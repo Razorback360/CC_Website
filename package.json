@@ -9,7 +9,15 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "seed": "prisma db seed",
+    "validate": "prisma validate",
+    "reset": "prisma migrate reset --force && prisma db seed && prisma generate",
+    "push": "prisma db push",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "generate-teams": "ts-node --project tsconfig.prisma.json prisma/generate-teams.ts"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
