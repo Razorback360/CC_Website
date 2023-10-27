@@ -1,6 +1,5 @@
-// @ts-check
+/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').options} */
 
-/** @type {import('prettier').Config} */
 module.exports = {
   endOfLine: "lf",
   printWidth: 80,
