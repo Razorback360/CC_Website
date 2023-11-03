@@ -45,6 +45,8 @@ model Session {
 
 enum UserRole {
     MEMBER
+    // TODO @SauceX22 @Razorback360 how to handle admins while also holding core member info to show the normal user card(like studentId...)
+    // we need a way to identify admins while also treating as normal members 
     ADMIN
 }
 
