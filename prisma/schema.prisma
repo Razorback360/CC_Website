@@ -14,17 +14,7 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
+// <Auth>
 
 // Necessary for Next auth
 model Account {
@@ -71,3 +61,5 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+// </Auth>
