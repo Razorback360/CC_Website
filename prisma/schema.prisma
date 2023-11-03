@@ -59,6 +59,12 @@ model User {
 
     role       UserRole  @default(MEMBER)
     member     Member?
+    Event      Event?    @relation(fields: [eventId], references: [id])
+    eventId    String?
+    Semester   Semester? @relation(fields: [semesterId], references: [id])
+    semesterId String?
+
+    @@unique([id, name])
 }
 
 model VerificationToken {
@@ -85,4 +91,23 @@ model Member {
 
     @@unique([userId, name])
     @@index([studentId])
+}
+
+model Event {
+    id          String   @id @default(cuid())
+    title       String
+    description String?  @db.Text
+    date        DateTime
+    organizers  Member[]
+    semester    Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+    semesterId  String
+    User        User[]
+}
+
+model Semester {
+    id      String   @id @default(cuid())
+    number  Int
+    members Member[]
+    events  Event[]
+    User    User[]
 }
