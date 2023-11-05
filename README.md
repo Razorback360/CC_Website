@@ -1,3 +1,17 @@
+Sure, here's a quick overview of the steps for more experienced users:
+
+# TL;DR Quick Start Guide
+
+1. **Clone the Project**: Clone the project repository from GitHub.
+2. **Install Extensions**: Install any extensions that you'd like to use for this project.
+3. **Enable Prettier Formatting**: Enable Prettier formatting in your code editor.
+4. **Set Up Environment Variables**: Create a copy of the `.env.example` file and rename it to `.env`. Fill in the necessary environment variables, including `NEXTAUTH_SECRET` and `NEXTAUTH_URL`.
+5. **Set Up Local PostgreSQL Database**: Install PostgreSQL and create a new database for the project.
+6. **Link Database to Project**: Update the `DATABASE_URL` in the `.env` file with your database connection string.
+7. **Start the Local Server**: Run `npm run dev` in the terminal to start the local development server.
+
+Please refer to the detailed steps below if you need more information on any of these steps.
+
 # Quick Start Guide to Setup this Project
 
 ## Step 1: Clone the Project
