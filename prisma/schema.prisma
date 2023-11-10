@@ -43,13 +43,6 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-enum UserRole {
-    MEMBER
-    // TODO @SauceX22 @Razorback360 how to handle admins while also holding core member info to show the normal user card(like studentId...)
-    // we need a way to identify admins while also treating as normal members 
-    ADMIN
-}
-
 model User {
     id            String    @id @default(cuid())
     name          String?
@@ -59,12 +52,15 @@ model User {
     accounts      Account[]
     sessions      Session[]
 
-    role       UserRole  @default(MEMBER)
-    member     Member?
-    Event      Event?    @relation(fields: [eventId], references: [id])
-    eventId    String?
-    Semester   Semester? @relation(fields: [semesterId], references: [id])
-    semesterId String?
+    // <Custom>
+    studentId String
+    admin     Boolean? @default(false)
+
+    links     String[]
+    tags      String[]
+    Semesters Semester[]
+    Events    Event[]
+    // </Custom>
 
     @@unique([id, name])
 }
@@ -79,37 +75,21 @@ model VerificationToken {
 
 // </Auth>
 
-model Member {
-    id        String     @id @default(cuid())
-    name      String
-    studentId String
-    links     String[]
-    tags      String[]
-    semesters Semester[]
-    events    Event[]
-
-    user   User?   @relation(fields: [userId, name], references: [id, name], onDelete: Cascade, onUpdate: Cascade)
-    userId String? @unique
-
-    @@unique([userId, name])
-    @@index([studentId])
-}
-
 model Event {
     id          String   @id @default(cuid())
     title       String
-    description String?  @db.Text
+    description String   @db.Text
     date        DateTime
-    organizers  Member[]
-    semester    Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
-    semesterId  String
-    User        User[]
+
+    Organizers User[]
+    Semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+    semesterId String
 }
 
 model Semester {
-    id      String   @id @default(cuid())
-    number  Int
-    members Member[]
-    events  Event[]
-    User    User[]
+    id     String @id @default(cuid())
+    number Int
+
+    Members User[]
+    Events  Event[]
 }
