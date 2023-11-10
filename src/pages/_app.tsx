@@ -19,14 +19,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <body
+      <main
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
         )}
       >
         <Component {...pageProps} />
-      </body>
+      </main>
     </SessionProvider>
   );
 };
