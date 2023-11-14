@@ -32,12 +32,12 @@ const Header = (props: Props) => {
 
           <ul className="flex gap-2 items-center justify-center pe-8">
             <li className="flex items-center justify-center">
-              <Button variant="link" className="text-white">
+              <Button variant="link" className="text-foreground">
                 <Link href="...">Upcoming events</Link>
               </Button>
             </li>
             <li className="flex items-center justify-center">
-              <Button variant="link" className="text-white">
+              <Button variant="link" className="text-foreground">
                 <Link href="...">Membership Form</Link>
               </Button>
             </li>
@@ -46,7 +46,7 @@ const Header = (props: Props) => {
       </div>
 
       {/* main nav */}
-      <div className="bg-white w-full outline outline-slate-300 outline-1">
+      <div className="bg-accent border-y border-y-foreground">
         <div className="flex flex-row justify-between w-full sm:w-2/3 sm:mx-auto">
           {/* <Image
               priority
