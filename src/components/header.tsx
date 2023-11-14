@@ -8,7 +8,7 @@ type Props = {
   // ...
 };
 
-const Header = (props: Props) => {
+const SiteHeader = (props: Props) => {
   return (
     <nav className="w-full top-0 relative">
       {/* socials */}
@@ -54,4 +54,4 @@ const Header = (props: Props) => {
   );
 };
 
-export default Header;
+export default SiteHeader;

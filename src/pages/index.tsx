@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 
-import Header from "@/components/header";
+import SiteHeader from "@/components/header";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
         <link rel="icon" href="/cc-kfupm-logo.ico" />
       </Head>
       <div className="flex min-h-full flex-col items-center justify-center bg-">
-        <Header />
+        <SiteHeader />
         {/* hero image */}
         <img
           className="relative w-full sm:mx-auto  overflow-clip"
