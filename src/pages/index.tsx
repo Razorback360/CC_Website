@@ -1,9 +1,9 @@
-import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
 
 import SiteHeader from "@/components/header";
+import { Separator } from "@/components/ui/separator";
+import { SiteFooter } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -25,6 +25,7 @@ export default function Home() {
         <section className="mt-4 bg-background w-full">
           <Separator className="w-full my-4 fill-secondary" />
         </section>
+        <SiteFooter />
       </div>
     </>
   );
