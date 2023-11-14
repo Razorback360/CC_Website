@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 
 import { api } from "@/utils/api";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
@@ -25,7 +26,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
           fontSans.variable,
         )}
       >
-        <Component {...pageProps} />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Component {...pageProps} />
+        </ThemeProvider>
       </main>
     </SessionProvider>
   );
