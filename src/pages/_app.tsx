@@ -6,10 +6,10 @@ import { api } from "@/utils/api";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 import "@/styles/globals.css";
-import { Inter as FontSans } from "next/font/google";
+import { Inter as InterFont } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-export const fontSans = FontSans({
+export const interFont = InterFont({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -23,7 +23,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <main
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          interFont.variable,
         )}
       >
         <ThemeProvider
