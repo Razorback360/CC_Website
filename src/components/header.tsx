@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Icons } from "../components/ui/icons";
 import Link from "next/link";
+import { ThemeToggle } from "./theme-toggle";
 
 type Props = {
   // ...
@@ -26,6 +27,7 @@ const Header = (props: Props) => {
             </li>
           </ul>
         </div>
+        <ThemeToggle className="self-center me-2" />
       </div>
 
       {/* main nav */}
