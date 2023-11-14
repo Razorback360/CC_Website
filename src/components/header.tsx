@@ -12,27 +12,9 @@ const SiteHeader = (props: Props) => {
   return (
     <nav className="w-full top-0 relative">
       {/* socials */}
-      <div className="flex flex-row">
-        <div className="py-2 flex flex-row justify-between sm:w-2/3 sm:mx-auto">
-          <ul className="flex gap-2 items-center justify-center pe-8">
-            <li className="flex items-center justify-center">
-              <Button variant="link" className="text-foreground">
-                <Link href="...">Upcoming events</Link>
-              </Button>
-            </li>
-            <li className="flex items-center justify-center">
-              <Button variant="link" className="text-foreground">
-                <Link href="...">Membership Form</Link>
-              </Button>
-            </li>
-          </ul>
-        </div>
-        <ThemeToggle className="self-center me-2" />
-      </div>
-
       {/* main nav */}
       <div className="bg-accent border-y border-y-foreground">
-        <div className="flex flex-row justify-between w-full sm:w-2/3 sm:mx-auto">
+        <div className="flex flex-row justify-between w-full sm:w-2/3 sm:mx-auto my-auto">
           {/* <Image
               priority
               quality={100}
@@ -48,6 +30,18 @@ const SiteHeader = (props: Props) => {
             placeholder="empty"
             alt="kfupm campus at its finest"
           />
+          <ul className="flex gap-2 items-center justify-center pe-8">
+            <li className="flex items-center justify-center">
+              <Button variant="link" className="text-foreground">
+                <Link href="...">Upcoming events</Link>
+              </Button>
+            </li>
+            <li className="flex items-center justify-center">
+              <Button variant="link" className="text-foreground">
+                <Link href="...">Membership Form</Link>
+              </Button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
