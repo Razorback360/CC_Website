@@ -5,51 +5,51 @@
 @layer base {
   :root {
     /* Background color of your web page */
-    --background: hsl(0 0% 100%);
+    --background: 0 0% 100%;
     /* Main color for text on your web page */
-    --foreground: hsl(222.2 84% 4.9%);
+    --foreground: 222.2 84% 4.9%;
 
     /* Background color for cards */
-    --card: hsl(0 0% 100%);
+    --card: 0 0% 100%;
     /* Text color for cards */
-    --card-foreground: hsl(222.2 84% 4.9%);
+    --card-foreground: 222.2 84% 4.9%;
 
     /* Background color for popovers */
-    --popover: hsl(0 0% 100%);
+    --popover: 0 0% 100%;
     /* Text color for popovers */
-    --popover-foreground: hsl(222.2 84% 4.9%);
+    --popover-foreground: 222.2 84% 4.9%;
 
     /* Background color for primary elements */
-    --primary: hsl(222.2 47.4% 11.2%);
+    --primary: 222.2 47.4% 11.2%;
     /* Text color for primary elements */
-    --primary-foreground: hsl(210 40% 98%);
+    --primary-foreground: 210 40% 98%;
 
     /* Background color for secondary elements */
-    --secondary: hsl(210 40% 96.1%);
+    --secondary: 210 40% 96.1%;
     /* Text color for secondary elements */
-    --secondary-foreground: hsl(222.2 47.4% 11.2%);
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
     /* Background color for disabled or less important elements */
-    --muted: hsl(210 40% 96.1%);
+    --muted: 210 40% 96.1%;
     /* Text color for disabled or less important elements */
-    --muted-foreground: hsl(215.4 16.3% 46.9%);
+    --muted-foreground: 215.4 16.3% 46.9%;
 
     /* Background color for accent elements */
-    --accent: hsl(210 40% 96.1%);
+    --accent: 210 40% 96.1%;
     /* Text color for accent elements */
-    --accent-foreground: hsl(222.2 47.4% 11.2%);
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     /* Background color for destructive actions like delete buttons */
-    --destructive: hsl(0 84.2% 60.2%);
+    --destructive: 0 84.2% 60.2%;
     /* Text color for destructive actions like delete buttons */
-    --destructive-foreground: hsl(210 40% 98%);
+    --destructive-foreground: 210 40% 98%;
 
     /* Color for borders */
-    --border: hsl(214.3 31.8% 91.4%);
+    --border: 214.3 31.8% 91.4%;
     /* Color for input fields */
-    --input: hsl(214.3 31.8% 91.4%);
+    --input: 214.3 31.8% 91.4%;
     /* Color for focus rings */
-    --ring: hsl(222.2 84% 4.9%);
+    --ring: 222.2 84% 4.9%;
 
     /* Border-radius for elements */
     --radius: 0.5rem;
@@ -57,51 +57,51 @@
 
   .dark {
     /* Background color of your web page in dark theme */
-    --background: hsl(222.2 84% 4.9%);
+    --background: 222.2 84% 4.9%;
     /* Main color for text on your web page in dark theme */
-    --foreground: hsl(210 40% 98%);
+    --foreground: 210 40% 98%;
 
     /* Background color for cards in dark theme */
-    --card: hsl(222.2 84% 4.9%);
+    --card: 222.2 84% 4.9%;
     /* Text color for cards in dark theme */
-    --card-foreground: hsl(210 40% 98%);
+    --card-foreground: 210 40% 98%;
 
     /* Background color for popovers in dark theme */
-    --popover: hsl(222.2 84% 4.9%);
+    --popover: 222.2 84% 4.9%;
     /* Text color for popovers in dark theme */
-    --popover-foreground: hsl(210 40% 98%);
+    --popover-foreground: 210 40% 98%;
 
     /* Background color for primary elements in dark theme */
-    --primary: hsl(210 40% 98%);
+    --primary: 210 40% 98%;
     /* Text color for primary elements in dark theme */
-    --primary-foreground: hsl(222.2 47.4% 11.2%);
+    --primary-foreground: 222.2 47.4% 11.2%;
 
     /* Background color for secondary elements in dark theme */
-    --secondary: hsl(217.2 32.6% 17.5%);
+    --secondary: 217.2 32.6% 17.5%;
     /* Text color for secondary elements in dark theme */
-    --secondary-foreground: hsl(210 40% 98%);
+    --secondary-foreground: 210 40% 98%;
 
     /* Background color for disabled or less important elements in dark theme */
-    --muted: hsl(217.2 32.6% 17.5%);
+    --muted: 217.2 32.6% 17.5%;
     /* Text color for disabled or less important elements in dark theme */
-    --muted-foreground: hsl(215 20.2% 65.1%);
+    --muted-foreground: 215 20.2% 65.1%;
 
     /* Background color for accent elements in dark theme */
-    --accent: hsl(217.2 32.6% 17.5%);
+    --accent: 217.2 32.6% 17.5%;
     /* Text color for accent elements in dark theme */
-    --accent-foreground: hsl(210 40% 98%);
+    --accent-foreground: 210 40% 98%;
 
     /* Background color for destructive actions like delete buttons in dark theme */
-    --destructive: hsl(0 62.8% 30.6%);
+    --destructive: 0 62.8% 30.6%;
     /* Text color for destructive actions like delete buttons in dark theme */
-    --destructive-foreground: hsl(210 40% 98%);
+    --destructive-foreground: 210 40% 98%;
 
     /* Color for borders in dark theme */
-    --border: hsl(217.2 32.6% 17.5%);
+    --border: 217.2 32.6% 17.5%;
     /* Color for input fields in dark theme */
-    --input: hsl(217.2 32.6% 17.5%);
+    --input: 217.2 32.6% 17.5%;
     /* Color for focus rings in dark theme */
-    --ring: hsl(212.7 26.8% 83.9%);
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
