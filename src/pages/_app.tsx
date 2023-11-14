@@ -26,6 +26,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
           interFont.variable,
         )}
       >
+        <style jsx global>{`
+          html {
+            font-family: ${interFont.style.fontFamily};
+          }
+        `}</style>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
