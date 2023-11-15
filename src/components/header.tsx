@@ -13,7 +13,7 @@ const SiteHeader = (props: Props) => {
     <nav className="w-full top-0 relative">
       {/* socials */}
       {/* main nav */}
-      <div className="bg-accent border-y border-y-foreground">
+      <div className="bg-background">
         <div className="flex flex-row justify-between w-full sm:w-2/3 sm:mx-auto my-auto">
           {/* <Image
               priority
