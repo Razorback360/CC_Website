@@ -22,8 +22,8 @@ export default function Home() {
           alt="kfupm campus at its finest"
         />
 
-        <section className="mt-4 bg-background w-full">
-          <Separator className="w-full my-4 fill-secondary" />
+        <section className="mt-4 w-full">
+          <Separator className="w-full my-4" />
         </section>
         <SiteFooter />
       </div>

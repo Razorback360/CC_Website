@@ -13,9 +13,8 @@ const SiteHeader = (props: Props) => {
     <nav className="w-full top-0 relative">
       {/* socials */}
       {/* main nav */}
-      <div className="bg-background">
-        <div className="flex flex-row justify-between w-full px-2 sm:w-2/3 sm:mx-auto my-auto">
-          {/* <Image
+      <div className="flex flex-row justify-between items-center w-full px-2 sm:w-2/3 sm:mx-auto">
+        {/* <Image
               priority
               quality={100}
               src="/cc-kfupm-logo.png"
@@ -24,27 +23,26 @@ const SiteHeader = (props: Props) => {
               placeholder="empty"
               alt="kfupm campus at its finest"
             /> */}
-          <img
-            className="w-16 aspect-square"
-            src="/cc-kfupm-logo.png"
-            placeholder="empty"
-            alt="kfupm campus at its finest"
-          />
-          <ul className="flex gap-2 items-center justify-center">
-            <Button variant="link">
-              <Link href="...">About Us</Link>
-            </Button>
-            <Button variant="link">
-              <Link href="...">Contact</Link>
-            </Button>
-            <Button variant="link">
-              <Link href="...">Events</Link>
-            </Button>
-            <Button variant="default">
-              <Link href="...">Join Us</Link>
-            </Button>
-          </ul>
-        </div>
+        <img
+          className="w-16 aspect-square"
+          src="/cc-kfupm-logo.png"
+          placeholder="empty"
+          alt="kfupm campus at its finest"
+        />
+        <ul className="flex gap-2 items-center justify-center">
+          <Button variant="link">
+            <Link href="...">About Us</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="...">Contact</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="...">Events</Link>
+          </Button>
+          <Button variant="default">
+            <Link href="...">Join Us</Link>
+          </Button>
+        </ul>
       </div>
     </nav>
   );
