@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import "@/styles/globals.css";
 import { Inter as InterFont } from "next/font/google";
 import { cn } from "@/lib/utils";
+import AppLayout from "@/components/layout";
 
 export const interFont = InterFont({
   subsets: ["latin"],
@@ -37,7 +38,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           enableSystem
           disableTransitionOnChange
         >
-          <Component {...pageProps} />
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
         </ThemeProvider>
       </main>
     </SessionProvider>
