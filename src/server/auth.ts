@@ -9,6 +9,10 @@ import {
 import { env } from "@/env.mjs";
 import { db } from "@/server/db";
 
+import AzureADProvider, {
+  type AzureADProfile,
+} from "next-auth/providers/azure-ad";
+
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -19,7 +23,6 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: DefaultSession["user"] & {
       id: string;
-      // ...other properties
       // role: UserRole;
     };
   }
@@ -46,8 +49,96 @@ export const authOptions: NextAuthOptions = {
     }),
   },
   adapter: PrismaAdapter(db),
+  pages: {
+    signIn: "/auth/login",
+  },
   providers: [
-    // TODO @SauceX22 add MSFT provider here
+    AzureADProvider({
+      id: "azure-ad",
+      name: "Microsoft",
+      clientId: env.AZURE_AD_B2C_CLIENT_ID,
+      clientSecret: env.AZURE_AD_B2C_CLIENT_SECRET,
+      wellKnown: `https://login.microsoftonline.com/${env.AZURE_AD_B2C_TENANT_NAME}/v2.0/.well-known/openid-configuration`,
+      authorization: {
+        params: {
+          scope:
+            "openid profile email offline_access user.Read People.Read User.ReadBasic.All",
+        },
+      },
+      idToken: true,
+      // TODO @SauceX22: change this proper MSFT logos
+      style: {
+        logo: "https://authjs.dev/img/providers/azure.svg",
+        logoDark: "https://authjs.dev/img/providers/azure-dark.svg",
+        bg: "#fff",
+        text: "#0072c6",
+        bgDark: "#0072c6",
+        textDark: "#fff",
+      },
+      async profile(profile: AzureADProfile, tokens) {
+        const profileObject = {
+          id: profile.sub,
+          name: profile.nickname,
+          email: profile.email,
+          image: profile.picture,
+          // NOT SURE OF DATA (Updated in session callback later)
+          // role: assinged down below
+        };
+        // https://learn.microsoft.com/en-us/graph/api/profile-get?view=graph-rest-beta&tabs=http#example-1-get-a-users-profile
+        if (
+          (!profileObject.name || !profileObject.email) &&
+          tokens.access_token
+        ) {
+          const profileData = await fetch(
+            `https://graph.microsoft.com/beta/me/profile`,
+            {
+              headers: {
+                Authorization: `Bearer ${tokens.access_token}`,
+                contentType: "application/json",
+              },
+            },
+          );
+          if (profileData.ok) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const profileJson = await profileData.json();
+            if (!profileObject.name) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+              profileObject.name = profileJson.names[0].displayName;
+            }
+            if (!profileObject.email) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+              profileObject.email = profileJson.emails[0].address;
+            }
+          }
+        } else {
+          throw new Error("NO ACCESS TOKEN: Unable to fetch profile data");
+        }
+        // https://docs.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0#examples
+        if (!profileObject.image && tokens.access_token) {
+          const profilePicture = await fetch(
+            `https://graph.microsoft.com/v1.0/me/photos/64x64/$value`,
+            {
+              headers: {
+                Authorization: `Bearer ${tokens.access_token}`,
+              },
+            },
+          );
+          if (profilePicture.ok) {
+            const pictureBuffer = await profilePicture.arrayBuffer();
+            const pictureBase64 = Buffer.from(pictureBuffer).toString("base64");
+            profileObject.image = `data:image/jpeg;base64, ${pictureBase64}`;
+          }
+        } else {
+          // its fine if the user doesn't have a profile picture
+          console.error("NO ACCESS TOKEN: Unable to fetch profile picture");
+        }
+        // if profile still has no name or email, throw an error
+        if (!profileObject.name || !profileObject.email) {
+          throw new Error("NO NAME OR EMAIL: Unable to fetch profile data");
+        }
+        return profileObject;
+      },
+    }),
     /**
      * ...add more providers here.
      *
