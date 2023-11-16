@@ -86,7 +86,9 @@ model Event {
     description String   @db.Text
     date        DateTime
 
+    category   String
     Organizers User[]
+
     Semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
     semesterId String
 }
