@@ -28,18 +28,12 @@ function LoginPage() {
           <Icons.logo className="mx-auto my-4 w-72" />
           <h1 className="text-3xl font-semibold tracking-tight">Welcome</h1>
           <p className="text-sm text-muted-foreground">
-            Enter your username to sign in to your account
+            Already a Member of the Computer Club?
+            <br />
+            Sign in to continue.
           </p>
         </div>
         <UserAuthForm />
-        <p className="px-8 text-center text-sm text-muted-foreground">
-          <Link
-            href="/auth/register"
-            className="hover:text-brand underline underline-offset-4"
-          >
-            Don&apos;t have an account? Sign Up
-          </Link>
-        </p>
       </div>
     </div>
   );
