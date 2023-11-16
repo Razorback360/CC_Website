@@ -9,10 +9,7 @@ import { cn } from "@/lib/utils";
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isMicrosoftLoading, setIsMicrosoftLoading] = useState<boolean>(false);
-
-  const router = useRouter();
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -22,26 +19,29 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+            Continue with <b>KFUPM Authentication</b>
           </span>
         </div>
       </div>
       <button
         type="button"
-        className={cn(buttonVariants({ variant: "outline" }))}
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "bg-green-500 text-primary-foreground font-semibold",
+        )}
         onClick={async () => {
           setIsMicrosoftLoading(true);
           // TODO - implement microsoft auth
           await signIn("azure-ad");
         }}
-        disabled={isLoading || isMicrosoftLoading}
+        disabled={isMicrosoftLoading}
       >
         {isMicrosoftLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.microsoft className="mr-2 h-4 w-4" />
         )}{" "}
-        Microsoft
+        KFUPM Authentication
       </button>
     </div>
   );
