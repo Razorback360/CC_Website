@@ -6,7 +6,7 @@ import { Icons } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useRouter } from "next/router";
 
-export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
+function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   const router = useRouter();
   return (
     <footer className={cn(className)}>
@@ -74,3 +74,5 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
     </footer>
   );
 }
+
+export default SiteFooter;

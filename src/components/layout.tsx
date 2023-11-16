@@ -1,6 +1,6 @@
 import React from "react";
 import SiteHeader from "./site-header";
-import { SiteFooter } from "./site-footer";
+import SiteFooter from "./site-footer";
 import { useRouter } from "next/router";
 import { HeaderFooterExclusionRoutes } from "@/config/site";
 
