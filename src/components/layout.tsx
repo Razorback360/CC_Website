@@ -2,13 +2,11 @@ import React from "react";
 import SiteHeader from "./site-header";
 import { SiteFooter } from "./site-footer";
 import { useRouter } from "next/router";
+import { HeaderFooterExclusionRoutes } from "@/config/site";
 
 type Props = {
   children: React.ReactNode;
 };
-
-// routes that should not have the header or footer
-const HeaderFooterExclusionRoutes = ["/auth/login", "/auth/register"];
 
 const AppLayout = ({ children, ...props }: Props) => {
   const { pathname } = useRouter();

@@ -12,3 +12,10 @@ export const siteConfig: SiteConfig = {
     youtube: "https://www.youtube.com/channel/UC53CPMNo35_d3q3QV7Hzu8w",
   },
 };
+
+// routes that should not have the header or footer
+export const HeaderFooterExclusionRoutes = [
+  "/auth/login",
+  "/auth/register",
+  "/dashboard/*",
+];
