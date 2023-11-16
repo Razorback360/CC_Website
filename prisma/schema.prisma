@@ -80,17 +80,25 @@ model VerificationToken {
 
 // </Auth>
 
+model EventCategory {
+    id     String  @id @default(cuid())
+    name   String
+    events Event[]
+}
+
 model Event {
     id          String   @id @default(cuid())
     title       String
     description String   @db.Text
     date        DateTime
 
-    category   String
     Organizers User[]
 
     Semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
     semesterId String
+
+    Category   EventCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    categoryId String
 }
 
 model Semester {
