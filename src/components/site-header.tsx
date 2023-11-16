@@ -1,16 +1,18 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Icons } from "./icons";
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
+import { UserNav } from "./user-nav";
+import { useSession } from "next-auth/react";
 
 type Props = {
   // ...
 };
 
 const SiteHeader = (props: Props) => {
+  const { data: session } = useSession();
+
   return (
-    <nav className="w-full top-0 relative">
+    <nav className="w-full top-0 relative flex flex-row items-center pe-4">
       {/* socials */}
       {/* main nav */}
       <div className="flex flex-row justify-between items-center w-full px-2 sm:w-2/3 sm:mx-auto">
@@ -44,6 +46,7 @@ const SiteHeader = (props: Props) => {
           </Button>
         </ul>
       </div>
+      {!!session?.user ?? <UserNav />}
     </nav>
   );
 };
