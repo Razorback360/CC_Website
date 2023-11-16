@@ -1,6 +1,6 @@
 import React from "react";
-import SiteHeader from "./header";
-import { SiteFooter } from "./footer";
+import SiteHeader from "./site-header";
+import { SiteFooter } from "./site-footer";
 
 type Props = {
   children: React.ReactNode;
