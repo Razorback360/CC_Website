@@ -1,9 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import SiteHeader from "@/components/header";
 import { Separator } from "@/components/ui/separator";
-import { SiteFooter } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -13,8 +11,7 @@ export default function Home() {
         <meta name="description" content="computer club of kfupm" />
         <link rel="icon" href="/cc-kfupm-logo.ico" />
       </Head>
-      <div className="flex min-h-full flex-col items-center justify-center bg-">
-        <SiteHeader />
+      <div>
         {/* hero image */}
         <img
           className="relative w-full sm:mx-auto  overflow-clip"
@@ -25,7 +22,6 @@ export default function Home() {
         <section className="mt-4 w-full">
           <Separator className="w-full my-4" />
         </section>
-        <SiteFooter />
       </div>
     </>
   );
