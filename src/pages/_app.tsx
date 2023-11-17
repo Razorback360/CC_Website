@@ -9,6 +9,7 @@ import "@/styles/globals.css";
 import { Inter as InterFont } from "next/font/google";
 import { cn } from "@/lib/utils";
 import AppLayout from "@/components/layout";
+import Head from "next/head";
 
 export const interFont = InterFont({
   subsets: ["latin"],
@@ -21,6 +22,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Head>
+        <link rel="icon" href="/cc-kfupm-logo.ico" />
+      </Head>
       <main
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

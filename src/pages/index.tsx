@@ -8,8 +8,7 @@ export default function Home() {
     <>
       <Head>
         <title>Computer Club - KFUPM</title>
-        <meta name="description" content="computer club of kfupm" />
-        <link rel="icon" href="/cc-kfupm-logo.ico" />
+        <meta name="description" content="Home of KFUPM's Computer Club" />
       </Head>
       <div>
         {/* hero image */}
