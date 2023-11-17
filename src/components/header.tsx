@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Icons } from "./icons";
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
-
+import Image from "next/image";
+import { ThemeToggle } from "@/components/theme-toggle";
 type Props = {
   // ...
 };
 
 const SiteHeader = (props: Props) => {
+  const [sidebar, setSidebar] = useState(false)
   return (
     <nav className="w-full top-0 relative">
       {/* socials */}
@@ -23,25 +24,57 @@ const SiteHeader = (props: Props) => {
               placeholder="empty"
               alt="kfupm campus at its finest"
             /> */}
-        <img
-          className="w-16 aspect-square"
+        <Image
+        width={64}
+        height={64}
+          className="aspect-square"
           src="/cc-kfupm-logo.png"
           placeholder="empty"
-          alt="kfupm campus at its finest"
+          alt="KFUPMCC Logo"
         />
-        <ul className="flex gap-2 items-center justify-center">
+        <a className="flex md:hidden hover:cursor-pointer" onClick={(e) => {setSidebar(!sidebar)}}>
+        <Icons.menu/>
+        </a>
+
+        <ul className="gap-2 items-center justify-center hidden md:flex">
+        <Button variant="link">
+            <Link href="...">Members</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="...">Events</Link>
+          </Button>
           <Button variant="link">
             <Link href="...">About Us</Link>
           </Button>
           <Button variant="link">
             <Link href="...">Contact</Link>
           </Button>
-          <Button variant="link">
-            <Link href="...">Events</Link>
-          </Button>
+          <ThemeToggle/>
           <Button variant="default">
             <Link href="...">Join Us</Link>
           </Button>
+        </ul>
+      </div>
+      <div className={`min-w-full min-h-[50vh] ${sidebar ? "absolute z-50 bg-background overflow-hidden" : "hidden"}`}>
+      <ul className="gap-2 items-start justify-center flex flex-col">
+        <Button variant="link">
+            <Link href="...">Members</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="...">Events</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="...">About Us</Link>
+          </Button>
+          <Button variant="link">
+            <Link href="...">Contact</Link>
+          </Button>
+          <div className="flex flex-row gap-2 mx-2">
+        <ThemeToggle/>
+          <Button variant="default">
+            <Link href="...">Join Us</Link>
+          </Button>
+        </div>
         </ul>
       </div>
     </nav>
