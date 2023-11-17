@@ -76,7 +76,7 @@ NEXTAUTH_URL="http://localhost:3000"
 
 ## Step 5: Set Up Local PostgreSQL Database
 
-First, you need to install PostgreSQL (or psql) on your machine. If you don't have it installed, you can follow the detailed steps in this [guide].
+First, you need to install PostgreSQL (or psql) on your machine. If you don't have it installed, you can follow the detailed steps in [this guide](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database#setting-up-postgresql-on-windows).
 
 Once you've installed PostgreSQL, you can create a new database for the project. Open your terminal and run the following commands:
 
