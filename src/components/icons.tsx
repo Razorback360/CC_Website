@@ -24,6 +24,7 @@ import {
   type IconNode as LucideIcon,
   AtSign,
   Youtube,
+  LogOut,
   MessageSquare,
 } from "lucide-react";
 type IconProps = React.HTMLAttributes<SVGElement>;
@@ -218,4 +219,5 @@ export const Icons = {
   check: Check,
   youtube: Youtube,
   whatsapp: MessageSquare,
+  logOut: LogOut,
 };
