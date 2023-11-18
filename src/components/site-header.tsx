@@ -42,7 +42,7 @@ const SiteHeader = (props: Props) => {
           </Button>
         </ul>
       </div>
-      {!!session?.user ?? <UserNav />}
+      {!!session?.user && <UserNav />}
     </nav>
   );
 };
