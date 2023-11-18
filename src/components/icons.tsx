@@ -5,7 +5,6 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Command,
   CreditCard,
   File,
   FileText,
@@ -23,11 +22,9 @@ import {
   User,
   X,
   type IconNode as LucideIcon,
-  Github,
   AtSign,
   Youtube,
   MessageSquare,
-  Menu,
 } from "lucide-react";
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -85,8 +82,8 @@ export const Icons = {
           y2="-0.000266926"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#33B1FF" />
-          <stop offset="1" stop-color="#3369FF" />
+          <stop stopColor="#33B1FF" />
+          <stop offset="1" stopColor="#3369FF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_317_40"
@@ -96,8 +93,8 @@ export const Icons = {
           y2="165.398"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#273039" />
-          <stop offset="1" stop-color="#181C20" />
+          <stop stopColor="#273039" />
+          <stop offset="1" stopColor="#181C20" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_317_40"
@@ -107,8 +104,8 @@ export const Icons = {
           y2="165.396"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#33B1FF" />
-          <stop offset="1" stop-color="#3369FF" />
+          <stop stopColor="#33B1FF" />
+          <stop offset="1" stopColor="#3369FF" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_317_40"
@@ -118,8 +115,8 @@ export const Icons = {
           y2="-0.000727518"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#273039" />
-          <stop offset="1" stop-color="#181C20" />
+          <stop stopColor="#273039" />
+          <stop offset="1" stopColor="#181C20" />
         </linearGradient>
       </defs>
     </svg>
