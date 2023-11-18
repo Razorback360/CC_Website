@@ -141,7 +141,14 @@ export const authOptions: NextAuthOptions = {
         if (!profileObject.name || !profileObject.email) {
           throw new Error("NO NAME OR EMAIL: Unable to fetch profile data");
         }
-        return profileObject;
+        // TODO @SauceX22 validate if the user is an admin through their id with known admin ids
+        return {
+          ...profileObject,
+          role: "MEMBER",
+          studentId: zodUser.shape.studentId.parse(
+            profileObject.email.split("@")[0],
+          ),
+        };
       },
     }),
     /**
