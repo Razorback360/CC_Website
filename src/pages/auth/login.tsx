@@ -5,9 +5,17 @@ import { UserAuthForm } from "@/components/core/user-auth-form";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 function LoginPage() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  // If the user is already logged in, redirect to the home page with await
+  if (session) {
+    void router.push("/");
+  }
+
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Button
