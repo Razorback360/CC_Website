@@ -61,10 +61,13 @@ export function UserNav({ className, ...props }: Props) {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <AlertDialogTrigger asChild>
+          <DropdownMenuItem className="text-destructive hover:bg-destructive">
+            <Icons.logOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </AlertDialogTrigger>{" "}
       </DropdownMenuContent>
     </DropdownMenu>
   );
