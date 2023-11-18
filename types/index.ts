@@ -7,5 +7,7 @@ export type SiteConfig = {
     twitter: string;
     linkedin: string;
     youtube: string;
+    github: string;
+    email: string;
   };
 };
