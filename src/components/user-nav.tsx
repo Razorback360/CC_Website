@@ -1,3 +1,4 @@
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,19 +11,25 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useSession } from "next-auth/react";
+import { Icons } from "./icons";
 
 type Props = {
   // ...
 } & React.ComponentProps<typeof DropdownMenuTrigger>;
 
 export function UserNav({ className, ...props }: Props) {
+  const { data: session } = useSession();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className={className} {...props}>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage src={session?.user?.image ?? undefined} />
+            <AvatarFallback>
+              <Skeleton className="group-hover:border" />
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
