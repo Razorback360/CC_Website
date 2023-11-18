@@ -23,6 +23,11 @@ import {
   User,
   X,
   type IconNode as LucideIcon,
+  Github,
+  AtSign,
+  Youtube,
+  MessageSquare,
+  Menu,
 } from "lucide-react";
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -190,7 +195,6 @@ export const Icons = {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -214,4 +218,6 @@ export const Icons = {
     </svg>
   ),
   check: Check,
+  youtube: Youtube,
+  whatsapp: MessageSquare,
 };
