@@ -25,98 +25,96 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             </a>
           </p>
         </div>
-        <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
-          <div className="flex items-center gap-4 px-8 flex-row md:gap-2 md:px-0">
+        <div className="flex items-center justify-center gap-4 px-8 flex-row md:gap-2 md:px-0">
+          <a
+            href={siteConfig.links.twitter}
+            title={siteConfig.links.twitter}
+            className="hover:cursor-pointer fill-secondary-foreground"
+          >
+            <Icons.twitter
+              title={siteConfig.links.twitter}
+              className="hover:cursor-pointer fill-secondary-foreground"
+            />
+          </a>
+          <a
+            href={siteConfig.links.linkedin}
+            title={siteConfig.links.linkedin}
+            className="hover:cursor-pointer fill-secondary-foreground"
+          >
+            <Icons.linkedin className="hover:cursor-pointer" />
+          </a>
+          <a
+            href={siteConfig.links.github}
+            title={siteConfig.links.github}
+            className="hover:cursor-pointer fill-secondary-foreground"
+          >
+            <Icons.gitHub className="hover:cursor-pointer" />
+          </a>
+          <a
+            href={siteConfig.links.youtube}
+            title={siteConfig.links.youtube}
+            className="hover:cursor-pointer fill-secondary-foreground"
+          >
+            <Icons.youtube className="hover:cursor-pointer" />
+          </a>
+          <a
+            href={siteConfig.links.whatsapp}
+            title={siteConfig.links.whatsapp}
+            className="hover:cursor-pointer fill-secondary-foreground"
+          >
+            <Icons.whatsapp className="hover:cursor-pointer" />
+          </a>
+          <a
+            href={siteConfig.links.email}
+            title={siteConfig.links.email}
+            className="hover:cursor-pointer fill-secondary-foreground"
+          >
+            {/* <Icons.email className="hover:cursor-pointer" /> */}
+          </a>
+        </div>
+        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+          <Icons.logo className="w-16" />
+          <p className="text-center text-sm leading-loose md:text-left">
+            Built by{" "}
             <a
               href={siteConfig.links.twitter}
-              title={siteConfig.links.twitter}
-              className="hover:cursor-pointer"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
             >
-              <Icons.twitter
-                title={siteConfig.links.twitter}
-                className="hover:cursor-pointer"
-              />
+              shadcn
             </a>
+            . Hosted on{" "}
             <a
-              href={siteConfig.links.linkedin}
-              title={siteConfig.links.linkedin}
-              className="hover:cursor-pointer"
+              href="https://vercel.com"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
             >
-              <Icons.linkedin className="hover:cursor-pointer" />
+              Vercel
             </a>
+            . Illustrations by{" "}
             <a
-              href={siteConfig.links.github}
-              title={siteConfig.links.github}
-              className="hover:cursor-pointer"
+              href="https://popsy.co"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
             >
-              <Icons.gitHub className="hover:cursor-pointer" />
+              Popsy
             </a>
+            . The source code is available on{" "}
             <a
               href={siteConfig.links.youtube}
-              title={siteConfig.links.youtube}
-              className="hover:cursor-pointer"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
             >
-              <Icons.youtube className="hover:cursor-pointer" />
+              GitHub
             </a>
-            <a
-              href={siteConfig.links.whatsapp}
-              title={siteConfig.links.whatsapp}
-              className="hover:cursor-pointer"
-            >
-              <Icons.whatsapp className="hover:cursor-pointer" />
-            </a>
-            <a
-              href={siteConfig.links.email}
-              title={siteConfig.links.email}
-              className="hover:cursor-pointer"
-            >
-              {/* <Icons.email className="hover:cursor-pointer" /> */}
-            </a>
-          </div>
-          <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-            <Icons.logo className="w-16" />
-            <p className="text-center text-sm leading-loose md:text-left">
-              Built by{" "}
-              <a
-                href={siteConfig.links.twitter}
-                target="_blank"
-                rel="noreferrer"
-                className="font-medium underline underline-offset-4"
-              >
-                shadcn
-              </a>
-              . Hosted on{" "}
-              <a
-                href="https://vercel.com"
-                target="_blank"
-                rel="noreferrer"
-                className="font-medium underline underline-offset-4"
-              >
-                Vercel
-              </a>
-              . Illustrations by{" "}
-              <a
-                href="https://popsy.co"
-                target="_blank"
-                rel="noreferrer"
-                className="font-medium underline underline-offset-4"
-              >
-                Popsy
-              </a>
-              . The source code is available on{" "}
-              <a
-                href={siteConfig.links.youtube}
-                target="_blank"
-                rel="noreferrer"
-                className="font-medium underline underline-offset-4"
-              >
-                GitHub
-              </a>
-              .
-            </p>
-          </div>
-          <ThemeToggle />
+            .
+          </p>
         </div>
+        <ThemeToggle />
       </div>
     </footer>
   );
