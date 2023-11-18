@@ -45,7 +45,7 @@ model Session {
 
 enum UserRole {
     ADMIN
-    Member
+    MEMBER
 }
 
 model User {
@@ -59,7 +59,7 @@ model User {
 
     // <Custom>
     studentId String
-    role      UserRole @default(Member)
+    role      UserRole @default(MEMBER)
 
     links     String[]
     tags      String[]
