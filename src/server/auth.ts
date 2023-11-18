@@ -12,6 +12,8 @@ import { db } from "@/server/db";
 import AzureADProvider, {
   type AzureADProfile,
 } from "next-auth/providers/azure-ad";
+import { type UserRole } from "@prisma/client";
+import { zodUser } from "@/utils/validation/auth";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -21,16 +23,17 @@ import AzureADProvider, {
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: DefaultSession["user"] & {
-      id: string;
-      // role: UserRole;
-    };
+    user: User;
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+
+    studentId: string;
+    role: UserRole;
+  }
 }
 
 /**
