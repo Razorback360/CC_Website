@@ -25,14 +25,10 @@ import {
   Github,
   AtSign,
   Youtube,
-  Phone,
-  MessageCircle,
   MessageSquare,
-  YoutubeIcon,
-  LucideYoutube,
   Menu
 } from "lucide-react";
-type IconProps = React.HTMLAttributes<SVGElement>;
+type IconProps = React.HTMLAttributes<SVGElement> & {fill: string};
 
 export type Icon = LucideIcon;
 
@@ -78,7 +74,6 @@ export const Icons = {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
