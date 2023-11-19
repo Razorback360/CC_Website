@@ -8,11 +8,11 @@ type Slide = {
 
 type Props = {
   slides: Slide[];
-};
+} & React.HTMLAttributes<HTMLImageElement> ;
 
 export function ImageCarousel(props: Props) {
   return (
-    <Carousel leftControl rightControl>
+    <Carousel leftControl rightControl className={props.className}>
       {props.slides.map((slide, i) => {
         return (
           <div
@@ -21,10 +21,10 @@ export function ImageCarousel(props: Props) {
           >
             <img
               src={slide.src}
-              className=" object-cover w-full h-auto"
+              className={`${props.className} object-cover w-full`}
               alt={slide.description}
             />
-            <div className="absolute bottom-0 p-10 mb-5 rounded-lg max-w-xl text-center opacity-90 bg-secondary">
+            <div className="absolute bottom-0 p-5 md:p-10 mb-5 rounded-lg max-w-xl text-center opacity-90 bg-secondary ">
               <h5>{slide.label}</h5>
               <p className=" text-primary">{slide.description}</p>
             </div>
