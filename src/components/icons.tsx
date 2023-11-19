@@ -28,7 +28,7 @@ import {
   MessageSquare,
   Menu
 } from "lucide-react";
-type IconProps = React.HTMLAttributes<SVGElement> & {fill: string};
+type IconProps = React.HTMLAttributes<SVGElement>;
 
 export type Icon = LucideIcon;
 
