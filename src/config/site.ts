@@ -14,3 +14,10 @@ export const siteConfig: SiteConfig = {
     email: ""
   },
 };
+
+// routes that should not have the header or footer
+export const HeaderFooterExclusionRoutes = [
+  "/auth/login",
+  "/auth/register",
+  "/dashboard/*",
+];
