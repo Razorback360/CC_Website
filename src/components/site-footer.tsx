@@ -6,6 +6,8 @@ import { Icons } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
+import { LocaleSwitcher } from "@/components/core/locale_switcher";
+import { Separator } from "@/components/ui/separator";
 
 function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   const router = useRouter();
@@ -29,6 +31,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           </Button>
         </p>
         <ThemeToggle />
+        <Separator orientation="vertical" />
+        <LocaleSwitcher />
       </div>
 
       <div className="flex items-center justify-center gap-4 px-8 flex-row md:gap-2 md:px-0">
