@@ -1,12 +1,4 @@
-type Member = {
-  id: number;
-  name: string;
-  img: string;
-  position: string;
-  major: string;
-  team: string;
-  status: boolean;
-};
+import { Member } from "types";
 
 type Props = {
   info: Member;
