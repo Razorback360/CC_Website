@@ -3,6 +3,7 @@ import MemberCard from "../../components/dashboard/MemberCard";
 import Sidebar from "../../components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Member } from "types";
 
 const membersList = [
   {
@@ -70,7 +71,7 @@ const membersList = [
   },
 ];
 
-const members = () => {
+const Members = () => {
   return (
     <div className="w-full lg:container lg:py-5">
       <section className="ml-auto lg:w-2/3 flex flex-col gap-4 px-5 pt-5">
@@ -93,4 +94,4 @@ const members = () => {
   );
 };
 
-export default members;
+export default Members;
