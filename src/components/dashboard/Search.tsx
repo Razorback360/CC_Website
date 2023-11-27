@@ -10,9 +10,9 @@ const Search = () => {
         className={`rounded-l ${
           !active ? "bg-primary" : "bg-white"
         } border-none`}
-        onClick={() => setActive((prev) => !prev)}
+        onFocus={() => setActive((prev) => !prev)}
       />
-      {active && (
+      {!active && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
