@@ -37,7 +37,7 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.twitter className="w-8 h-8" />
+            <Icons.twitter className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Twitter</div>
           </a>
           <a
@@ -46,7 +46,7 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.linkedin className="w-8 h-8" />
+            <Icons.linkedin className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Linkedin</div>
           </a>
           <a
@@ -55,7 +55,7 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.gitHub className="w-8 h-8" />
+            <Icons.gitHub className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Github</div>
           </a>
           <a
@@ -64,7 +64,7 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.youtube className="w-8 h-8" />
+            <Icons.youtube className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Youtube</div>
           </a>
           <a
@@ -73,7 +73,7 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.whatsapp className="w-8 h-8" />
+            <Icons.whatsapp className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Whatsapp</div>
           </a>
         </div>
