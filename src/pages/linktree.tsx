@@ -1,5 +1,6 @@
 import { Icons } from "@/components/icons";
 import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 import Head from "next/head";
 import React from "react";
 
@@ -17,11 +18,13 @@ const Linktree = () => {
 
       <main className="flex flex-col gap-4 items-center justify-center px-2 sm:px-20 text-center">
         <div
-          className="w-[32rem] h-[36rem] bg-primary absolute items-center justify-center blur-[200px]
-           opacity-20"
+          className={cn(
+            "w-[32rem] h-[36rem] absolute items-center justify-center blur-[200px]",
+            "bg-[rgb(69,69,228)] bg-gradient-to-br from-[rgba(69,69,228,1)] via-[rgba(125,24,255,1)] to-[rgba(172,24,255,1)] opacity-30",
+          )}
           style={{
             borderRadius: "30% 70% 68% 32% / 30% 71% 29% 70% ",
-            zIndex: 1,
+            zIndex: 0,
           }}
         ></div>
         <Icons.logo className="w-52 sm:my-4 sm:w-72" />
