@@ -19,7 +19,7 @@ const Linktree = () => {
       <main className="flex flex-col gap-4 items-center justify-center px-2 sm:px-20 text-center">
         <div
           className={cn(
-            "w-[32rem] h-[36rem] absolute items-center justify-center blur-[200px]",
+            "sm:w-[32rem] sm:h-[36rem] w-full h-[28rem] absolute items-center justify-center blur-[200px]",
             "bg-[rgb(69,69,228)] bg-gradient-to-br from-[rgba(69,69,228,1)] via-[rgba(125,24,255,1)] to-[rgba(172,24,255,1)] opacity-30",
             "animate-slow-pulse ",
           )}
