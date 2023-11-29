@@ -9,18 +9,19 @@ const iconStyles =
 
 const Linktree = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-transparent">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
         <title>Follow KFUPM_CC</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col gap-4 items-center justify-center px-2 sm:px-20 text-center bg-transparent">
+      <main className="flex flex-col gap-4 items-center justify-center px-2 sm:px-20 text-center">
         <div
-          className="w-96 h-96 bg-secondary-foreground absolute items-center justify-center"
+          className="w-[32rem] h-[36rem] bg-primary absolute items-center justify-center blur-[200px]
+           opacity-20"
           style={{
-            borderRadius: "30% 70% 78% 22% / 30% 64% 36% 70%",
-            zIndex: -1,
+            borderRadius: "30% 70% 68% 32% / 30% 71% 29% 70% ",
+            zIndex: 1,
           }}
         ></div>
         <Icons.logo className="w-52 sm:my-4 sm:w-72" />
