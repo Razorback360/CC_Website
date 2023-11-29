@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Icons } from "@/components/icons";
 import MemberCard from "../../components/dashboard/MemberCard";
 import Sidebar from "../../components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -82,7 +82,7 @@ const Members = () => {
           <Button variant="secondary">
             <Link href="...">Edit</Link>
           </Button>
-          <Search />
+          <Icons.search />
         </div>
         <div className="flex flex-col gap-4">
           {membersList.map((member) => (
