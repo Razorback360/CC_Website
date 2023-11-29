@@ -53,7 +53,7 @@ const Linktree = () => {
             <Icons.linkedin className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Linkedin</div>
           </a>
-          <a
+          {/* <a
             href={siteConfig.links.github}
             title={siteConfig.links.github}
             className={iconStyles}
@@ -61,7 +61,7 @@ const Linktree = () => {
           >
             <Icons.gitHub className="w-8 sm:w-12 h-8 sm:h-12" />
             <div className="mx-auto sm:hidden">Github</div>
-          </a>
+          </a> */}
           <a
             href={siteConfig.links.youtube}
             title={siteConfig.links.youtube}
