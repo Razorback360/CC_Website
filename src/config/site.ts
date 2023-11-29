@@ -19,6 +19,6 @@ export const siteConfig: SiteConfig = {
 export const HeaderFooterExclusionRoutes = [
   "/auth/login",
   "/auth/register",
-  "/dashboard/",
-  "/linktree/",
+  "/dashboard",
+  "/linktree",
 ];
