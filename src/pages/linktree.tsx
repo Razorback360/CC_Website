@@ -21,6 +21,7 @@ const Linktree = () => {
           className={cn(
             "w-[32rem] h-[36rem] absolute items-center justify-center blur-[200px]",
             "bg-[rgb(69,69,228)] bg-gradient-to-br from-[rgba(69,69,228,1)] via-[rgba(125,24,255,1)] to-[rgba(172,24,255,1)] opacity-30",
+            "animate-slow-pulse ",
           )}
           style={{
             borderRadius: "30% 70% 68% 32% / 30% 71% 29% 70% ",
