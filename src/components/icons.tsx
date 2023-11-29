@@ -20,7 +20,6 @@ import {
   FaPizzaSlice as Pizza,
   FaPlus as Plus,
   FaCog as Settings,
-  FaRegSun as SunMedium,
   FaTrash as Trash,
   FaUser as User,
   FaTimes as X,
@@ -34,6 +33,7 @@ import {
   FaLinkedin as LinkedinIcon,
   FaSearch as Search,
 } from "react-icons/fa";
+import { IoSunnyOutline as Sun } from "react-icons/io5";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -72,7 +72,7 @@ export const Icons = {
   arrowRight: ArrowRight,
   help: HelpCircle,
   pizza: Pizza,
-  sun: SunMedium,
+  sun: Sun,
   moon: Moon,
   laptop: Laptop,
   microsoft: MicrosoftIcon,
