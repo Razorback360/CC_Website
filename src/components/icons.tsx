@@ -26,7 +26,7 @@ import {
   FaAt as AtSign,
   FaYoutube as Youtube,
   FaSignOutAlt as LogOut,
-  FaComment as MessageSquare,
+  FaWhatsapp as WhatsappIcon,
   FaMicrosoft as MicrosoftIcon,
   FaGithub as GitHubIcon,
   FaTwitter as TwitterIcon,
@@ -175,6 +175,6 @@ export const Icons = {
   email: AtSign,
   check: Check,
   youtube: Youtube,
-  whatsapp: MessageSquare,
+  whatsapp: WhatsappIcon,
   logOut: LogOut,
 };
