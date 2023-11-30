@@ -6,7 +6,7 @@ import React from "react";
 
 // cool blocks with contrasty borders
 const iconStyles =
-  "flex flex-row gap-4 text-xl sm:aspect-square items-center justify-center font-semibold p-4 w-full sm:p-4 border-2 border-secondary-foreground rounded-md sm:hover:bg-secondary-foreground sm:hover:text-background sm:transition-colors sm:duration-200 sm:ease-in-out";
+  "flex flex-row gap-4 text-xl sm:aspect-square items-center justify-center font-semibold p-4 w-full sm:p-6 sm:max-w-fit border-2 border-secondary-foreground rounded-md sm:hover:bg-secondary-foreground sm:hover:text-background sm:transition-colors sm:duration-200 sm:ease-in-out";
 
 const Linktree = () => {
   return (
@@ -43,9 +43,11 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <div className="flex items-center justify-center w-full">
+            <div className="flex flex-row justify-between sm:justify-center items-center w-full h-full">
               <Icons.twitter className="w-8 sm:w-12 h-8 sm:h-12" />
-              <div className="mx-auto sm:hidden">Twitter</div>
+              <div className="self-center w-full absolute inset-x-0 sm:hidden">
+                Twitter
+              </div>
             </div>
           </a>
           <a
@@ -54,9 +56,11 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <div className="flex items-center justify-center w-full">
+            <div className="flex flex-row justify-between sm:justify-center items-center w-full h-full">
               <Icons.linkedin className="w-8 sm:w-12 h-8 sm:h-12" />
-              <div className="mx-auto sm:hidden">Linkedin</div>
+              <div className="self-center w-full absolute inset-x-0 sm:hidden">
+                Linkedin
+              </div>
             </div>
           </a>
           {/* <a
@@ -65,9 +69,9 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <div className="flex items-center justify-center w-full">
+            <div className="flex flex-row justify-between sm:justify-center items-center w-full h-full">
               <Icons.gitHub className="w-8 sm:w-12 h-8 sm:h-12" />
-              <div className="mx-auto sm:hidden">Github</div>
+              <div className="self-center w-full absolute inset-x-0 sm:hidden">Github</div>
             </div>
           </a> */}
           <a
@@ -76,9 +80,11 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <div className="flex items-center justify-center w-full">
+            <div className="flex flex-row justify-between sm:justify-center items-center w-full h-full">
               <Icons.youtube className="w-8 sm:w-12 h-8 sm:h-12" />
-              <div className="mx-auto sm:hidden">Youtube</div>
+              <div className="self-center w-full absolute inset-x-0 sm:hidden">
+                Youtube
+              </div>
             </div>
           </a>
           <a
@@ -87,9 +93,11 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <div className="flex items-center justify-center w-full">
+            <div className="flex flex-row justify-between sm:justify-center items-center w-full h-full">
               <Icons.whatsapp className="w-8 sm:w-12 h-8 sm:h-12" />
-              <div className="mx-auto sm:hidden">Whatsapp</div>
+              <div className="self-center w-full absolute inset-x-0 sm:hidden">
+                Whatsapp
+              </div>
             </div>
           </a>
         </div>
