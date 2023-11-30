@@ -13,7 +13,9 @@ export function middleware(req: NextRequest) {
     PUBLIC_FILE.test(pathname) // exclude all files in the public folder
   )
     return NextResponse.next();
-  if (env.NODE_ENV === "production" && !pathname.includes("/linktree")) {
+  // make sure to check only for /linktree, not allowing stuff after it like /linktree/username or /linktreeadsfasdjhf
+  console.log(pathname);
+  if (env.NODE_ENV === "production" && pathname !== "/linktree") {
     return NextResponse.redirect(new URL("/linktree", req.nextUrl));
   }
   return NextResponse.next();
