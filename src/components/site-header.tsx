@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserNav } from "./user-nav";
 import { useSession } from "next-auth/react";
 import { Icons } from "@/components/icons";
+import { useRouter } from "next/router";
 
 type Props = {
   // ...
@@ -11,6 +12,7 @@ type Props = {
 
 const SiteHeader = (props: Props) => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <nav className="w-full top-0 relative flex flex-row items-center pe-4">
@@ -26,7 +28,10 @@ const SiteHeader = (props: Props) => {
               placeholder="empty"
               alt="kfupm campus at its finest"
             /> */}
-        <Icons.logo className="w-20" />
+        <Icons.logo
+          className="w-20 cursor-pointer"
+          onClick={async () => await router.push("/")}
+        />
         <ul className="flex gap-2 items-center justify-center">
           <Button variant="link">
             <Link href="...">About Us</Link>

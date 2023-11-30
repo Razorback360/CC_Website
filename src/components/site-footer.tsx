@@ -33,7 +33,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           >
             <Icons.twitter
               title={siteConfig.links.twitter}
-              className="hover:cursor-pointer fill-secondary-foreground"
+              className="w-8 h-8 hover:cursor-pointer"
             />
           </a>
           <a
@@ -41,35 +41,28 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.linkedin}
             className="hover:cursor-pointer fill-secondary-foreground"
           >
-            <Icons.linkedin className="hover:cursor-pointer" />
+            <Icons.linkedin className="w-8 h-8 hover:cursor-pointer" />
           </a>
           <a
             href={siteConfig.links.github}
             title={siteConfig.links.github}
             className="hover:cursor-pointer fill-secondary-foreground"
           >
-            <Icons.gitHub className="hover:cursor-pointer" />
+            <Icons.gitHub className="w-8 h-8 hover:cursor-pointer" />
           </a>
           <a
             href={siteConfig.links.youtube}
             title={siteConfig.links.youtube}
             className="hover:cursor-pointer fill-secondary-foreground"
           >
-            <Icons.youtube className="hover:cursor-pointer" />
+            <Icons.youtube className="w-8 h-8 hover:cursor-pointer" />
           </a>
           <a
             href={siteConfig.links.whatsapp}
             title={siteConfig.links.whatsapp}
             className="hover:cursor-pointer fill-secondary-foreground"
           >
-            <Icons.whatsapp className="hover:cursor-pointer" />
-          </a>
-          <a
-            href={siteConfig.links.email}
-            title={siteConfig.links.email}
-            className="hover:cursor-pointer fill-secondary-foreground"
-          >
-            {/* <Icons.email className="hover:cursor-pointer" /> */}
+            <Icons.whatsapp className="w-8 h-8 hover:cursor-pointer" />
           </a>
         </div>
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
