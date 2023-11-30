@@ -6,7 +6,7 @@ import React from "react";
 
 // cool blocks with contrasty borders
 const iconStyles =
-  "flex flex-row gap-4 text-xl sm:aspect-square items-center justify-center font-semibold p-6 w-full sm:p-4 border-2 border-secondary-foreground rounded-md sm:hover:bg-secondary-foreground sm:hover:text-background sm:transition-colors sm:duration-200 sm:ease-in-out";
+  "flex flex-row gap-4 text-xl sm:aspect-square items-center justify-center font-semibold p-4 w-full sm:p-4 border-2 border-secondary-foreground rounded-md sm:hover:bg-secondary-foreground sm:hover:text-background sm:transition-colors sm:duration-200 sm:ease-in-out";
 
 const Linktree = () => {
   return (
@@ -28,11 +28,11 @@ const Linktree = () => {
             zIndex: 0,
           }}
         ></div>
-        <Icons.logo className="w-52 sm:my-4 sm:w-72" />
+        <Icons.logo className="w-44 sm:my-4 sm:w-72" />
         <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
           @kfupm_cc
         </h1>
-        <h1 className="text-xl">
+        <h1 className="text-xl px-16">
           The official accounts for Computer Club at KFUPM
         </h1>
         <div className="flex flex-col sm:flex-row items-center justify-center container gap-2 sm:gap-4 px-4 sm:px-8 pt-4 z-10">
