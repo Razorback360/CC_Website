@@ -6,7 +6,7 @@ import React from "react";
 
 // cool blocks with contrasty borders
 const iconStyles =
-  "flex flex-row gap-4 text-xl sm:aspect-square items-center justify-center font-semibold p-4 w-full sm:p-6 sm:max-w-fit border-2 border-secondary-foreground rounded-md sm:hover:bg-secondary-foreground sm:hover:text-background sm:transition-colors sm:duration-200 sm:ease-in-out";
+  "flex flex-row gap-4 text-xl sm:aspect-square items-center justify-center font-semibold p-4 w-full sm:p-6 sm:max-w-fit border-2 border-secondary-foreground rounded-md active:bg-secondary-foreground active:text-background sm:hover:bg-secondary-foreground sm:hover:text-background sm:transition-colors sm:duration-200 sm:ease-in-out";
 
 const Linktree = () => {
   return (
