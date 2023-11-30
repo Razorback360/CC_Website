@@ -42,8 +42,10 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.twitter className="w-8 sm:w-12 h-8 sm:h-12" />
-            <div className="mx-auto sm:hidden">Twitter</div>
+            <div className="flex items-center justify-center w-full">
+              <Icons.twitter className="w-8 sm:w-12 h-8 sm:h-12" />
+              <div className="mx-auto sm:hidden">Twitter</div>
+            </div>
           </a>
           <a
             href={siteConfig.links.linkedin}
@@ -51,8 +53,10 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.linkedin className="w-8 sm:w-12 h-8 sm:h-12" />
-            <div className="mx-auto sm:hidden">Linkedin</div>
+            <div className="flex items-center justify-center w-full">
+              <Icons.linkedin className="w-8 sm:w-12 h-8 sm:h-12" />
+              <div className="mx-auto sm:hidden">Linkedin</div>
+            </div>
           </a>
           {/* <a
             href={siteConfig.links.github}
@@ -60,8 +64,10 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.gitHub className="w-8 sm:w-12 h-8 sm:h-12" />
-            <div className="mx-auto sm:hidden">Github</div>
+            <div className="flex items-center justify-center w-full">
+              <Icons.gitHub className="w-8 sm:w-12 h-8 sm:h-12" />
+              <div className="mx-auto sm:hidden">Github</div>
+            </div>
           </a> */}
           <a
             href={siteConfig.links.youtube}
@@ -69,8 +75,10 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.youtube className="w-8 sm:w-12 h-8 sm:h-12" />
-            <div className="mx-auto sm:hidden">Youtube</div>
+            <div className="flex items-center justify-center w-full">
+              <Icons.youtube className="w-8 sm:w-12 h-8 sm:h-12" />
+              <div className="mx-auto sm:hidden">Youtube</div>
+            </div>
           </a>
           <a
             href={siteConfig.links.whatsapp}
@@ -78,8 +86,10 @@ const Linktree = () => {
             className={iconStyles}
             target="_blank"
           >
-            <Icons.whatsapp className="w-8 sm:w-12 h-8 sm:h-12" />
-            <div className="mx-auto sm:hidden">Whatsapp</div>
+            <div className="flex items-center justify-center w-full">
+              <Icons.whatsapp className="w-8 sm:w-12 h-8 sm:h-12" />
+              <div className="mx-auto sm:hidden">Whatsapp</div>
+            </div>
           </a>
         </div>
       </main>
