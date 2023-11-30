@@ -20,7 +20,8 @@ const Linktree = () => {
         <div
           className={cn(
             "sm:w-[32rem] sm:h-[36rem] w-full h-[28rem] absolute items-center justify-center blur-[200px]",
-            "bg-[rgb(69,69,228)] bg-gradient-to-br from-[rgba(69,69,228,1)] via-[rgba(125,24,255,1)] to-[rgba(172,24,255,1)] opacity-30",
+            "dark:bg-[rgb(69,69,228)] dark:bg-gradient-to-br dark:from-[rgba(69,69,228,1)] dark:via-[rgba(125,24,255,1)] dark:to-[rgba(172,24,255,1)] dark:opacity-30",
+            "bg-[rgb(69,109,228)] bg-gradient-to-br from-[#8f45e4] via-[rgba(44,24,255,1)] to-[rgba(24,125,255,1)] opacity-10",
             "animate-slow-pulse ",
           )}
           style={{
