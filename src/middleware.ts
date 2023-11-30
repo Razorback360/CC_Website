@@ -14,7 +14,7 @@ export function middleware(req: NextRequest) {
   )
     return NextResponse.next();
   if (env.NODE_ENV === "production" && !pathname.includes("/linktree")) {
-    return NextResponse.redirect("/linktree");
+    return NextResponse.rewrite("/linktree");
   }
   return NextResponse.next();
 }
