@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserNav } from "./user-nav";
 import { useSession } from "next-auth/react";
 import { Icons } from "@/components/icons";
+import { useRouter } from "next/router";
 
 type Props = {
   // ...
@@ -11,6 +12,7 @@ type Props = {
 
 const SiteHeader = (props: Props) => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <nav className="w-full top-0 relative flex flex-row items-center pe-4">

@@ -30,5 +30,11 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    ".*Styles*" // Add ".*Styles*" (or whatever matches your naming scheme)
+  ],
   "discord.enabled": false
 }

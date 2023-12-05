@@ -11,3 +11,13 @@ export type SiteConfig = {
     email: string;
   };
 };
+
+export type Member = {
+  id: number;
+  name: string;
+  img: string;
+  position: string;
+  major: string;
+  team: string;
+  status: boolean;
+};
