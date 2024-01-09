@@ -19,19 +19,7 @@ const SiteHeader = (props: Props) => {
       {/* socials */}
       {/* main nav */}
       <div className="flex flex-row justify-between items-center w-full py-4 px-2 sm:w-2/3 sm:mx-auto">
-        {/* <Image
-              priority
-              quality={100}
-              src="/cc-kfupm-logo.svg"
-              fill={true}
-              sizes="24rem"
-              placeholder="empty"
-              alt="kfupm campus at its finest"
-            /> */}
-        <Icons.logo
-          className="w-20 cursor-pointer"
-          onClick={async () => await router.push("/")}
-        />
+        <Icons.logo className="w-20" />
         <ul className="flex gap-2 items-center justify-center">
           <Button variant="link">
             <Link href="...">About Us</Link>

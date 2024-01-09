@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SiteHeader from "./site-header";
 import SiteFooter from "./site-footer";
 import { Separator } from "@/components/ui/separator";
@@ -11,7 +11,16 @@ type Props = {
 };
 
 const AppLayout = ({ children, ...props }: Props) => {
-  const { pathname } = useRouter();
+  const { pathname, locale } = useRouter();
+
+  useEffect(() => {
+    if (locale === "ar") {
+      document.body.setAttribute("dir", "rtl");
+    } else {
+      document.body.setAttribute("dir", "ltr");
+    }
+  }, [locale]);
+
   return (
     <div className="flex min-h-full flex-col items-center justify-center">
       <SignoutPopup>
