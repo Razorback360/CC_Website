@@ -75,14 +75,14 @@ export function UserNav({ className, ...props }: Props) {
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
               <DropdownMenuItem
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
                 onClick={async () => await handleLocaleChange(router, "ar")}
                 className="cursor-pointer"
               >
                 العربية
               </DropdownMenuItem>
               <DropdownMenuItem
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
                 onClick={async () => await handleLocaleChange(router, "en")}
                 className="cursor-pointer"
               >
