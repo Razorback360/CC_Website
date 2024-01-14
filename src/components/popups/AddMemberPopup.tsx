@@ -66,7 +66,7 @@ export default function AddNewMemberFormDialog({
   }
 
   return (
-    <Dialog {...props}>
+    <Dialog {...props} onOpenChange={(open) => !open && form.reset()}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
