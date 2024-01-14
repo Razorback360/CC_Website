@@ -39,7 +39,6 @@ export default function AddNewMemberFormDialog({
   children,
   ...props
 }: AddNewMemberFormDialogProps) {
-  const [labels, setLabels] = React.useState<string[]>([]);
   const form = useForm<z.infer<typeof addMemberFormSchema>>({
     resolver: zodResolver(addMemberFormSchema),
     defaultValues: {
@@ -74,13 +73,7 @@ export default function AddNewMemberFormDialog({
           <DialogTitle>Add member</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              form.handleSubmit(onSubmit);
-            }}
-            className="space-y-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="recordName"
@@ -190,12 +183,24 @@ export default function AddNewMemberFormDialog({
                   <FormControl>
                     <LabelsInput
                       maxLabels={10}
-                      labels={labels}
-                      setLabels={setLabels}
+                      labels={form.getValues("tags")}
+                      setLabels={(labels) => form.setValue("tags", labels)}
                       className="col-span-3"
                       id="tags"
                       placeholder="(e.g. '2020', 'photo-editor')"
-                      {...field}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          const label = e.currentTarget.value;
+                          if (label.trim() !== "") {
+                            form.setValue("tags", [
+                              ...form.getValues("tags"),
+                              label,
+                            ]);
+                            e.currentTarget.value = "";
+                          }
+                        }
+                      }}
                     />
                   </FormControl>
                   <FormMessage className="col-start-2 col-span-3">
