@@ -192,7 +192,7 @@ export default function AddNewMemberFormDialog({
                         if (e.key === "Enter") {
                           e.preventDefault();
                           const label = e.currentTarget.value;
-                          if (label.trim() !== "") {
+                          if (label && label.trim() !== "") {
                             form.setValue("tags", [
                               ...form.getValues("tags"),
                               label,
