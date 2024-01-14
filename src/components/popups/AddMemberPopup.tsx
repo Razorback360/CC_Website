@@ -19,13 +19,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import LabelsInput from "@/components/labels-input";
+import React from "react";
 
 const addMemberFormSchema = z.object({
   recordName: z.string().min(2).max(50),
-  studentId: z.string().min(2).max(9),
+  studentId: z.string().min(2).max(10),
   major: z.string().min(2).max(50),
-  position: z.string().min(2).max(100),
+  position: z.string().min(2).max(20),
   privileges: z.string().min(2).max(100),
+  tags: z.array(z.string().min(2).max(15)).min(0),
 });
 
 type AddNewMemberFormDialogProps = {
@@ -36,6 +39,7 @@ export default function AddNewMemberFormDialog({
   children,
   ...props
 }: AddNewMemberFormDialogProps) {
+  const [labels, setLabels] = React.useState<string[]>([]);
   const form = useForm<z.infer<typeof addMemberFormSchema>>({
     resolver: zodResolver(addMemberFormSchema),
     defaultValues: {
@@ -45,6 +49,7 @@ export default function AddNewMemberFormDialog({
       position: "",
       // TODO @SauceX22 add default privilege setting
       privileges: "",
+      tags: [],
     },
   });
 
@@ -69,7 +74,13 @@ export default function AddNewMemberFormDialog({
           <DialogTitle>Add member</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              form.handleSubmit(onSubmit);
+            }}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="recordName"
@@ -166,6 +177,29 @@ export default function AddNewMemberFormDialog({
                   </FormControl>
                   <FormMessage className="col-start-2 col-span-3">
                     {form.formState.errors.privileges?.message}
+                  </FormMessage>
+                </div>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <div className="grid grid-cols-4 items-center gap-2">
+                  <FormLabel htmlFor="tags">General Tags</FormLabel>
+                  <FormControl>
+                    <LabelsInput
+                      maxLabels={10}
+                      labels={labels}
+                      setLabels={setLabels}
+                      className="col-span-3"
+                      id="tags"
+                      placeholder="(e.g. '2020', 'photo-editor')"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="col-start-2 col-span-3">
+                    {form.formState.errors.tags?.message}
                   </FormMessage>
                 </div>
               )}
