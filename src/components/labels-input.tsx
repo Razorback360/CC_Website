@@ -58,6 +58,7 @@ function LabelsInput({
         </LabelChip>
       ))}
       <Input
+        className="mt-2"
         autoCorrect={props.autoCorrect ?? "on"}
         spellCheck={props.spellCheck ?? true}
         type="text"
