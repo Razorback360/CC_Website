@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import AddNewMemberFormDialog from "@/components/popups/AddMemberPopup";
+import AddNewMemberFormDialog from "@/components/popups/AddMemberDialog";
 import { Button } from "@/components/ui/button";
 
 const CreateMemberTest = () => {
