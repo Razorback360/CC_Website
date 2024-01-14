@@ -40,8 +40,8 @@ function LabelsInput({
     e.currentTarget.value = "";
   }
 
-  function removeLabel(label: string): void {
-    setLabels(labels.filter((l) => l !== label));
+  function removeLabel(labelIdx: number): void {
+    setLabels(labels.filter((_, i) => i !== labelIdx));
   }
 
   return (
@@ -52,8 +52,8 @@ function LabelsInput({
       )}
       {...props}
     >
-      {labels.map((label) => (
-        <LabelChip key={label} onClickRemove={() => removeLabel(label)}>
+      {labels.map((label, i) => (
+        <LabelChip key={label} onClickRemove={() => removeLabel(i)}>
           {label}
         </LabelChip>
       ))}
