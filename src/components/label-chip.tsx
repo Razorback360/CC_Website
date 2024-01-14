@@ -10,11 +10,10 @@ type LabelChipProps = {
 function LabelChip({ children, onClickRemove }: LabelChipProps) {
   return (
     <div
-      className="flex flex-row select-none flex-grow-0 flex-shrink-0 gap-2 items-center justify-center font-semibold bg-transparent rounded-full max-h-fit min-w-fit outline outline-2 outline-neutral-700 pl-4 pr-1 py-1 hover:cursor-pointer hover:bg-neutral-800 hover:opacity-70 focus:outline focus:outline-2 focus:outline-white"
+      className="select-none text-sm items-center justify-center font-semibold bg-transparent rounded-full outline outline-2 outline-border px-3 py-1 hover:cursor-pointer hover:bg-destructive hover:opacity-70 focus:outline focus:outline-0"
       onClick={() => onClickRemove(children)}
     >
       {children}
-      <TiDelete className="w-4 h-4" />
     </div>
   );
 }
