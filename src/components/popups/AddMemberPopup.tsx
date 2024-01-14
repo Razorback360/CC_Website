@@ -187,7 +187,7 @@ export default function AddNewMemberFormDialog({
                       setLabels={(labels) => form.setValue("tags", labels)}
                       className="col-span-3"
                       id="tags"
-                      placeholder="(e.g. '2020', 'photo-editor')"
+                      placeholder="(e.g. '2020', 'photo editor')"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
