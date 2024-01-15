@@ -33,6 +33,7 @@ import {
   FaLinkedin as LinkedinIcon,
   FaSearch as Search,
 } from "react-icons/fa";
+import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
@@ -177,4 +178,5 @@ export const Icons = {
   youtube: Youtube,
   whatsapp: WhatsappIcon,
   logOut: LogOut,
+  caretUpDown: CaretUpDown,
 };
