@@ -34,6 +34,27 @@ const evnets = [
   },
 ];
 
+const updates = [
+  {
+    id: 1,
+    category: "New Member",
+    member: "Moaz Abdelaziz",
+    info: "Moaz added new member to the tech team recently.",
+  },
+  {
+    id: 2,
+    category: "New Member",
+    member: "Moaz Abdelaziz",
+    info: "Moaz added new member to the tech team recently.",
+  },
+  {
+    id: 3,
+    category: "New Member",
+    member: "Moaz Abdelaziz",
+    info: "Moaz added new member to the tech team recently.",
+  },
+];
+
 const Dashboard = () => {
   return (
     <div className="w-full lg:container lg:py-5 relative">
@@ -60,14 +81,34 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="w-2/3">
-          <div className="border-white border-2 p-4">
-            <h2 className="text-4xl font-bold">Upcoming Events</h2>
-            {evnets.map((event) => (
-              <EventCard key={event.id} info={event} />
-            ))}
+        <div className="flex gap-4">
+          {/* Upcoming events field */}
+          <div className="w-2/3">
+            <div className="border-white border-2 p-4">
+              <h2 className="text-4xl font-bold">Upcoming Events</h2>
+              {evnets.map((event) => (
+                <EventCard key={event.id} info={event} />
+              ))}
+            </div>
+            <div></div>
           </div>
-          <div></div>
+          {/* Recent Updates */}
+          <div className="w-1/3 h-full overflow-scroll">
+            <div className="border-white border-2 py-4">
+              <h2 className="text-4xl font-bold mb-4 text-center">
+                Recent Updates
+              </h2>
+              {updates.map((update) => (
+                <div key={update.id} className="border-white border-2 p-4">
+                  <p className="rounded-sm text-center text-white px-5 bg-primary w-fit my-2">
+                    {update.category}
+                  </p>
+                  <h4 className="text-lg font-bold">{update.member}</h4>
+                  <p>{update.info}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </div>
