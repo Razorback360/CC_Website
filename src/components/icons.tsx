@@ -34,7 +34,9 @@ import { FaUsers as Users } from "react-icons/fa";
 import { FaUserCheck as DoubleCheck } from "react-icons/fa";
 import { GiHamburgerMenu as MenuOpen } from "react-icons/gi";
 import { IoClose as MenuClose } from "react-icons/io5";
-
+import { IoPersonSharp as Person } from "react-icons/io5";
+import { MdEventAvailable as EventsDone } from "react-icons/md";
+import { RiListCheck3 as EventsRemain } from "react-icons/ri";
 type IconProps = React.HTMLAttributes<SVGElement>;
 export type Icon = LucideIcon;
 
@@ -153,6 +155,9 @@ export const Icons = {
   dCheck: DoubleCheck,
   menuOpen: MenuOpen,
   menuClose: MenuClose,
+  person: Person,
+  eventsDone: EventsDone,
+  eventsRemain: EventsRemain,
   moon: Moon,
   laptop: Laptop,
   microsoft: (props: IconProps) => (
