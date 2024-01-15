@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
-import MemberCard from "../../components/dashboard/MemberCard";
-import Sidebar from "../../components/dashboard/Sidebar";
+import MemberCard from "../../../components/dashboard/MemberCard";
+import Sidebar from "../../../components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Member } from "types";
