@@ -75,7 +75,7 @@ const Members = () => {
   return (
     <div className="w-full lg:container lg:py-5 relative">
       <Sidebar />
-      <section className="ml-auto lg:w-2/3 flex flex-col gap-4 px-5 pt-5">
+      <section className="ml-auto lg:w-3/4 flex flex-col gap-4 px-5 pt-5">
         <div className="flex items-center justify-end gap-4">
           <Button variant="default">
             <Link href="...">Add</Link>

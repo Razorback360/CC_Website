@@ -59,7 +59,7 @@ const Dashboard = () => {
   return (
     <div className="w-full lg:container lg:py-5 relative">
       <Sidebar />
-      <section className="ml-auto lg:w-2/3 flex flex-col gap-4">
+      <section className="ml-auto lg:w-3/4 flex flex-col gap-4">
         {/* Quick view bar */}
         <div className="hidden md:flex gap-4 w-full justify-between">
           <div className="w-1/3 flex gap-2 border-white border-2 py-4 items-center">

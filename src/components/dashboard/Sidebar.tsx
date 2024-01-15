@@ -21,7 +21,7 @@ const Sidebar = () => {
         {!menu ? <Icons.menuOpen /> : <Icons.menuClose />}
       </button>
       <section
-        className={`h-fit lg:w-1/3 lg:fixed hidden lg:!block flex-col lg:flex-row mt-16 ${
+        className={`h-fit md:w-1/4 lg:fixed hidden lg:!block flex-col lg:flex-row mt-16 ${
           menu ? "transparent" : ""
         } lg:bg-none lg:h-full w-full text-center`}
         style={style}
@@ -35,15 +35,15 @@ const Sidebar = () => {
           <h2 className="font-bold text-4xl">User</h2>
         </div>
         <ul className="font-bold text-4xl text-primary flex flex-col gap-4 p-5">
-          <li className="hover:text-white">
+          <li className="hover:text-white w-fit">
             <h2>
-              <Link href="..." className="flex items-center gap-2">
+              <Link href="/dashboard" className="flex items-center gap-2">
                 <Icons.chart />
                 Overview
               </Link>
             </h2>
           </li>
-          <li className="hover:text-white">
+          <li className="hover:text-white w-fit">
             <h2>
               <Link href="..." className="flex items-center gap-2">
                 <Icons.events />
@@ -51,7 +51,7 @@ const Sidebar = () => {
               </Link>
             </h2>
           </li>
-          <li className="hover:text-white">
+          <li className="hover:text-white w-fit">
             <h2>
               <Link
                 href="/dashboard/members"
@@ -62,7 +62,7 @@ const Sidebar = () => {
               </Link>
             </h2>
           </li>
-          <li className="hover:text-white">
+          <li className="hover:text-white w-fit">
             <h2>
               <Link href="..." className="flex items-center gap-2">
                 <Icons.dCheck />
