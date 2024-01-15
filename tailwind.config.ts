@@ -4,7 +4,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 module.exports = {
   darkMode: ["class"],
   content: [
-    './node_modules/flowbite-react/**/*.js',
+    "./node_modules/flowbite-react/**/*.js",
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
@@ -75,8 +75,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slow-pulse": "pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('flowbite/plugin')],
+  plugins: [require("tailwindcss-animate"), require("flowbite/plugin")],
 };

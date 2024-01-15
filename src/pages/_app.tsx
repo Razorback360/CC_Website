@@ -10,6 +10,7 @@ import { Inter as InterFont } from "next/font/google";
 import { cn } from "@/lib/utils";
 import AppLayout from "@/components/layout";
 import Head from "next/head";
+import { appWithTranslation } from "next-i18next";
 
 export const interFont = InterFont({
   subsets: ["latin"],
@@ -51,4 +52,4 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(appWithTranslation(MyApp));

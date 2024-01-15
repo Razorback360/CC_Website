@@ -7,13 +7,20 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "next-auth/react";
 import { Icons } from "./icons";
+import { handleLocaleChange } from "@/lib/utils";
+import { Languages } from "lucide-react";
+import router from "next/router";
 
 type Props = {
   // ...
@@ -60,6 +67,30 @@ export function UserNav({ className, ...props }: Props) {
           </DropdownMenuItem>
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Languages className="mr-2 h-4 w-4" />
+            <span>Language</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+                onClick={async () => await handleLocaleChange(router, "ar")}
+                className="cursor-pointer"
+              >
+                العربية
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+                onClick={async () => await handleLocaleChange(router, "en")}
+                className="cursor-pointer"
+              >
+                English
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>{" "}
         <DropdownMenuSeparator />
         <AlertDialogTrigger asChild>
           <DropdownMenuItem className="text-destructive hover:bg-destructive">
