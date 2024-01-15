@@ -59,7 +59,7 @@ const Dashboard = () => {
   return (
     <div className="w-full lg:container lg:py-5 relative">
       <Sidebar />
-      <section className="ml-auto lg:w-3/4 flex flex-col gap-4">
+      <section className="ml-auto lg:w-3/4 flex gap-4 mt-16 flex-col lg:mt-0">
         {/* Quick view bar */}
         <div className="hidden md:flex gap-4 w-full justify-between">
           <div className="w-1/3 flex gap-2 border-white border-2 py-4 items-center">
@@ -81,9 +81,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-col lg:flex-row">
           {/* Upcoming events field */}
-          <div className="w-2/3">
+          <div className="w-full lg:w-2/3">
             <div className="border-white border-2 p-4">
               <h2 className="text-4xl font-bold">Upcoming Events</h2>
               {evnets.map((event) => (
@@ -93,7 +93,7 @@ const Dashboard = () => {
             <div></div>
           </div>
           {/* Recent Updates */}
-          <div className="w-1/3 h-full overflow-scroll">
+          <div className="w-full lg:w-1/3 h-full overflow-scroll">
             <div className="border-white border-2 py-4">
               <h2 className="text-4xl font-bold mb-4 text-center">
                 Recent Updates
