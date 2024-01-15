@@ -37,6 +37,9 @@ import { IoClose as MenuClose } from "react-icons/io5";
 import { IoPersonSharp as Person } from "react-icons/io5";
 import { MdEventAvailable as EventsDone } from "react-icons/md";
 import { RiListCheck3 as EventsRemain } from "react-icons/ri";
+import { VscDebugBreakpointDataUnverified as Point } from "react-icons/vsc";
+import { IoLink as Link } from "react-icons/io5";
+
 type IconProps = React.HTMLAttributes<SVGElement>;
 export type Icon = LucideIcon;
 
@@ -158,6 +161,8 @@ export const Icons = {
   person: Person,
   eventsDone: EventsDone,
   eventsRemain: EventsRemain,
+  point: Point,
+  link: Link,
   moon: Moon,
   laptop: Laptop,
   microsoft: (props: IconProps) => (
