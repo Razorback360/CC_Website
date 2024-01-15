@@ -27,8 +27,15 @@ import {
   LogOut,
   MessageSquare,
 } from "lucide-react";
-type IconProps = React.HTMLAttributes<SVGElement>;
 
+import { FaChartSimple as Chart } from "react-icons/fa6";
+import { FaClipboardList as Events } from "react-icons/fa";
+import { FaUsers as Users } from "react-icons/fa";
+import { FaUserCheck as DoubleCheck } from "react-icons/fa";
+import { GiHamburgerMenu as MenuOpen } from "react-icons/gi";
+import { IoClose as MenuClose } from "react-icons/io5";
+
+type IconProps = React.HTMLAttributes<SVGElement>;
 export type Icon = LucideIcon;
 
 export const Icons = {
@@ -140,6 +147,12 @@ export const Icons = {
   help: HelpCircle,
   pizza: Pizza,
   sun: SunMedium,
+  chart: Chart,
+  events: Events,
+  users: Users,
+  dCheck: DoubleCheck,
+  menuOpen: MenuOpen,
+  menuClose: MenuClose,
   moon: Moon,
   laptop: Laptop,
   microsoft: (props: IconProps) => (
