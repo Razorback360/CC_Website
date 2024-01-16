@@ -13,7 +13,6 @@ import { Icons } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import UserProfile from "@/pages/dashboard/components/user-profile";
-import RecentActivityDisplay from "@/pages/dashboard/components/recent-activity";
 import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -32,7 +31,6 @@ import {
   FormField,
   FormLabel,
   FormControl,
-  FormDescription,
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";

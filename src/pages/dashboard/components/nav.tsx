@@ -9,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 interface NavProps {
   isCollapsed: boolean;
@@ -21,7 +22,7 @@ interface NavProps {
   }[];
 }
 
-export default function Nav({ links, isCollapsed }: NavProps) {
+export default function Nav({ links = [], isCollapsed }: NavProps) {
   return (
     <div
       data-collapsed={isCollapsed}
@@ -30,7 +31,8 @@ export default function Nav({ links, isCollapsed }: NavProps) {
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
         {links.map((link, index) =>
           isCollapsed ? (
-            <Tooltip key={index} delayDuration={0}>
+            <TooltipProvider key={index}>
+            <Tooltip  delayDuration={0}>
               <TooltipTrigger asChild>
                 <Link
                   href={link.href}
@@ -54,6 +56,7 @@ export default function Nav({ links, isCollapsed }: NavProps) {
                 )}
               </TooltipContent>
             </Tooltip>
+            </TooltipProvider>
           ) : (
             <Link
               key={index}
