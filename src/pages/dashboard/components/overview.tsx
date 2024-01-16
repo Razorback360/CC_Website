@@ -98,24 +98,28 @@ export function DashboardOverview({
                   label: "128",
                   icon: Icons.chart,
                   variant: "default",
+                  href:"/dashboard/test"
                 },
                 {
                   title: "Events",
                   label: "9",
                   icon: Icons.events,
                   variant: "ghost",
+                  href: "/dashboard/events"
                 },
                 {
                   title: "Members",
                   label: "",
                   icon: Icons.users,
                   variant: "ghost",
+                  href: "#"
                 },
                 {
                   title: "Privileges",
                   label: "23",
                   icon: Icons.dCheck,
                   variant: "ghost",
+                  href: "#"
                 },
               ]}
             />
