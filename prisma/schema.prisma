@@ -46,8 +46,9 @@ model Session {
 
 // table to store users allowed to sign in
 model UserAllowedList {
-    id    String @id @default(cuid())
-    email String @unique
+    id      String  @id @default(cuid())
+    email   String  @unique
+    enabled Boolean @default(true)
 }
 
 enum UserRole {
