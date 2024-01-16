@@ -37,7 +37,7 @@ interface MailProps {
   navCollapsedSize: number;
 }
 
-export function DashboardOverview({
+export default function DashboardOverview({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
