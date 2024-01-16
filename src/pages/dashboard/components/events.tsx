@@ -12,9 +12,9 @@ import {
 import { Icons } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { UserProfile } from "@/pages/dashboard/components/user-profile";
-import { RecentActivityDisplay } from "@/pages/dashboard/components/recent-activity";
-import { Nav } from "@/pages/dashboard/components/nav";
+import UserProfile from "@/pages/dashboard/components/user-profile";
+import RecentActivityDisplay from "@/pages/dashboard/components/recent-activity";
+import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -59,7 +59,7 @@ interface MailProps {
   navCollapsedSize: number;
 }
 
-export function DashboardEvents({
+export default function DashboardEvents({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,

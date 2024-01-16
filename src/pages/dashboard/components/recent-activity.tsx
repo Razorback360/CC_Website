@@ -39,7 +39,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export function RecentActivityDisplay() {
+export default function RecentActivityDisplay() {
   const today = new Date();
   // fetch recent activities
   return (

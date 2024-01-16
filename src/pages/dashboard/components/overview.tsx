@@ -16,11 +16,10 @@ import {
 
 import { Icons } from "@/components/icons";
 
-import { UserProfile } from "@/pages/dashboard/components/user-profile";
-import { RecentActivityDisplay } from "@/pages/dashboard/components/recent-activity";
-import { EventList } from "@/pages/dashboard/components/events-list";
-import { Nav } from "@/pages/dashboard/components/nav";
-import { type Mail } from "@/pages/dashboard/components/data";
+import UserProfile from "@/pages/dashboard/components/user-profile";
+import RecentActivityDisplay from "@/pages/dashboard/components/recent-activity";
+import EventList from "@/pages/dashboard/components/events-list";
+import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -33,7 +32,6 @@ import {
 } from "@/components/ui/resizable";
 
 interface MailProps {
-  mails: Mail[];
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;

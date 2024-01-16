@@ -60,7 +60,6 @@ const Dashboard = () => {
   return (
     <div className="w-full h-full">
       <DashboardOverview
-        mails={[]}
         defaultLayout={undefined}
         navCollapsedSize={0}
       />

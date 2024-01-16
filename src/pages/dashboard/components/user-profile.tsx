@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function UserProfile() {
+export default function UserProfile() {
   // TODO fetch profile info
   return (
     <div className="flex w-full items-center gap-4 px-4">
