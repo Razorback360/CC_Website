@@ -50,6 +50,21 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      // allow only users with a specific emails to sign in (production only)
+      if (env.NODE_ENV === "development") {
+        return true;
+      }
+      const allowedEmails = await db.userAllowedList.findMany({});
+      if (
+        allowedEmails?.some((allowedEmail) => allowedEmail.email === user.email)
+      ) {
+        return true;
+      } else {
+        // Optional: redirect to error page or display a custom error message
+        throw new Error("Access denied. You're not allowed to sign in.");
+      }
+    },
   },
   secret: env.NEXTAUTH_SECRET,
   debug: env.NODE_ENV === "development",
