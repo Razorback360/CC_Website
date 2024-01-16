@@ -3,6 +3,7 @@ import { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { Icon } from "@/components/icons";
 import {
   Tooltip,
   TooltipContent,
@@ -14,7 +15,7 @@ interface NavProps {
   links: {
     title: string;
     label?: string;
-    icon: LucideIcon;
+    icon: LucideIcon | Icon;
     variant: "default" | "ghost";
   }[];
 }

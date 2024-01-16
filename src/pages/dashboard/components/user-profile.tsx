@@ -11,5 +11,14 @@ import {
 
 export function UserProfile() {
   // TODO fetch profile info
-  return <div>{/* circle pfp with some text idk */}</div>;
+  return (
+    <div className="flex w-full items-center gap-4 px-4">
+      <img
+        src="/profilePic.png"
+        alt="person"
+        className="rounded-full lg:w-[45px] mx-auto lg:m-0"
+      />
+      <h2 className="font-bold text-xl">User</h2>
+    </div>
+  );
 }

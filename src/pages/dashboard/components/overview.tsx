@@ -14,6 +14,8 @@ import {
   Users2,
 } from "lucide-react";
 
+import { Icons } from "@/components/icons";
+
 import { UserProfile } from "@/pages/dashboard/components/user-profile";
 import { RecentActivityDisplay } from "@/pages/dashboard/components/recent-activity";
 import { EventList } from "@/pages/dashboard/components/events-list";
@@ -92,39 +94,27 @@ export function DashboardOverview({
               isCollapsed={isCollapsed}
               links={[
                 {
-                  title: "Inbox",
+                  title: "Overview",
                   label: "128",
-                  icon: Inbox,
+                  icon: Icons.chart,
                   variant: "default",
                 },
                 {
-                  title: "Drafts",
+                  title: "Events",
                   label: "9",
-                  icon: File,
+                  icon: Icons.events,
                   variant: "ghost",
                 },
                 {
-                  title: "Sent",
+                  title: "Members",
                   label: "",
-                  icon: Send,
+                  icon: Icons.users,
                   variant: "ghost",
                 },
                 {
-                  title: "Junk",
+                  title: "Privileges",
                   label: "23",
-                  icon: ArchiveX,
-                  variant: "ghost",
-                },
-                {
-                  title: "Trash",
-                  label: "",
-                  icon: Trash2,
-                  variant: "ghost",
-                },
-                {
-                  title: "Archive",
-                  label: "",
-                  icon: Archive,
+                  icon: Icons.dCheck,
                   variant: "ghost",
                 },
               ]}
