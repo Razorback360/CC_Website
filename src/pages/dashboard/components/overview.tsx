@@ -16,11 +16,10 @@ import {
 
 import { Icons } from "@/components/icons";
 
-import { UserProfile } from "@/pages/dashboard/components/user-profile";
-import { RecentActivityDisplay } from "@/pages/dashboard/components/recent-activity";
-import { EventList } from "@/pages/dashboard/components/events-list";
-import { Nav } from "@/pages/dashboard/components/nav";
-import { type Mail } from "@/pages/dashboard/components/data";
+import UserProfile from "@/pages/dashboard/components/user-profile";
+import RecentActivityDisplay from "@/pages/dashboard/components/recent-activity";
+import EventList from "@/pages/dashboard/components/events-list";
+import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -33,13 +32,12 @@ import {
 } from "@/components/ui/resizable";
 
 interface MailProps {
-  mails: Mail[];
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
 }
 
-export function DashboardOverview({
+export default function DashboardOverview({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize,
@@ -98,24 +96,28 @@ export function DashboardOverview({
                   label: "128",
                   icon: Icons.chart,
                   variant: "default",
+                  href:"/dashboard/test"
                 },
                 {
                   title: "Events",
                   label: "9",
                   icon: Icons.events,
                   variant: "ghost",
+                  href: "/dashboard/events"
                 },
                 {
                   title: "Members",
                   label: "",
                   icon: Icons.users,
                   variant: "ghost",
+                  href: "#"
                 },
                 {
                   title: "Privileges",
                   label: "23",
                   icon: Icons.dCheck,
                   variant: "ghost",
+                  href: "#"
                 },
               ]}
             />
