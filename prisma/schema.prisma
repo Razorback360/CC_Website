@@ -44,6 +44,12 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+// table to store users allowed to sign in
+model UserAllowedList {
+    id    String @id @default(cuid())
+    email String @unique
+}
+
 enum UserRole {
     ADMIN
     MEMBER
