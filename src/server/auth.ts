@@ -56,8 +56,18 @@ export const authOptions: NextAuthOptions = {
         return true;
       }
       const allowedEmails = await db.userAllowedList.findMany({});
+      if (!allowedEmails) {
+        throw new Error(
+          "Unable to reach server data at this time, try again later",
+        );
+      }
+      // only allow users with an email in the allowedEmails array
+      // and if the user is enabled
       if (
-        allowedEmails?.some((allowedEmail) => allowedEmail.email === user.email)
+        allowedEmails.some(
+          (allowedEmail) =>
+            allowedEmail.email === user.email && allowedEmail.enabled === true,
+        )
       ) {
         return true;
       } else {
