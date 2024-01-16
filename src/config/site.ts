@@ -21,5 +21,6 @@ export const HeaderFooterExclusionRoutes = [
   "/auth/register",
   "/dashboard",
   "/dashboard/test",
+  "/dashboard/events",
   "/linktree",
 ];
