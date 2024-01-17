@@ -107,28 +107,37 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  className="flex flex-row items-center gap-2 rounded-lg border p-3 text-left text-sm transition-all text-stone-900 hover:bg-stone-200"
+                  className="flex flex-row items-center gap-2 rounded-md p-2 text-sm transition-all h-52"
                 >
-                  <CardHeader className="p-4">
+                  <CardHeader className="p-2 min-h-full">
                     <img
                       src={el.image}
-                      className="w-3/2 object-cover border h-40 border-transparent rounded-lg"
+                      className="object-cover max-w-[12rem] min-h-full rounded-md"
                     ></img>
                   </CardHeader>
-                  <div className="flex flex-col items-end">
-                    <CardContent>
-                      <p className="text-xl">{el.name}</p>
+                  <div className="flex flex-col h-full w-full justify-between">
+                    <CardContent className="p-1 flex flex-col h-full">
+                      <p className="text-xl font-bold">{el.name}</p>
                       <Badge
-                        className="text-sm text-muted-foreground"
+                        className="text-xs max-w-fit mt-2"
                         variant="secondary"
                       >
                         {el.term}
                       </Badge>
-                      <p className="text-epllipsis">{el.content} </p>
+                      <p className="text-epllipsis text-xs mt-2 h-full">
+                        {el.content}{" "}
+                      </p>
                     </CardContent>
-                    <Button className="flex justify-center" variant="default">
-                      <Link href="...">Register</Link>
-                    </Button>
+                    <CardFooter className="p-1">
+                      <Button
+                        className="w-full"
+                        asChild
+                        variant="default"
+                        size="sm"
+                      >
+                        <Link href="...">Register</Link>
+                      </Button>{" "}
+                    </CardFooter>
                   </div>
                 </Card>
               );
@@ -144,7 +153,7 @@ export default function Home() {
                   <CardHeader className="p-4">
                     <img
                       src={el.image}
-                      className="w-full object-cover h-40 border border-transparent rounded-lg"
+                      className="w-full object-cover h-40 border border-transparent rounded-md"
                     ></img>
                   </CardHeader>
                   <CardContent>
@@ -168,7 +177,7 @@ export default function Home() {
                   <CardHeader className="p-4">
                     <img
                       src={el.image}
-                      className="w-full object-cover h-40 border border-transparent rounded-lg"
+                      className="w-full object-cover h-40 border border-transparent rounded-md"
                     ></img>
                   </CardHeader>
                   <CardContent>
