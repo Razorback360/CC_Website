@@ -28,7 +28,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           <a
             href={siteConfig.links.twitter}
             title={siteConfig.links.twitter}
-            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2 "
           >
             <p>Twitter</p>
             <Icons.twitter
