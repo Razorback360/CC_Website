@@ -17,7 +17,7 @@ export default function EventList({ events }: EventListProps) {
   const { selectedEvent, selectEvent } = useSelectedEvent();
 
   return (
-    <ScrollArea className="h-screen mt-5 mb-5">
+    <ScrollArea className="h-full my-5">
       <div className="flex flex-col gap-2 p-4 pt-0">
         {events?.map((event, index) => {
           return (

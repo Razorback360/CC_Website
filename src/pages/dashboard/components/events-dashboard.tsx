@@ -97,108 +97,108 @@ export default function DashboardEvents({
   }
 
   return (
-    <div className="h-screen w-screen">
-      <TooltipProvider delayDuration={0}>
-        <ResizablePanelGroup
-          direction="horizontal"
-          onLayout={(sizes: number[]) => {
-            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-              sizes,
+    <TooltipProvider delayDuration={0}>
+      <ResizablePanelGroup
+        direction="horizontal"
+        onLayout={(sizes: number[]) => {
+          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+            sizes,
+          )}`;
+        }}
+        className="h-full items-stretch"
+      >
+        <ResizablePanel
+          defaultSize={defaultLayout[0]}
+          collapsedSize={navCollapsedSize}
+          collapsible={true}
+          minSize={15}
+          maxSize={20}
+          onCollapse={() => {
+            setIsCollapsed(true);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              true,
             )}`;
           }}
-          className="h-full items-stretch"
+          onExpand={() => {
+            setIsCollapsed(false);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+              false,
+            )}`;
+          }}
+          className={cn(
+            isCollapsed &&
+              "min-w-[50px] transition-all duration-300 ease-in-out",
+          )}
         >
-          <ResizablePanel
-            defaultSize={defaultLayout[0]}
-            collapsedSize={navCollapsedSize}
-            collapsible={true}
-            minSize={15}
-            maxSize={20}
-            onCollapse={() => {
-              setIsCollapsed(true);
-              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-                true,
-              )}`;
-            }}
-            onExpand={() => {
-              setIsCollapsed(false);
-              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-                false,
-              )}`;
-            }}
+          <div
             className={cn(
-              isCollapsed &&
-                "min-w-[50px] transition-all duration-300 ease-in-out",
+              "flex h-fit py-2 items-center justify-center",
+              isCollapsed ? "h-fit" : "px-2",
             )}
           >
-            <div
-              className={cn(
-                "flex h-[52px] items-center justify-center",
-                isCollapsed ? "h-[52px]" : "px-2",
-              )}
-            >
-              <UserProfile />
-            </div>
-            <Separator />
-            <Nav
-              isCollapsed={isCollapsed}
-              links={[
-                {
-                  title: "Overview",
-                  label: "128",
-                  icon: Icons.chart,
-                  variant: "ghost",
-                  href: "/dashboard/test",
-                },
-                {
-                  title: "Events",
-                  label: "9",
-                  icon: Icons.events,
-                  variant: "default",
-                  href: "/dashboard/events",
-                },
-                {
-                  title: "Members",
-                  label: "",
-                  icon: Icons.users,
-                  variant: "ghost",
-                  href: "#",
-                },
-                {
-                  title: "Privileges",
-                  label: "23",
-                  icon: Icons.dCheck,
-                  variant: "ghost",
-                  href: "#",
-                },
-              ]}
-            />
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-            <div className="flex items-center px-4 py-3">
-              <h1 className="text-xl font-bold">Events Management</h1>
-            </div>
-            <Separator />
-            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <EventList events={events ?? []} />
-            </div>
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={defaultLayout[2]}>
-            <div className="flex items-center px-4 py-3">
-              <h1 className="text-xl font-bold">
-                <br />
-              </h1>
-            </div>
-            <Separator />
-            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <h1 className="font-semibold text-lg mb-2">Create an Event</h1>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-2"
-                >
+            <UserProfile />
+          </div>
+          <Separator />
+          <Nav
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Overview",
+                label: "128",
+                icon: Icons.chart,
+                variant: "ghost",
+                href: "/dashboard/test",
+              },
+              {
+                title: "Events",
+                label: "9",
+                icon: Icons.events,
+                variant: "default",
+                href: "/dashboard/events",
+              },
+              {
+                title: "Members",
+                label: "",
+                icon: Icons.users,
+                variant: "ghost",
+                href: "#",
+              },
+              {
+                title: "Privileges",
+                label: "23",
+                icon: Icons.dCheck,
+                variant: "ghost",
+                href: "#",
+              },
+            ]}
+          />
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+          <div className="flex items-center px-4 py-3">
+            <h1 className="text-xl font-bold">Events Management</h1>
+          </div>
+          <Separator />
+          <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <EventList events={events ?? []} />
+          </div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={defaultLayout[2]}>
+          <div className="flex items-center px-4 py-3">
+            <h1 className="text-xl font-bold">
+              <br />
+            </h1>
+          </div>
+          <Separator />
+          <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
+            <h1 className="font-semibold text-lg">Create an Event</h1>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col gap-2 justify-between"
+              >
+                <div>
                   <FormField
                     control={form.control}
                     name="title"
@@ -358,19 +358,19 @@ export default function DashboardEvents({
                       )}
                     />
                   </div>
-                  <Button
-                    variant="default"
-                    type="submit"
-                    className="w-full text-white mt-4"
-                  >
-                    Create
-                  </Button>
-                </form>
-              </Form>
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </TooltipProvider>
-    </div>
+                </div>
+                <Button
+                  variant="default"
+                  type="submit"
+                  className="w-full text-white mt-4"
+                >
+                  Create
+                </Button>
+              </form>
+            </Form>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </TooltipProvider>
   );
 }
