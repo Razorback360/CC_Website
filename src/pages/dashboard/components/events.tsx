@@ -53,17 +53,17 @@ const addEventFormSchema = z.object({
   categoryId: z.string(), // Add validation if needed
 });
 
-interface MailProps {
+interface DashboardEventsProps {
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
   navCollapsedSize: number;
 }
 
 export default function DashboardEvents({
-  defaultLayout = [265, 440, 655],
+  defaultLayout = [265, 600, 600],
   defaultCollapsed = false,
   navCollapsedSize,
-}: MailProps) {
+}: DashboardEventsProps) {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [date, setDate] = useState<Date>();
   const form = useForm<z.infer<typeof addEventFormSchema>>({
