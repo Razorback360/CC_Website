@@ -45,10 +45,10 @@ const addEventFormSchema = z.object({
 });
 
 type EventDisplayProps = {
-  // ...
+  isCreatingNewEvent: boolean;
 };
 
-const EventDisplay = ({}: EventDisplayProps) => {
+const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
   const { selectedEvent, selectEvent } = useSelectedEvent();
   const form = useForm<z.infer<typeof addEventFormSchema>>({
     resolver: zodResolver(addEventFormSchema),
@@ -63,9 +63,10 @@ const EventDisplay = ({}: EventDisplayProps) => {
   });
 
   function onSubmit(data: z.infer<typeof addEventFormSchema>) {
-    if (selectedEvent) {
+    if (selectedEvent && !isCreatingNewEvent) {
       updateEvent({ ...data, id: selectedEvent.id });
-    } else {
+    }
+    if (isCreatingNewEvent) {
       createEvent(data);
     }
   }
@@ -74,7 +75,7 @@ const EventDisplay = ({}: EventDisplayProps) => {
 
   const { data: categories } = api.event.getAllCategories.useQuery();
 
-  const { mutate: createEvent, isLoading: isCreating } =
+  const { mutate: createEvent, isLoading: loadingCreate } =
     api.event.create.useMutation({
       onSuccess: (data) => {
         selectEvent(data);
@@ -85,7 +86,7 @@ const EventDisplay = ({}: EventDisplayProps) => {
       },
     });
 
-  const { mutate: updateEvent, isLoading: isUpdating } =
+  const { mutate: updateEvent, isLoading: loadingUpdate } =
     api.event.update.useMutation({
       onSuccess: (data) => {
         selectEvent(data);
@@ -106,7 +107,7 @@ const EventDisplay = ({}: EventDisplayProps) => {
         categoryId: selectedEvent.categoryId,
         link: selectedEvent.link,
       });
-    } else if (!selectedEvent) {
+    } else {
       form.reset({
         title: "",
         description: "",
@@ -283,9 +284,9 @@ const EventDisplay = ({}: EventDisplayProps) => {
             variant="default"
             type="submit"
             className="w-full text-white mt-4"
-            disabled={isCreating || isUpdating}
+            disabled={loadingCreate || loadingUpdate}
           >
-            {isCreating || isUpdating ? (
+            {loadingCreate || loadingUpdate ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : selectedEvent ? (
               <Icons.edit className="mr-2 h-4 w-4" />

@@ -67,11 +67,15 @@ export default function DashboardEvents({
 }: DashboardEventsProps) {
   const { selectedEvent, selectEvent } = useSelectedEvent();
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
+  const [isCreatingNewEvent, setIsCreatingNewEvent] = useState(false);
 
   // if there's no data returned from the api, use placeholder data
   const { data: events } = api.event.getAll.useQuery(undefined, {
     onSuccess: (data) => {
-      if (!selectedEvent) selectEvent(data[0]);
+      if (!selectedEvent && !isCreatingNewEvent) {
+        selectEvent(data[0]);
+        setIsCreatingNewEvent(false);
+      }
     },
   });
 
@@ -163,6 +167,7 @@ export default function DashboardEvents({
                   size="icon"
                   onClick={() => {
                     selectEvent(undefined);
+                    setIsCreatingNewEvent(true);
                   }}
                 >
                   <Icons.add />
@@ -174,7 +179,11 @@ export default function DashboardEvents({
           </div>
           <Separator />
           <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <EventList events={events ?? []} />
+            <EventList
+              events={events ?? []}
+              isCreatingNewEvent={isCreatingNewEvent}
+              setIsCreatingNewEvent={setIsCreatingNewEvent}
+            />
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle={false} />
@@ -188,7 +197,7 @@ export default function DashboardEvents({
           </div>
           <Separator />
           <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
-            <EventDisplay />
+            <EventDisplay isCreatingNewEvent={isCreatingNewEvent} />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

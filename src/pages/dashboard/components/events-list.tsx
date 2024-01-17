@@ -11,9 +11,15 @@ import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 
 type EventListProps = {
   events: RouterOutputs["event"]["getAll"];
+  isCreatingNewEvent: boolean;
+  setIsCreatingNewEvent: (isCreatingNewEvent: boolean) => void;
 };
 
-export default function EventList({ events }: EventListProps) {
+export default function EventList({
+  events,
+  isCreatingNewEvent,
+  setIsCreatingNewEvent,
+}: EventListProps) {
   const { selectedEvent, selectEvent } = useSelectedEvent();
 
   return (
@@ -27,7 +33,10 @@ export default function EventList({ events }: EventListProps) {
                 "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                 selectedEvent?.id === event.id && "bg-muted",
               )}
-              onClick={() => selectEvent(event)}
+              onClick={() => {
+                selectEvent(event);
+                setIsCreatingNewEvent(false);
+              }}
             >
               <div className="flex w-full flex-col gap-1">
                 <div className="flex items-center">
