@@ -180,7 +180,6 @@ export default function DashboardEvents({
             </div>
             <Separator />
             <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <h1 className="font-semibold text-lg mb-2">Create an Event</h1>
               <ScrollArea className="h-screen mt-5 mb-5">
                 <div className="flex flex-col gap-2 p-4 pt-0">
                   {events?.map((event, index) => {
