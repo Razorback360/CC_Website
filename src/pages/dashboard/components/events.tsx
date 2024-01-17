@@ -65,13 +65,12 @@ export default function DashboardEvents({
   navCollapsedSize,
 }: DashboardEventsProps) {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
-  const [date, setDate] = useState<Date>();
   const form = useForm<z.infer<typeof addEventFormSchema>>({
     resolver: zodResolver(addEventFormSchema),
     defaultValues: {
       title: "",
       description: "",
-      date: new Date(),
+      date: undefined,
       semesterId: "",
       categoryId: "",
     },
@@ -282,130 +281,125 @@ export default function DashboardEvents({
                         </>
                       )}
                     />
-                    <div className="flex flex-row justify-between mb-3 mt-2">
-                      <div className="flex flex-col">
-                        <FormLabel className="m-1">Event Date</FormLabel>
-                        <FormControl>
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant={"outline"}
-                                className={cn(
-                                  "w-[240px] justify-start text-left font-normal mt-2 mr-2",
-                                  !date && "text-muted-foreground",
-                                )}
-                              >
-                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                {date ? (
-                                  format(date, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent
-                              className="w-auto p-0"
-                              align="start"
-                            >
-                              <Calendar
-                                mode="single"
-                                selected={date}
-                                onSelect={(date: Date | undefined) => {
-                                  if (date) form.setValue("date", date);
-                                }}
-                                initialFocus
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        </FormControl>
-                        <FormMessage className="col-start-2 col-span-3">
-                          {form.formState.errors.date?.message}
-                        </FormMessage>
-                      </div>
-                      <div className="flex flex-col">
+                    <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
+                      <FormField
+                        control={form.control}
+                        name="date"
+                        render={({ field }) => (
+                          <div className="w-full flex flex-col">
+                            <FormLabel htmlFor="date" className="m-1">
+                              Event Date
+                            </FormLabel>
+                            <FormControl>
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "font-normal mt-2 mr-2",
+                                      !form.getValues("date") &&
+                                        "text-muted-foreground",
+                                    )}
+                                  >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {form.getValues("date") ? (
+                                      format(form.getValues("date"), "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                  </Button>
+                                </PopoverTrigger>
+                                <PopoverContent
+                                  className="w-auto p-0"
+                                  align="start"
+                                >
+                                  <Calendar
+                                    mode="single"
+                                    selected={form.getValues("date")}
+                                    onSelect={(date: Date | undefined) => {
+                                      if (date) form.setValue("date", date);
+                                    }}
+                                    initialFocus
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                            </FormControl>
+                            <FormMessage className="col-start-2 col-span-3">
+                              {form.formState.errors.date?.message}
+                            </FormMessage>
+                          </div>
+                        )}
+                      />
+                      <div className="w-full">
                         <Label htmlFor="picture" className="m-1">
                           Event Poster
                         </Label>
-                        <Input
-                          id="picture"
-                          type="file"
-                          className="p-0 mt-2 w-[275px]"
-                        />
+                        <Input id="picture" type="file" className="p-0 mt-2" />
                       </div>
                     </div>
-                    <div className="flex flex-row justify-between ">
-                      <div className="flex flex-col">
-                        <FormField
-                          control={form.control}
-                          name="semesterId"
-                          render={({ field }) => (
-                            <>
-                              <FormLabel htmlFor="semesterId" className="m-1">
-                                Semester
-                              </FormLabel>
-                              <FormControl>
-                                {/* Custom Combobox for Semester */}
-                                <Select onValueChange={field.onChange}>
-                                  <FormControl>
-                                    <SelectTrigger className="w-[240px] mt-2 mr-2">
-                                      <SelectValue placeholder="Select a Semester" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    {semesters?.map((semester, index) => (
-                                      <SelectItem
-                                        value={semester.id}
-                                        key={index}
-                                      >
-                                        Term {semester.number}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
-                              <FormMessage className="col-start-2 col-span-3">
-                                {form.formState.errors.semesterId?.message}
-                              </FormMessage>
-                            </>
-                          )}
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <FormField
-                          control={form.control}
-                          name="categoryId"
-                          render={({ field }) => (
-                            <>
-                              <FormLabel htmlFor="categoryId" className="m-1">
-                                Category
-                              </FormLabel>
-                              <FormControl>
-                                {/* Custom Combobox for Semester */}
-                                <Select onValueChange={field.onChange}>
-                                  <FormControl>
-                                    <SelectTrigger className="w-[275px] mt-2 ">
-                                      <SelectValue placeholder="Select a Category" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    {categories?.map((category, index) => (
-                                      <SelectItem
-                                        value={category.id}
-                                        key={index}
-                                      >
-                                        {category.name}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
-                              <FormMessage className="col-start-2 col-span-3">
-                                {form.formState.errors.categoryId?.message}
-                              </FormMessage>
-                            </>
-                          )}
-                        />
-                      </div>
+                    <div className="w-full flex flex-row items-center gap-2 justify-between">
+                      <FormField
+                        control={form.control}
+                        name="semesterId"
+                        render={({ field }) => (
+                          <div className="w-full">
+                            <FormLabel htmlFor="semesterId" className="m-1">
+                              Semester
+                            </FormLabel>
+                            <FormControl>
+                              {/* Custom Combobox for Semester */}
+                              <Select onValueChange={field.onChange}>
+                                <FormControl>
+                                  <SelectTrigger className="mt-2 mr-2">
+                                    <SelectValue placeholder="Select a Semester" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {semesters?.map((semester, index) => (
+                                    <SelectItem value={semester.id} key={index}>
+                                      Term {semester.number}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage className="col-start-2 col-span-3">
+                              {form.formState.errors.semesterId?.message}
+                            </FormMessage>
+                          </div>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="categoryId"
+                        render={({ field }) => (
+                          <div className="w-full">
+                            <FormLabel htmlFor="categoryId" className="m-1">
+                              Category
+                            </FormLabel>
+                            <FormControl>
+                              {/* Custom Combobox for Semester */}
+                              <Select onValueChange={field.onChange}>
+                                <FormControl>
+                                  <SelectTrigger className="mt-2 ">
+                                    <SelectValue placeholder="Select a Category" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {categories?.map((category, index) => (
+                                    <SelectItem value={category.id} key={index}>
+                                      {category.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage className="col-start-2 col-span-3">
+                              {form.formState.errors.categoryId?.message}
+                            </FormMessage>
+                          </div>
+                        )}
+                      />
                     </div>
                     <Button
                       variant="default"
