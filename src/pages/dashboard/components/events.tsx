@@ -352,16 +352,14 @@ export default function DashboardEvents({
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {[{ id: "test", name: "test" }].map(
-                                      (semester, index) => (
-                                        <SelectItem
-                                          value={semester.id}
-                                          key={index}
-                                        >
-                                          {semester.name}
-                                        </SelectItem>
-                                      ),
-                                    )}
+                                    {semesters?.map((semester, index) => (
+                                      <SelectItem
+                                        value={semester.id}
+                                        key={index}
+                                      >
+                                        Term {semester.number}
+                                      </SelectItem>
+                                    ))}
                                   </SelectContent>
                                 </Select>
                               </FormControl>
@@ -390,16 +388,14 @@ export default function DashboardEvents({
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {[{ id: "test", name: "test" }].map(
-                                      (category, index) => (
-                                        <SelectItem
-                                          value={category.id}
-                                          key={index}
-                                        >
-                                          {category.name}
-                                        </SelectItem>
-                                      ),
-                                    )}
+                                    {categories?.map((category, index) => (
+                                      <SelectItem
+                                        value={category.id}
+                                        key={index}
+                                      >
+                                        {category.name}
+                                      </SelectItem>
+                                    ))}
                                   </SelectContent>
                                 </Select>
                               </FormControl>
