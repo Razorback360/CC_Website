@@ -17,7 +17,12 @@ import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -43,16 +48,11 @@ import {
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { api } from "@/utils/api";
+import { RouterOutputs, api } from "@/utils/api";
 import EventList from "@/pages/dashboard/components/events-list";
-
-const addEventFormSchema = z.object({
-  title: z.string().min(2).max(50),
-  description: z.string().min(2).max(500),
-  date: z.date(), // You can use a specific date format validation here
-  semesterId: z.string(), // Add validation if needed
-  categoryId: z.string(), // Add validation if needed
-});
+import EventDisplay from "./event-display";
+import { useSelectedEvent } from "@/pages/dashboard/components/use-selected-event";
+import { Event } from "@prisma/client";
 
 interface DashboardEventsProps {
   defaultLayout: number[] | undefined;
@@ -65,36 +65,15 @@ export default function DashboardEvents({
   defaultCollapsed = false,
   navCollapsedSize,
 }: DashboardEventsProps) {
+  const { selectedEvent, selectEvent } = useSelectedEvent();
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
-  const form = useForm<z.infer<typeof addEventFormSchema>>({
-    resolver: zodResolver(addEventFormSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      date: undefined,
-      semesterId: "",
-      categoryId: "",
+
+  // if there's no data returned from the api, use placeholder data
+  const { data: events } = api.event.getAll.useQuery(undefined, {
+    onSuccess: (data) => {
+      if (!selectedEvent) selectEvent(data[0]);
     },
   });
-
-  const { data: semesters } = api.semester.getAll.useQuery();
-
-  const { data: categories } = api.event.getAllCategories.useQuery();
-
-  const { data: events } = api.event.getAll.useQuery();
-
-  function onSubmit(data: z.infer<typeof addEventFormSchema>) {
-    // Do something with the form values.
-    console.log(data);
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -175,199 +154,41 @@ export default function DashboardEvents({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <div className="flex items-center px-4 py-3">
+          <div className="flex items-center px-4 py-2">
             <h1 className="text-xl font-bold">Events Management</h1>
+            <Tooltip>
+              <TooltipTrigger asChild className="ml-auto">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    selectEvent(undefined);
+                  }}
+                >
+                  <Icons.add />
+                  <span className="sr-only">Reply</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Reply</TooltipContent>
+            </Tooltip>
           </div>
           <Separator />
-          <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <EventList events={events ?? []} />
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <div className="flex items-center px-4 py-3">
-            <h1 className="text-xl font-bold">
-              <br />
+          <div className="ml-auto flex items-center p-2">
+            <h1 className="font-semibold text-lg">
+              {selectedEvent
+                ? `Editing ${selectedEvent?.title}`
+                : "Creating an Event"}
             </h1>
           </div>
           <Separator />
           <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
-            <h1 className="font-semibold text-lg">Create an Event</h1>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col gap-2 justify-between"
-              >
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <div className="mt-2 flex flex-col gap-2">
-                        <FormLabel htmlFor="title">Title</FormLabel>
-                        <FormControl className="">
-                          <Input
-                            id="title"
-                            placeholder="Event Title"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage>
-                          {form.formState.errors.title?.message}
-                        </FormMessage>
-                      </div>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <div className="mt-2 flex flex-col gap-2">
-                        <FormLabel htmlFor="description">Description</FormLabel>
-                        <FormControl className="">
-                          <Textarea
-                            className="max-h-72"
-                            id="description"
-                            placeholder="Event Description"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage>
-                          {form.formState.errors.description?.message}
-                        </FormMessage>
-                      </div>
-                    )}
-                  />
-                  <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
-                    <FormField
-                      control={form.control}
-                      name="date"
-                      render={({ field }) => (
-                        <div className="w-full flex flex-col">
-                          <FormLabel htmlFor="date" className="m-1">
-                            Event Date
-                          </FormLabel>
-                          <FormControl>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button
-                                  variant={"outline"}
-                                  className={cn(
-                                    "font-normal mt-2 mr-2",
-                                    !form.getValues("date") &&
-                                      "text-muted-foreground",
-                                  )}
-                                >
-                                  <CalendarIcon className="mr-2 h-4 w-4" />
-                                  {form.getValues("date") ? (
-                                    format(form.getValues("date"), "PPP")
-                                  ) : (
-                                    <span>Pick a date</span>
-                                  )}
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                className="w-auto p-0"
-                                align="start"
-                              >
-                                <Calendar
-                                  mode="single"
-                                  selected={form.getValues("date")}
-                                  onSelect={(date: Date | undefined) => {
-                                    if (date) form.setValue("date", date);
-                                  }}
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                          </FormControl>
-                          <FormMessage className="col-start-2 col-span-3">
-                            {form.formState.errors.date?.message}
-                          </FormMessage>
-                        </div>
-                      )}
-                    />
-                    <div className="w-full">
-                      <Label htmlFor="picture" className="m-1">
-                        Event Poster
-                      </Label>
-                      <Input id="picture" type="file" className="p-0 mt-2" />
-                    </div>
-                  </div>
-                  <div className="w-full flex flex-row items-center gap-2 justify-between">
-                    <FormField
-                      control={form.control}
-                      name="semesterId"
-                      render={({ field }) => (
-                        <div className="w-full">
-                          <FormLabel htmlFor="semesterId" className="m-1">
-                            Semester
-                          </FormLabel>
-                          <FormControl>
-                            {/* Custom Combobox for Semester */}
-                            <Select onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger className="mt-2 mr-2">
-                                  <SelectValue placeholder="Select a Semester" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {semesters?.map((semester, index) => (
-                                  <SelectItem value={semester.id} key={index}>
-                                    Term {semester.number}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage className="col-start-2 col-span-3">
-                            {form.formState.errors.semesterId?.message}
-                          </FormMessage>
-                        </div>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="categoryId"
-                      render={({ field }) => (
-                        <div className="w-full">
-                          <FormLabel htmlFor="categoryId" className="m-1">
-                            Category
-                          </FormLabel>
-                          <FormControl>
-                            {/* Custom Combobox for Semester */}
-                            <Select onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger className="mt-2 ">
-                                  <SelectValue placeholder="Select a Category" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {categories?.map((category, index) => (
-                                  <SelectItem value={category.id} key={index}>
-                                    {category.name}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage className="col-start-2 col-span-3">
-                            {form.formState.errors.categoryId?.message}
-                          </FormMessage>
-                        </div>
-                      )}
-                    />
-                  </div>
-                </div>
-                <Button
-                  variant="default"
-                  type="submit"
-                  className="w-full text-white mt-4"
-                >
-                  Create
-                </Button>
-              </form>
-            </Form>
+            <EventDisplay />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
