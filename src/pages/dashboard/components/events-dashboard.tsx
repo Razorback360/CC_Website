@@ -111,7 +111,7 @@ export default function DashboardEvents({
         >
           <div
             className={cn(
-              "flex h-fit py-2 items-center justify-center",
+              "flex h-fit py-3 items-center justify-center max-h-16",
               isCollapsed ? "h-fit" : "px-2",
             )}
           >
@@ -154,7 +154,7 @@ export default function DashboardEvents({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <div className="flex items-center px-4 py-2">
+          <div className="flex items-center px-4 py-2 h-16">
             <h1 className="text-xl font-bold">Events Management</h1>
             <Tooltip>
               <TooltipTrigger asChild className="ml-auto">
@@ -179,7 +179,7 @@ export default function DashboardEvents({
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={defaultLayout[2]}>
-          <div className="ml-auto flex items-center p-2">
+          <div className="ml-auto flex items-center p-5 max-h-16">
             <h1 className="font-semibold text-lg">
               {selectedEvent
                 ? `Editing ${selectedEvent?.title}`
