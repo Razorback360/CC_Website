@@ -96,28 +96,28 @@ export default function DashboardOverview({
                   label: "128",
                   icon: Icons.chart,
                   variant: "default",
-                  href:"/dashboard/test"
+                  href: "/dashboard/test",
                 },
                 {
                   title: "Events",
                   label: "9",
                   icon: Icons.events,
                   variant: "ghost",
-                  href: "/dashboard/events"
+                  href: "/dashboard/events",
                 },
                 {
                   title: "Members",
                   label: "",
                   icon: Icons.users,
                   variant: "ghost",
-                  href: "#"
+                  href: "#",
                 },
                 {
                   title: "Privileges",
                   label: "23",
                   icon: Icons.dCheck,
                   variant: "ghost",
-                  href: "#"
+                  href: "#",
                 },
               ]}
             />
@@ -152,10 +152,10 @@ export default function DashboardOverview({
                 </form>
               </div>
               <TabsContent value="upcoming-events" className="m-0">
-                <EventList />
+                {/* <EventList /> */}
               </TabsContent>
               <TabsContent value="other" className="m-0">
-                <EventList />
+                {/* <EventList /> */}
               </TabsContent>
             </Tabs>
           </ResizablePanel>

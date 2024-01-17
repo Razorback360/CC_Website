@@ -51,7 +51,7 @@ import { Badge } from "@/components/ui/badge";
 import { RouterOutputs, api } from "@/utils/api";
 import EventList from "@/pages/dashboard/components/events-list";
 import EventDisplay from "./event-display";
-import { useSelectedEvent } from "@/pages/dashboard/components/use-selected-event";
+import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Event } from "@prisma/client";
 
 interface DashboardEventsProps {

@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { api } from "@/utils/api";
-import { useSelectedEvent } from "@/pages/dashboard/components/use-selected-event";
+import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Icons } from "@/components/icons";
 
 const addEventFormSchema = z.object({
