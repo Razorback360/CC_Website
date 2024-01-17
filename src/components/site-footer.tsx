@@ -18,7 +18,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         "flex flex-col items-center justify-between py-2 gap-4 h-fit w-full",
       )}
     >
-      <div className="flex flex-row pt-4 px-16 w-full justify-between">
+      <div className="flex flex-row pt-4 px-8 w-full justify-between">
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0 md:h-fit">
           <ThemeToggle />
           <Separator orientation="vertical" />
@@ -28,47 +28,53 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           <a
             href={siteConfig.links.twitter}
             title={siteConfig.links.twitter}
-            className="hover:cursor-pointer fill-secondary-foreground"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
+            <p>Twitter</p>
             <Icons.twitter
               title={siteConfig.links.twitter}
-              className="hover:cursor-pointer fill-secondary-foreground"
+              className="hover:cursor-pointer  ml-4"
             />
           </a>
           <a
             href={siteConfig.links.linkedin}
             title={siteConfig.links.linkedin}
-            className="hover:cursor-pointer fill-secondary-foreground"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.linkedin className="hover:cursor-pointer" />
+            <p>Linkedin</p>
+            <Icons.linkedin className="hover:cursor-pointer  ml-4" />
           </a>
           <a
             href={siteConfig.links.github}
             title={siteConfig.links.github}
-            className="hover:cursor-pointer fill-secondary-foreground"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.gitHub className="hover:cursor-pointer" />
+            <p>Github</p>
+            <Icons.gitHub className="hover:cursor-pointer  ml-4" />
           </a>
           <a
             href={siteConfig.links.youtube}
             title={siteConfig.links.youtube}
-            className="hover:cursor-pointer fill-secondary-foreground"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.youtube className="hover:cursor-pointer" />
+            <p>Youtube</p>
+            <Icons.youtube className="hover:cursor-pointer  ml-4" />
           </a>
           <a
             href={siteConfig.links.whatsapp}
             title={siteConfig.links.whatsapp}
-            className="hover:cursor-pointer fill-secondary-foreground"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.whatsapp className="hover:cursor-pointer" />
+            <p>Whatsapp</p>
+            <Icons.whatsapp className="hover:cursor-pointer  ml-4" />
           </a>
           <a
             href={siteConfig.links.email}
             title={siteConfig.links.email}
-            className="hover:cursor-pointer fill-secondary-foreground"
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            {/* <Icons.email className="hover:cursor-pointer" /> */}
+            <p>Email</p>
+            <Icons.email className="hover:cursor-pointer ml-4" />
           </a>
         </div>
       </div>
@@ -83,7 +89,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             rel="noreferrer"
             className="font-medium underline underline-offset-4"
           >
-            shadcn
+            CC KFUPM
           </a>
           . Hosted on{" "}
           <a
