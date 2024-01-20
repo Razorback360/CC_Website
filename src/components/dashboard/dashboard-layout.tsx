@@ -93,14 +93,14 @@ const DashboardLayout = ({
               links={[
                 {
                   title: "Overview",
-                  label: "128",
+                  label: "",
                   icon: Icons.chart,
                   variant: "ghost",
                   href: "/dashboard/overview",
                 },
                 {
                   title: "Events",
-                  label: "9",
+                  label: "",
                   icon: Icons.events,
                   variant: "ghost",
                   href: "/dashboard/events",
@@ -114,7 +114,7 @@ const DashboardLayout = ({
                 },
                 {
                   title: "Privileges",
-                  label: "23",
+                  label: "",
                   icon: Icons.dCheck,
                   variant: "ghost",
                   href: "#",
