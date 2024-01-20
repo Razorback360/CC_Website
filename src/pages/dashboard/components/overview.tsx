@@ -1,17 +1,9 @@
 import * as React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import UserProfile from "@/pages/dashboard/components/user-profile";
+
+import { UserProfile } from "@/components/core/user-profile";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -53,8 +45,8 @@ export default function DashboardOverview({
             defaultSize={defaultLayout[0]}
             collapsedSize={navCollapsedSize}
             collapsible={true}
-            minSize={15}
-            maxSize={20}
+            minSize={17}
+            maxSize={22}
             onCollapse={() => {
               setIsCollapsed(true);
               document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
@@ -69,16 +61,16 @@ export default function DashboardOverview({
             }}
             className={cn(
               isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
+                "min-w-fit transition-all duration-300 ease-in-out",
             )}
           >
             <div
               className={cn(
-                "flex h-[52px] items-center justify-center",
-                isCollapsed ? "h-[52px]" : "px-2",
+                "flex h-fit items-center justify-center",
+                isCollapsed ? "h-fit w-fit" : "",
               )}
             >
-              <UserProfile />
+              <UserProfile isCollapsed={isCollapsed} />
             </div>
             <Separator />
             <Nav
@@ -89,7 +81,7 @@ export default function DashboardOverview({
                   label: "128",
                   icon: Icons.chart,
                   variant: "default",
-                  href: "/dashboard/overview"
+                  href: "/dashboard/overview",
                 },
                 {
                   title: "Events",
@@ -155,9 +147,7 @@ export default function DashboardOverview({
             <div className="flex flex-row w-full -mt-5 justify-around">
               <Card className="w-1/2 m-5">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Images
-                  </CardTitle>
+                  <CardTitle className="text-sm font-medium">Images</CardTitle>
                   <Icons.media />
                 </CardHeader>
                 <CardContent>
@@ -166,9 +156,7 @@ export default function DashboardOverview({
               </Card>
               <Card className="w-1/2 m-5">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Members
-                  </CardTitle>
+                  <CardTitle className="text-sm font-medium">Members</CardTitle>
                   <Icons.users />
                 </CardHeader>
                 <CardContent>
@@ -187,7 +175,9 @@ export default function DashboardOverview({
                     <AvatarFallback>OM</AvatarFallback>
                   </Avatar>
                   <div className="ml-4 space-y-1">
-                    <p className="text-sm font-medium leading-none">Olivia Martin</p>
+                    <p className="text-sm font-medium leading-none">
+                      Olivia Martin
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       Created event
                     </p>
@@ -201,28 +191,103 @@ export default function DashboardOverview({
           <ResizableHandle withHandle />
           <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
             <div className="flex items-center px-4 py-3">
-              <h1 className="text-xl font-bold"><br /></h1>
+              <h1 className="text-xl font-bold">
+                <br />
+              </h1>
             </div>
             <Separator />
             <h1 className="font-semibold text-lg m-5">Upcoming Events</h1>
             <ScrollArea className="h-[87vh] ">
               <div className="flex flex-col gap-2 p-4 pt-0">
-                {[{ id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
-                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" }].map((event, index) => {
+                {[
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                  {
+                    id: "#21321",
+                    title: "Test Event",
+                    category: "Workshop",
+                    date: "2024/06/02",
+                    semester: "232",
+                    description:
+                      "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                  },
+                ].map((event, index) => {
                   return (
                     <button
                       key={index}
                       className={cn(
                         "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                       )}
-
                     >
                       <div className="flex w-full flex-col gap-1">
                         <div className="flex items-center">
@@ -230,9 +295,7 @@ export default function DashboardOverview({
                             <div className="font-semibold">{event.title}</div>
                           </div>
                           <div
-                            className={cn(
-                              "ml-auto text-xs text-foreground"
-                            )}
+                            className={cn("ml-auto text-xs text-foreground")}
                           >
                             {event.date}
                           </div>
@@ -242,16 +305,11 @@ export default function DashboardOverview({
                         {event.description.substring(0, 300)}
                       </div>
                       <div className="flex items-center gap-2">
-
-                        <Badge variant="secondary">
-                          {event.category}
-                        </Badge>
-                        <Badge variant="secondary">
-                          {event.semester}
-                        </Badge>
+                        <Badge variant="secondary">{event.category}</Badge>
+                        <Badge variant="secondary">{event.semester}</Badge>
                       </div>
                     </button>
-                  )
+                  );
                 })}
               </div>
             </ScrollArea>
