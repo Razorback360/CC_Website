@@ -53,11 +53,11 @@ export const UserProfile = ({ isCollapsed }: Props) => {
           variant="ghost"
           className={cn(
             "group flex h-full w-full flex-row items-center justify-between rounded-none",
-            isCollapsed ? "p-1 " : "p-2",
+            isCollapsed ? "p-2" : "p-2",
           )}
         >
           {isCollapsed ? (
-            <Avatar className="h-12 w-12">
+            <Avatar className="h-10 w-10">
               <AvatarImage src={session?.user?.image ?? undefined} />
               <AvatarFallback>
                 <Skeleton className="group-hover:border" />
