@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { api } from "@/utils/api";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import RecentActivityCard from "@/components/dashboard/overview/recent-activity-card";
 
 interface DashboardLayoutProps {
   defaultLayout: number[];
@@ -111,44 +112,7 @@ export default function DashboardOverview({
                   : recentActivity
                   ? recentActivity.map((activity, index) => {
                       return (
-                        <Button
-                          key={index}
-                          className="flex items-center h-fit px-4 py-4"
-                          variant="outline"
-                        >
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage
-                              src={activity.Author.profileImage ?? ""}
-                              alt="Avatar"
-                            />
-                            <AvatarFallback>
-                              {getNameInitials(
-                                activity.Author.name ?? "UNKNOWN",
-                              )}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">
-                              {activity.Author.name ?? "Unknown"}
-                            </p>
-                            <p className="text-sm text-muted-foreground text-start">
-                              {/* convert to a simple title case from "EVENT_UPDATE" */}
-                              {activity.type
-                                .split("_")
-                                .map((word) => {
-                                  return (
-                                    word.charAt(0).toUpperCase() +
-                                    word.slice(1).toLowerCase()
-                                  );
-                                })
-                                .join(" ")}
-                            </p>
-                          </div>
-                          <div className="ml-auto ">
-                            {/* format date with time */}
-                            {format(activity.date, "dd MMM yyyy - hh:mm a")}
-                          </div>
-                        </Button>
+                        <RecentActivityCard key={index} activity={activity} />
                       );
                     })
                   : "Failed to load data"}
