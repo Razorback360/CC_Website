@@ -84,7 +84,9 @@ export default function DashboardOverview({
               <Icons.users size={28} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">50</div>
+              <div className="text-2xl font-bold">
+                {semesterStats?.totalMembersThisSemester}
+              </div>{" "}
             </CardContent>
           </Card>
         </div>
