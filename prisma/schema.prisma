@@ -144,6 +144,7 @@ enum SystemUpdateType {
 model SystemUpdate {
     id          String           @id @default(cuid())
     type        SystemUpdateType
+    referenceId String // id of the record that was updated
     description String           @db.Text
     date        DateTime         @default(now())
 
