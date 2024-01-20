@@ -42,7 +42,7 @@ const DashboardLayout = ({
             sizes,
           )}`;
         }}
-        className="max-h-screen items-stretch"
+        className="max-h-screen items-stretch select-none"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
