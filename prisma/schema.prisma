@@ -60,7 +60,7 @@ model User {
 
     // <Custom>
     studentId    String
-    profileImage String
+    profileImage String?
     role         UserRole @default(MEMBER)
 
     links     String[]
