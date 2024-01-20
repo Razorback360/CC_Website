@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { api } from "@/utils/api";
 
 interface DashboardLayoutProps {
   defaultLayout: number[];
@@ -16,6 +17,9 @@ interface DashboardLayoutProps {
 export default function DashboardOverview({
   defaultLayout,
 }: DashboardLayoutProps) {
+  const { data: semesterStats, isLoading: semesterStatsLoading } =
+    api.utils.getSemesterStats.useQuery();
+
   return (
     <>
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
@@ -30,9 +34,24 @@ export default function DashboardOverview({
               <Icons.events size={28} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">600</div>
+              <div className="text-2xl font-bold">
+                {semesterStats && semesterStatsLoading
+                  ? "Loading..."
+                  : semesterStats?.events.totalEventsThisMonth}
+              </div>
               <p className="text-xs mt-2 text-muted-foreground">
-                +20.1% from last month
+                {/* +20.1% from last month */}
+                {semesterStatsLoading
+                  ? "Loading..."
+                  : semesterStats
+                  ? semesterStats.events.percentageChange +
+                    "%" +
+                    // up or down based on percentage change
+                    (semesterStats?.events.percentageChange > 0
+                      ? " up"
+                      : " down") +
+                    " from last month"
+                  : "Failed to load data"}
               </p>
             </CardContent>
           </Card>
