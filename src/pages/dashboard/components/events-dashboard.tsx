@@ -153,7 +153,7 @@ export default function DashboardEvents({
                   label: "128",
                   icon: Icons.chart,
                   variant: "ghost",
-                  href: "/dashboard/test",
+                  href: "/dashboard/overview",
                 },
                 {
                   title: "Events",

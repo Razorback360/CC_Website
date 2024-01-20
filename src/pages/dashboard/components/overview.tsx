@@ -89,7 +89,6 @@ export default function DashboardOverview({
                   label: "128",
                   icon: Icons.chart,
                   variant: "default",
-                  href: "/dashboard/test",
                   href: "/dashboard/overview"
                 },
                 {
