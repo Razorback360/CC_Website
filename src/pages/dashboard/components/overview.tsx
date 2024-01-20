@@ -16,7 +16,7 @@ import {
 
 import { Icons } from "@/components/icons";
 
-import { UserProfile } from "@/pages/dashboard/components/user-profile";
+import { UserProfile } from "@/components/core/user-profile";
 import { RecentActivityDisplay } from "@/pages/dashboard/components/recent-activity";
 import { EventList } from "@/pages/dashboard/components/events-list";
 import { Nav } from "@/pages/dashboard/components/nav";
@@ -78,16 +78,16 @@ export function DashboardOverview({
             }}
             className={cn(
               isCollapsed &&
-                "min-w-[50px] transition-all duration-300 ease-in-out",
+                "min-w-fit transition-all duration-300 ease-in-out",
             )}
           >
             <div
               className={cn(
-                "flex h-[52px] items-center justify-center",
-                isCollapsed ? "h-[52px]" : "px-2",
+                "flex h-fit items-center justify-center",
+                isCollapsed ? "h-fit w-fit" : "",
               )}
             >
-              <UserProfile />
+              <UserProfile isCollapsed={isCollapsed} />
             </div>
             <Separator />
             <Nav
