@@ -34,7 +34,7 @@ import {
   FaSearch as Search,
 } from "react-icons/fa";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
-
+import { MdEdit } from "react-icons/md";
 import { FaChartSimple as Chart } from "react-icons/fa6";
 import { FaClipboardList as Events } from "react-icons/fa";
 import { FaUsers as Users } from "react-icons/fa";
@@ -200,4 +200,5 @@ export const Icons = {
   youtube: Youtube,
   whatsapp: WhatsappIcon,
   logOut: LogOut,
+  edit: MdEdit,
 };
