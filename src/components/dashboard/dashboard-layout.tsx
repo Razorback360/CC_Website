@@ -11,6 +11,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useSession } from "next-auth/react";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -26,6 +27,11 @@ const DashboardLayout = ({
   children,
 }: DashboardLayoutProps) => {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+
+  const { data: session } = useSession({
+    // if not logged in, route to login page
+    required: true,
+  });
 
   return (
     <TooltipProvider delayDuration={0}>
