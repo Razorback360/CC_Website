@@ -118,7 +118,7 @@ export default function DashboardOverview({
                         >
                           <Avatar className="h-12 w-12">
                             <AvatarImage
-                              src={activity.Author.image ?? ""}
+                              src={activity.Author.profileImage ?? ""}
                               alt="Avatar"
                             />
                             <AvatarFallback>OM</AvatarFallback>

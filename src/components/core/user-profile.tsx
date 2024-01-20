@@ -58,7 +58,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         >
           {isCollapsed ? (
             <Avatar className="h-10 w-10">
-              <AvatarImage src={session?.user?.image ?? undefined} />
+              <AvatarImage src={session?.user?.profileImage ?? undefined} />
               <AvatarFallback>
                 <Skeleton className="group-hover:border" />
               </AvatarFallback>
@@ -67,7 +67,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
             <>
               <div className="flex items-center space-x-2">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={session?.user?.image ?? undefined} />
+                  <AvatarImage src={session?.user?.profileImage ?? undefined} />
                   <AvatarFallback>
                     <Skeleton className="group-hover:border" />
                   </AvatarFallback>
