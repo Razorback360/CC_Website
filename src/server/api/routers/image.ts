@@ -1,9 +1,11 @@
 import { z } from "zod";
-
 import {
   createTRPCRouter,
+  protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { env } from "@/env.mjs";
+import { supabase } from "@/utils/supabase";
 
 export const imageRouter = createTRPCRouter({
   getImage: publicProcedure
@@ -65,4 +67,32 @@ export const imageRouter = createTRPCRouter({
         images,
       };
     }),
+  create: protectedProcedure
+  .input(z.object({src: z.string()}))
+  .mutation(async ({ctx, input}) => {
+    await ctx.db.image.create({
+      data: {
+        src: input.src
+      }
+    })
+  }),
+  delete: protectedProcedure
+  .input(z.object({id: z.string()}))
+  .mutation(async ({ctx, input}) => {
+    const image = await ctx.db.image.findUnique({
+      where: {
+        id: input.id
+      }
+    })
+    
+    await supabase.storage
+    .from(env.SUPABASE_IMAGE_BUCKET)
+    .remove([image?.src.split(`${env.SUPABASE_IMAGE_BUCKET}/`)[1] as string])
+
+    await ctx.db.image.delete({
+      where: {
+        id: input.id
+      }
+    })
+  })
 });
