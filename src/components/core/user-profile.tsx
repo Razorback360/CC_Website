@@ -78,7 +78,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
                       <Skeleton className="mb-1 h-5 w-40" />
                     )}
                   </h4>
-                  <div className="text-xs font-medium">
+                  <div className="text-xs font-medium text-muted-foreground truncate">
                     {session?.user?.email ?? <Skeleton className="h-4 w-20" />}
                   </div>
                 </div>
