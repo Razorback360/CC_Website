@@ -111,17 +111,20 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
+            {/* // TODO @SauceX22 @Razorback360 add back routing once page ready */}
+            {/* //   onClick={() => router.push("/dashboard/profile")}> */}
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
+            {/* // TODO @SauceX22 @Razorback360 add back routing once page ready */}
+            {/* //   onClick={() => router.push("/dashboard/settings")}> */}
             <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        {/* do a dropdown menu sub for the theme toggle */}
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
