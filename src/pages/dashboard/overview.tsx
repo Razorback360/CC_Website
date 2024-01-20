@@ -7,8 +7,8 @@ import DashboardLayout from "@/components/dashboard/layout";
 
 const Dashboard = () => {
   return (
-    <DashboardLayout defaultLayout={undefined} navCollapsedSize={0}>
-      <DashboardOverview defaultLayout={undefined} />
+    <DashboardLayout defaultLayout={[265, 440, 655]} navCollapsedSize={0}>
+      <DashboardOverview />
     </DashboardLayout>
   );
 };

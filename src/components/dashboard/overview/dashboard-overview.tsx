@@ -16,13 +16,21 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 
-interface DashboardProps {
-  defaultLayout: number[] | undefined;
-}
+export default function DashboardOverview() {
+  // read cookie to get default layout for resizable panels
+  const defaultLayout = React.useMemo(() => {
+    const layoutCookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("react-resizable-panels:layout="));
 
-export default function DashboardOverview({
-  defaultLayout = [440, 655],
-}: DashboardProps) {
+    if (layoutCookie) {
+      const layout = layoutCookie.split("=")[1];
+      if (layout) return JSON.parse(layout) as number[];
+    }
+
+    return [200, 600, 600];
+  }, []);
+
   return (
     <>
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
