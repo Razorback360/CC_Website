@@ -141,7 +141,8 @@ export default function DashboardOverview({
                             </p>
                           </div>
                           <div className="ml-auto ">
-                            {format(activity.date, "dd MMM yyyy")}
+                            {/* format date with time */}
+                            {format(activity.date, "dd MMM yyyy - hh:mm a")}
                           </div>
                         </Button>
                       );
