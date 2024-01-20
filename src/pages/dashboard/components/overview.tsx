@@ -62,8 +62,8 @@ export function DashboardOverview({
             defaultSize={defaultLayout[0]}
             collapsedSize={navCollapsedSize}
             collapsible={true}
-            minSize={15}
-            maxSize={20}
+            minSize={17}
+            maxSize={22}
             onCollapse={() => {
               setIsCollapsed(true);
               document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(

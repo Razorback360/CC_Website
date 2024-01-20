@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import React from "react";
 import {
   ChevronRight,
@@ -31,6 +32,7 @@ import { useTranslation } from "next-i18next";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn, handleLocaleChange } from "@/lib/utils";
 import { useRouter } from "next/router";
+import { Icons } from "@/components/icons";
 
 type Props = {
   isCollapsed?: boolean;
@@ -39,6 +41,7 @@ type Props = {
 export const UserProfile = ({ isCollapsed }: Props) => {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { setTheme, theme } = useTheme();
   const router = useRouter();
 
   const { t } = useTranslation("common");
@@ -83,7 +86,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
               {session?.user && (
                 <ChevronRight
                   className={cn(
-                    "transition-all duration-300 ease-in-out transform",
+                    "mx-2 min-w-fit transition-all duration-300 ease-in-out transform",
                     isMenuOpen ? "rotate-90" : "",
                   )}
                 />
@@ -118,6 +121,35 @@ export const UserProfile = ({ isCollapsed }: Props) => {
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+        {/* do a dropdown menu sub for the theme toggle */}
+        <DropdownMenuSeparator />
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            {theme === "light" ? (
+              <Icons.sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            ) : (
+              <Icons.moon className="mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            )}
+            <span>Toggle theme</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              {theme === "light" && <Icons.check className="mr-2 h-4 w-4" />}
+              Light
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              {theme === "dark" && <Icons.check className="mr-2 h-4 w-4" />}
+              Dark
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              {theme === "system" && <Icons.check className="mr-2 h-4 w-4" />}
+              System
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSeparator />
+        {/* --------- */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Languages className="mr-2 h-4 w-4" />
@@ -130,6 +162,9 @@ export const UserProfile = ({ isCollapsed }: Props) => {
                 onClick={async () => await handleLocaleChange(router, "ar")}
                 className="cursor-pointer"
               >
+                {router.locale === "ar" && (
+                  <Icons.check className="mr-2 h-4 w-4" />
+                )}
                 العربية
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -137,12 +172,10 @@ export const UserProfile = ({ isCollapsed }: Props) => {
                 onClick={async () => await handleLocaleChange(router, "en")}
                 className="cursor-pointer"
               >
+                {router.locale === "en" && (
+                  <Icons.check className="mr-2 h-4 w-4" />
+                )}
                 English
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                <span>More...</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
