@@ -43,15 +43,17 @@ export const systemRouter = createTRPCRouter({
   createSystemUpdate: protectedProcedure
     .input(
       z.object({
-        type: z.nativeEnum(SystemUpdateType),
+        referenceId: z.string().min(1),
         description: z.string().min(1),
+        type: z.nativeEnum(SystemUpdateType),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.systemUpdate.create({
         data: {
-          type: input.type,
+          referenceId: input.referenceId,
           description: input.description,
+          type: input.type,
           Author: {
             connect: {
               id: ctx.session.user.id,
