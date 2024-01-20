@@ -1,18 +1,13 @@
 import React from "react";
-import Sidebar from "@/components/dashboard/Sidebar";
-import { Icons } from "@/components/icons";
-import EventCard from "@/components/dashboard/EventCard";
-import DashboardOverview  from "./components/overview";
+import DashboardOverview from "@/components/dashboard/overview/dashboard-overview";
+import DashboardLayout from "@/components/dashboard/dashboard-layout";
 
-const Dashboard = () => {
+const Overview = () => {
   return (
-    <div className="w-full h-full">
-      <DashboardOverview
-        defaultLayout={undefined}
-        navCollapsedSize={0}
-      />
-    </div>
+    <DashboardLayout defaultLayout={[265, 440, 655]} navCollapsedSize={0}>
+      <DashboardOverview defaultLayout={[265, 440, 655]} />
+    </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default Overview;

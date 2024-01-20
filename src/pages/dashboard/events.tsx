@@ -1,12 +1,13 @@
 import React from "react";
-import DashboardEvents from "@/pages/dashboard/components/events-dashboard";
+import DashboardEvents from "@/components/dashboard/events/dashboard-events";
+import DashboardLayout from "@/components/dashboard/dashboard-layout";
 
-const Dashboard = () => {
+const Events = () => {
   return (
-    <div className="w-screen h-screen">
-      <DashboardEvents defaultLayout={undefined} navCollapsedSize={0} />
-    </div>
+    <DashboardLayout defaultLayout={[265, 600, 600]} navCollapsedSize={0}>
+      <DashboardEvents defaultLayout={[265, 600, 600]} />
+    </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default Events;
