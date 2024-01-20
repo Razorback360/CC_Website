@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { z } from "zod";
 import {
   createTRPCRouter,
@@ -68,11 +72,13 @@ export const imageRouter = createTRPCRouter({
       };
     }),
   create: protectedProcedure
-  .input(z.object({src: z.string()}))
+  .input(z.object({src: z.string(), eventId: z.string()}))
   .mutation(async ({ctx, input}) => {
     await ctx.db.image.create({
       data: {
-        src: input.src
+        src: input.src,
+        eventId: input.eventId,
+        uploaderId: ctx.session.user.id
       }
     })
   }),
@@ -87,7 +93,7 @@ export const imageRouter = createTRPCRouter({
     
     await supabase.storage
     .from(env.SUPABASE_IMAGE_BUCKET)
-    .remove([image?.src.split(`${env.SUPABASE_IMAGE_BUCKET}/`)[1] as string])
+    .remove([image?.src.split(`${env.SUPABASE_IMAGE_BUCKET}/`)[1]!])
 
     await ctx.db.image.delete({
       where: {
