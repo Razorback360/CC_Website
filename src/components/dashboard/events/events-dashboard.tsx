@@ -12,7 +12,7 @@ import {
 import { Icons } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import Nav from "@/components/dashboard/components/nav";
+import Nav from "@/components/dashboard/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -48,7 +48,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { RouterOutputs, api } from "@/utils/api";
-import EventList from "@/components/dashboard/components/events-list";
+import EventList from "@/components/dashboard/events/events-list";
 import EventDisplay from "./event-display";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Event } from "@prisma/client";
