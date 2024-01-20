@@ -19,11 +19,10 @@ export default function DashboardOverview({
   return (
     <>
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-        <div className="flex items-center px-4 py-4">
-          <h1 className="text-4xl font-bold">Club Overview</h1>
+        <div className="flex items-center p-4">
+          <h1 className="text-3xl font-bold">Club Overview</h1>
         </div>
         <Separator />
-        <h1 className="font-semibold text-lg m-5 -mb-1">Club Statistics</h1>
         <div className="grid grid-cols-2 gap-2 p-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -71,31 +70,39 @@ export default function DashboardOverview({
           </Card>
         </div>
         <Separator className="m-auto w-11/12" />
-        <h1 className="font-semibold text-lg m-5 -mb-1">Recent Activity</h1>
-        <ScrollArea className="h-[48vh] border pt-5 mx-5 mt-5 rounded-xl">
-          <div className="space-y-8 mx-5">
-            {/* TODO: Codeblock below up until comment to be used as a return to recentActivity.map() */}
-            <div className="flex items-center border rounded-xl px-5 py-3">
-              <Avatar className="h-9 w-9">
-                <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                <AvatarFallback>OM</AvatarFallback>
-              </Avatar>
-              <div className="ml-4 space-y-1">
-                <p className="text-sm font-medium leading-none">
-                  Olivia Martin
-                </p>
-                <p className="text-sm text-muted-foreground">Created event</p>
-              </div>
-              <div className="ml-auto font-medium">2024/06/02</div>
-            </div>
-          </div>
-          {/* END */}
-        </ScrollArea>
+        <Card className="m-4">
+          <CardHeader className="flex flex-row items-center ">
+            <Icons.history size={28} className="mr-4" />
+            <CardTitle className="font-semibold text-2xl m-0">
+              Recent Activity
+            </CardTitle>
+          </CardHeader>
+          <Separator />
+          <CardContent className="h-[48vh] p-4">
+            <ScrollArea className="">
+              {/* TODO: Codeblock below up until comment to be used as a return to recentActivity.map() */}
+              <Card className="flex items-center px-4 py-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarImage src="/avatars/01.png" alt="Avatar" />
+                  <AvatarFallback>OM</AvatarFallback>
+                </Avatar>
+                <div className="ml-4 space-y-1">
+                  <p className="text-sm font-medium leading-none">
+                    Olivia Martin
+                  </p>
+                  <p className="text-sm text-muted-foreground">Created event</p>
+                </div>
+                <div className="ml-auto font-medium">2024/06/02</div>
+              </Card>
+              {/* END */}
+            </ScrollArea>
+          </CardContent>
+        </Card>
       </ResizablePanel>
       <ResizableHandle withHandle={false} />
       <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
         <div className="flex items-center p-4">
-          <h1 className="font-bold text-4xl">Upcoming Events</h1>
+          <h1 className="font-bold text-3xl">Upcoming Events</h1>
         </div>
         <Separator />
         <ScrollArea className="h-[95vh]">

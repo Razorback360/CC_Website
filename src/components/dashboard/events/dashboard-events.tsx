@@ -98,8 +98,8 @@ export default function DashboardEvents({
       }}
     >
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-        <div className="flex items-center px-4 py-2 max-h-16">
-          <h1 className="text-xl font-bold">Events Management</h1>
+        <div className="flex items-center p-4 ">
+          <h1 className="text-3xl font-bold">Events Management</h1>
           <Tooltip>
             <TooltipTrigger asChild className="ml-auto">
               <Button
@@ -128,8 +128,8 @@ export default function DashboardEvents({
       </ResizablePanel>
       <ResizableHandle withHandle={false} />
       <ResizablePanel defaultSize={defaultLayout[2]}>
-        <div className={cn("ml-auto flex items-center px-4 py-2 max-h-16")}>
-          <h1 className="font-bold text-lg">
+        <div className={cn("ml-auto flex items-center p-4")}>
+          <h1 className="font-bold text-3xl">
             {selectedEvent
               ? `Editing Event: ${selectedEvent?.title}`
               : "Creating an Event"}
