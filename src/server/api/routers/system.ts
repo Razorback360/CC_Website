@@ -35,6 +35,9 @@ import { SystemUpdateType } from "@prisma/client";
 export const systemRouter = createTRPCRouter({
   getSystemUpdates: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.systemUpdate.findMany({
+      include: {
+        Author: true,
+      },
       orderBy: {
         date: "desc",
       },
