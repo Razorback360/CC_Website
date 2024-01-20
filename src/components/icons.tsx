@@ -32,6 +32,7 @@ import {
   FaTwitter as TwitterIcon,
   FaLinkedin as LinkedinIcon,
   FaSearch as Search,
+  FaHistory as History,
 } from "react-icons/fa";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
@@ -201,4 +202,5 @@ export const Icons = {
   whatsapp: WhatsappIcon,
   logOut: LogOut,
   edit: MdEdit,
+  history: History,
 };
