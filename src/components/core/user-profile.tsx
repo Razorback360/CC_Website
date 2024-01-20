@@ -163,7 +163,6 @@ export const UserProfile = ({ isCollapsed }: Props) => {
               <DropdownMenuItem
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
                 onClick={async () => await handleLocaleChange(router, "ar")}
-                className="cursor-pointer"
               >
                 {router.locale === "ar" && (
                   <Icons.check className="mr-2 h-4 w-4" />
@@ -173,7 +172,6 @@ export const UserProfile = ({ isCollapsed }: Props) => {
               <DropdownMenuItem
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
                 onClick={async () => await handleLocaleChange(router, "en")}
-                className="cursor-pointer"
               >
                 {router.locale === "en" && (
                   <Icons.check className="mr-2 h-4 w-4" />
