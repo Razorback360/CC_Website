@@ -53,6 +53,8 @@ import EventList from "@/pages/dashboard/components/events-list";
 import EventDisplay from "./event-display";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Event } from "@prisma/client";
+import DeleteEventPopup from "@/components/popups/delete-event-popup";
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 interface DashboardEventsProps {
   defaultLayout: number[] | undefined;
@@ -70,7 +72,7 @@ export default function DashboardEvents({
   const [isCreatingNewEvent, setIsCreatingNewEvent] = useState(false);
 
   // if there's no data returned from the api, use placeholder data
-  const { data: events } = api.event.getAll.useQuery(undefined, {
+  const { data: events, refetch } = api.event.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       if (!selectedEvent && !isCreatingNewEvent) {
         selectEvent(data[0]);
@@ -79,128 +81,168 @@ export default function DashboardEvents({
     },
   });
 
+  const apiUtils = api.useUtils();
+
+  const { mutateAsync: deleteEvent, isLoading: loadingDelete } =
+    api.event.delete.useMutation({
+      onSuccess: async (data) => {
+        selectEvent(data);
+        await apiUtils.event.getAll.invalidate();
+        toast({
+          title: "Event Deleted!",
+          description: "Your event has been deleted successfully.",
+        });
+      },
+    });
+
   return (
-    <TooltipProvider delayDuration={0}>
-      <ResizablePanelGroup
-        direction="horizontal"
-        onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes,
-          )}`;
-        }}
-        className="h-full items-stretch"
-      >
-        <ResizablePanel
-          defaultSize={defaultLayout[0]}
-          collapsedSize={navCollapsedSize}
-          collapsible={true}
-          minSize={15}
-          maxSize={20}
-          onCollapse={() => {
-            setIsCollapsed(true);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
+    <DeleteEventPopup
+      eventTitle={selectedEvent?.title ?? "_UNDEFINED_"}
+      onConfirm={async () => {
+        if (!selectedEvent) return;
+        await deleteEvent({ id: selectedEvent.id });
+      }}
+    >
+      <TooltipProvider delayDuration={0}>
+        <ResizablePanelGroup
+          direction="horizontal"
+          onLayout={(sizes: number[]) => {
+            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+              sizes,
             )}`;
           }}
-          onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
-            )}`;
-          }}
-          className={cn(
-            isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
-          )}
+          className="h-full items-stretch"
         >
-          <div
+          <ResizablePanel
+            defaultSize={defaultLayout[0]}
+            collapsedSize={navCollapsedSize}
+            collapsible={true}
+            minSize={15}
+            maxSize={20}
+            onCollapse={() => {
+              setIsCollapsed(true);
+              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+                true,
+              )}`;
+            }}
+            onExpand={() => {
+              setIsCollapsed(false);
+              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+                false,
+              )}`;
+            }}
             className={cn(
-              "flex h-fit py-3 items-center justify-center max-h-16",
-              isCollapsed ? "h-fit" : "px-2",
+              isCollapsed &&
+                "min-w-[50px] transition-all duration-300 ease-in-out",
             )}
           >
-            <UserProfile />
-          </div>
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Overview",
-                label: "128",
-                icon: Icons.chart,
-                variant: "ghost",
-                href: "/dashboard/test",
-              },
-              {
-                title: "Events",
-                label: "9",
-                icon: Icons.events,
-                variant: "default",
-                href: "/dashboard/events",
-              },
-              {
-                title: "Members",
-                label: "",
-                icon: Icons.users,
-                variant: "ghost",
-                href: "#",
-              },
-              {
-                title: "Privileges",
-                label: "23",
-                icon: Icons.dCheck,
-                variant: "ghost",
-                href: "#",
-              },
-            ]}
-          />
-        </ResizablePanel>
-        <ResizableHandle withHandle={false} />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-          <div className="flex items-center px-4 py-2 h-16">
-            <h1 className="text-xl font-bold">Events Management</h1>
-            <Tooltip>
-              <TooltipTrigger asChild className="ml-auto">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => {
-                    selectEvent(undefined);
-                    setIsCreatingNewEvent(true);
-                  }}
-                >
-                  <Icons.add />
-                  <span className="sr-only">Reply</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Reply</TooltipContent>
-            </Tooltip>
-          </div>
-          <Separator />
-          <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <EventList
-              events={events ?? []}
-              isCreatingNewEvent={isCreatingNewEvent}
-              setIsCreatingNewEvent={setIsCreatingNewEvent}
+            <div
+              className={cn(
+                "flex h-fit py-3 items-center justify-center max-h-16",
+                isCollapsed ? "h-fit" : "px-2",
+              )}
+            >
+              <UserProfile />
+            </div>
+            <Separator />
+            <Nav
+              isCollapsed={isCollapsed}
+              links={[
+                {
+                  title: "Overview",
+                  label: "128",
+                  icon: Icons.chart,
+                  variant: "ghost",
+                  href: "/dashboard/test",
+                },
+                {
+                  title: "Events",
+                  label: "9",
+                  icon: Icons.events,
+                  variant: "default",
+                  href: "/dashboard/events",
+                },
+                {
+                  title: "Members",
+                  label: "",
+                  icon: Icons.users,
+                  variant: "ghost",
+                  href: "#",
+                },
+                {
+                  title: "Privileges",
+                  label: "23",
+                  icon: Icons.dCheck,
+                  variant: "ghost",
+                  href: "#",
+                },
+              ]}
             />
-          </div>
-        </ResizablePanel>
-        <ResizableHandle withHandle={false} />
-        <ResizablePanel defaultSize={defaultLayout[2]}>
-          <div className="ml-auto flex items-center p-5 max-h-16">
-            <h1 className="font-semibold text-lg">
-              {selectedEvent
-                ? `Editing ${selectedEvent?.title}`
-                : "Creating an Event"}
-            </h1>
-          </div>
-          <Separator />
-          <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
-            <EventDisplay isCreatingNewEvent={isCreatingNewEvent} />
-          </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </TooltipProvider>
+          </ResizablePanel>
+          <ResizableHandle withHandle={false} />
+          <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+            <div className="flex items-center px-4 py-2 max-h-16">
+              <h1 className="text-xl font-bold">Events Management</h1>
+              <Tooltip>
+                <TooltipTrigger asChild className="ml-auto">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      selectEvent(undefined);
+                      setIsCreatingNewEvent(true);
+                    }}
+                  >
+                    <Icons.add />
+                    <span className="sr-only">Create Event</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Create Event</TooltipContent>
+              </Tooltip>
+            </div>
+            <Separator />
+            <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <EventList
+                events={events ?? []}
+                isCreatingNewEvent={isCreatingNewEvent}
+                setIsCreatingNewEvent={setIsCreatingNewEvent}
+              />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle withHandle={false} />
+          <ResizablePanel defaultSize={defaultLayout[2]}>
+            <div className={cn("ml-auto flex items-center px-4 py-2 max-h-16")}>
+              <h1 className="font-semibold text-lg">
+                {selectedEvent
+                  ? `Editing Event: ${selectedEvent?.title}`
+                  : "Creating an Event"}
+              </h1>
+              <Tooltip>
+                <TooltipTrigger asChild className="ml-auto">
+                  <AlertDialogTrigger
+                    asChild
+                    disabled={!selectedEvent?.id || loadingDelete}
+                  >
+                    <Button
+                      variant={!selectedEvent?.id ? "ghost" : "destructive"}
+                      size="icon"
+                      disabled={!selectedEvent || loadingDelete}
+                    >
+                      <Icons.trash />
+                      <span className="sr-only">Delete Event</span>
+                    </Button>
+                  </AlertDialogTrigger>
+                </TooltipTrigger>
+                <TooltipContent>Delete Event</TooltipContent>
+              </Tooltip>
+            </div>
+            <Separator />
+            <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
+              <EventDisplay isCreatingNewEvent={isCreatingNewEvent} />
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </TooltipProvider>
+    </DeleteEventPopup>
   );
 }

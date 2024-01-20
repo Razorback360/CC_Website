@@ -62,12 +62,12 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof addEventFormSchema>) {
+  async function onSubmit(data: z.infer<typeof addEventFormSchema>) {
     if (selectedEvent && !isCreatingNewEvent) {
-      updateEvent({ ...data, id: selectedEvent.id });
+      await updateEvent({ ...data, id: selectedEvent.id });
     }
     if (isCreatingNewEvent) {
-      createEvent(data);
+      await createEvent(data);
     }
   }
 
@@ -75,10 +75,13 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
 
   const { data: categories } = api.event.getAllCategories.useQuery();
 
-  const { mutate: createEvent, isLoading: loadingCreate } =
+  const apiUtils = api.useUtils();
+
+  const { mutateAsync: createEvent, isLoading: loadingCreate } =
     api.event.create.useMutation({
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         selectEvent(data);
+        await apiUtils.event.getAll.invalidate();
         toast({
           title: "Event Created!",
           description: "Your event has been created successfully.",
@@ -86,10 +89,11 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       },
     });
 
-  const { mutate: updateEvent, isLoading: loadingUpdate } =
+  const { mutateAsync: updateEvent, isLoading: loadingUpdate } =
     api.event.update.useMutation({
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         selectEvent(data);
+        await apiUtils.event.getAll.invalidate();
         toast({
           title: "Event Updated!",
           description: "Your event has been updated successfully.",
