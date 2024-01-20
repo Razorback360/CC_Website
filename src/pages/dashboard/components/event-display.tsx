@@ -166,6 +166,26 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                 </div>
               )}
             />
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <div className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="link">Link</FormLabel>
+                  <FormControl className="">
+                    <Textarea
+                      className="max-h-72"
+                      id="link"
+                      placeholder="Event Link"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.link?.message}
+                  </FormMessage>
+                </div>
+              )}
+            />
             <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
               <FormField
                 control={form.control}
