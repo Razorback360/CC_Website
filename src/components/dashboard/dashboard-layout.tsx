@@ -1,9 +1,7 @@
 import * as React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 import { UserProfile } from "@/components/core/user-profile";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Nav from "@/components/dashboard/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -13,8 +11,6 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -26,7 +22,7 @@ type DashboardLayoutProps = {
 const DashboardLayout = ({
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
-  navCollapsedSize,
+  navCollapsedSize = 0,
   children,
 }: DashboardLayoutProps) => {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
@@ -80,7 +76,7 @@ const DashboardLayout = ({
                 title: "Overview",
                 label: "128",
                 icon: Icons.chart,
-                variant: "default",
+                variant: "ghost",
                 href: "/dashboard/overview",
               },
               {
@@ -107,7 +103,7 @@ const DashboardLayout = ({
             ]}
           />
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle withHandle={false} />
         {children}
       </ResizablePanelGroup>
     </TooltipProvider>

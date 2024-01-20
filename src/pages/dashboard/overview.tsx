@@ -1,16 +1,13 @@
 import React from "react";
-import Sidebar from "@/components/dashboard/Sidebar";
-import { Icons } from "@/components/icons";
-import EventCard from "@/components/dashboard/EventCard";
-import DashboardOverview from "../../components/dashboard/overview/dashboard-overview";
-import DashboardLayout from "@/components/dashboard/layout";
+import DashboardOverview from "@/components/dashboard/overview/dashboard-overview";
+import DashboardLayout from "@/components/dashboard/dashboard-layout";
 
-const Dashboard = () => {
+const Overview = () => {
   return (
     <DashboardLayout defaultLayout={[265, 440, 655]} navCollapsedSize={0}>
-      <DashboardOverview />
+      <DashboardOverview defaultLayout={[265, 440, 655]} />
     </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default Overview;

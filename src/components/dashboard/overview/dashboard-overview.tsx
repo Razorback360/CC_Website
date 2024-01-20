@@ -2,35 +2,20 @@ import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
-import { UserProfile } from "@/components/core/user-profile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Nav from "@/components/dashboard/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 
-export default function DashboardOverview() {
-  // read cookie to get default layout for resizable panels
-  const defaultLayout = React.useMemo(() => {
-    const layoutCookie = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("react-resizable-panels:layout="));
+interface DashboardLayoutProps {
+  defaultLayout: number[];
+}
 
-    if (layoutCookie) {
-      const layout = layoutCookie.split("=")[1];
-      if (layout) return JSON.parse(layout) as number[];
-    }
-
-    return [200, 600, 600];
-  }, []);
-
+export default function DashboardOverview({
+  defaultLayout,
+}: DashboardLayoutProps) {
   return (
     <>
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
