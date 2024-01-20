@@ -52,7 +52,7 @@
     --ring: 221.2 83.2% 53.3%;
 
     /* Border-radius for elements */
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -103,6 +103,12 @@
     /* Color for focus rings in dark theme */
     --ring: 224.3 76.3% 48%;
   }
+}
+
+/* Transparent Effect */
+.transparent {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
 }
 
 @layer base {
