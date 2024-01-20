@@ -23,7 +23,7 @@ export default function EventList({
   const { selectedEvent, selectEvent } = useSelectedEvent();
 
   return (
-    <ScrollArea className="h-full my-5">
+    <ScrollArea className="h-[92vh] my-5">
       <div className="flex flex-col gap-2 p-4 pt-0">
         {events?.map((event, index) => {
           return (
