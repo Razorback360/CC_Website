@@ -2,6 +2,7 @@ import { eventRouter } from "@/server/api/routers/event";
 import { semesterRouter } from "@/server/api/routers/semester";
 import { userRouter } from "@/server/api/routers/user";
 import { utilsRouter } from "@/server/api/routers/utils";
+import { imageRouter } from "@/server/api/routers/image";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   semester: semesterRouter,
   user: userRouter,
   utils: utilsRouter,
+  image: imageRouter
 });
 
 // export type definition of API

@@ -31,6 +31,10 @@ export const env = createEnv({
     AZURE_AD_B2C_TENANT_NAME: z.string().min(1),
     AZURE_AD_B2C_CLIENT_ID: z.string().min(1),
     AZURE_AD_B2C_CLIENT_SECRET: z.string().min(1),
+    SUPABASE_PROJECT_URL: z.string().min(1),
+    SUPABASE_API_KEY: z.string().min(1),
+    SUPABASE_IMAGE_BUCKET: z.string().min(1),
+    SUPABASE_FILE_BUCKET: z.string().min(1)
     // Add ` on ID and SECRET if you want to make sure they're not empty
   },
 
@@ -55,6 +59,10 @@ export const env = createEnv({
     AZURE_AD_B2C_TENANT_NAME: process.env.AZURE_AD_B2C_TENANT_NAME,
     AZURE_AD_B2C_CLIENT_ID: process.env.AZURE_AD_B2C_CLIENT_ID,
     AZURE_AD_B2C_CLIENT_SECRET: process.env.AZURE_AD_B2C_CLIENT_SECRET,
+    SUPABASE_PROJECT_URL: process.env.SUPABASE_PROJECT_URL,
+    SUPABASE_API_KEY: process.env.SUPABASE_API_KEY,
+    SUPABASE_IMAGE_BUCKET: process.env.SUPABASE_IMAGE_BUCKET,
+    SUPABASE_FILE_BUCKET: process.env.SUPABASE_FILE_BUCKET
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -59,14 +59,16 @@ model User {
     sessions      Session[]
 
     // <Custom>
-    studentId String
-    role      UserRole @default(MEMBER)
+    studentId    String
+    profileImage String
+    role         UserRole @default(MEMBER)
 
     links     String[]
     tags      String[]
     Semesters Semester[]
     Events    Event[]
     // </Custom>
+    Image     Image[]
 
     @@unique([id, name])
 }
@@ -94,6 +96,7 @@ model Event {
     date        DateTime
 
     Organizers User[]
+    Images     Image[]
 
     Semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
     semesterId String
@@ -110,4 +113,15 @@ model Semester {
 
     Members User[]
     Events  Event[]
+}
+
+model Image {
+    id  String @id @default(cuid())
+    src String @db.Text
+
+    Event   Event  @relation(fields: [eventId], references: [id])
+    eventId String
+
+    Uploader   User   @relation(fields: [uploaderId], references: [id])
+    uploaderId String
 }
