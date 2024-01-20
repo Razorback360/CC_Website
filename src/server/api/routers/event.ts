@@ -13,6 +13,9 @@ export const eventRouter = createTRPCRouter({
         Semester: true,
         Category: true,
       },
+      orderBy: {
+        date: "asc",
+      },
     });
   }),
   getAllCategories: protectedProcedure.query(async ({ ctx }) => {
