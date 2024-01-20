@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns"
+import { format } from "date-fns";
 
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { Icons } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -40,7 +40,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 const addEventFormSchema = z.object({
@@ -63,7 +63,7 @@ export default function DashboardEvents({
   navCollapsedSize,
 }: MailProps) {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
-  const [date, setDate] = useState<Date>()
+  const [date, setDate] = useState<Date>();
   const form = useForm<z.infer<typeof addEventFormSchema>>({
     resolver: zodResolver(addEventFormSchema),
     defaultValues: {
@@ -106,7 +106,6 @@ export default function DashboardEvents({
     });
   }
 
-
   return (
     <div className="h-screen w-screen">
       <TooltipProvider delayDuration={0}>
@@ -139,7 +138,7 @@ export default function DashboardEvents({
             }}
             className={cn(
               isCollapsed &&
-              "min-w-[50px] transition-all duration-300 ease-in-out",
+                "min-w-[50px] transition-all duration-300 ease-in-out",
             )}
           >
             <div
@@ -159,28 +158,28 @@ export default function DashboardEvents({
                   label: "128",
                   icon: Icons.chart,
                   variant: "ghost",
-                  href: "/dashboard/test"
+                  href: "/dashboard/overview",
                 },
                 {
                   title: "Events",
                   label: "9",
                   icon: Icons.events,
                   variant: "default",
-                  href: "/dashboard/events"
+                  href: "/dashboard/events",
                 },
                 {
                   title: "Members",
                   label: "",
                   icon: Icons.users,
                   variant: "ghost",
-                  href: "#"
+                  href: "#",
                 },
                 {
                   title: "Privileges",
                   label: "23",
                   icon: Icons.dCheck,
                   variant: "ghost",
-                  href: "#"
+                  href: "#",
                 },
               ]}
             />
@@ -189,21 +188,29 @@ export default function DashboardEvents({
           <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
             <div className="flex items-center px-4 py-3">
               <h1 className="text-xl font-bold">Events Management</h1>
-
             </div>
             <Separator />
             <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <h1 className="font-semibold text-lg mb-2">Create an Event</h1>
               <ScrollArea className="h-screen mt-5 mb-5">
                 <div className="flex flex-col gap-2 p-4 pt-0">
-                  {[{ id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" }].map((event, index) => {
+                  {[
+                    {
+                      id: "#21321",
+                      title: "Test Event",
+                      category: "Workshop",
+                      date: "2024/06/02",
+                      semester: "232",
+                      description:
+                        "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                    },
+                  ].map((event, index) => {
                     return (
                       <button
                         key={index}
                         className={cn(
                           "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                         )}
-
                       >
                         <div className="flex w-full flex-col gap-1">
                           <div className="flex items-center">
@@ -211,9 +218,7 @@ export default function DashboardEvents({
                               <div className="font-semibold">{event.title}</div>
                             </div>
                             <div
-                              className={cn(
-                                "ml-auto text-xs text-foreground"
-                              )}
+                              className={cn("ml-auto text-xs text-foreground")}
                             >
                               {event.date}
                             </div>
@@ -223,16 +228,11 @@ export default function DashboardEvents({
                           {event.description.substring(0, 300)}
                         </div>
                         <div className="flex items-center gap-2">
-
-                          <Badge variant="secondary">
-                            {event.category}
-                          </Badge>
-                          <Badge variant="secondary">
-                            {event.semester}
-                          </Badge>
+                          <Badge variant="secondary">{event.category}</Badge>
+                          <Badge variant="secondary">{event.semester}</Badge>
                         </div>
                       </button>
-                    )
+                    );
                   })}
                 </div>
               </ScrollArea>
@@ -241,20 +241,27 @@ export default function DashboardEvents({
           <ResizableHandle withHandle />
           <ResizablePanel defaultSize={defaultLayout[2]}>
             <div className="flex items-center px-4 py-3">
-              <h1 className="text-xl font-bold"><br /></h1>
+              <h1 className="text-xl font-bold">
+                <br />
+              </h1>
             </div>
             <Separator />
             <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <h1 className="font-semibold text-lg mb-2">Create an Event</h1>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
+                >
                   <div className="relative border p-2 rounded-lg">
                     <FormField
                       control={form.control}
                       name="title"
                       render={({ field }) => (
                         <>
-                          <FormLabel htmlFor="title" className="m-1">Title</FormLabel>
+                          <FormLabel htmlFor="title" className="m-1">
+                            Title
+                          </FormLabel>
                           <FormControl>
                             <Input
                               className="pl-3 mb-3 mt-2"
@@ -274,7 +281,9 @@ export default function DashboardEvents({
                       name="description"
                       render={({ field }) => (
                         <>
-                          <FormLabel htmlFor="description" className="m-1">Description</FormLabel>
+                          <FormLabel htmlFor="description" className="m-1">
+                            Description
+                          </FormLabel>
                           <FormControl>
                             <Textarea
                               className="pl-3 mb-3 mt-2"
@@ -293,25 +302,32 @@ export default function DashboardEvents({
                       <div className="flex flex-col">
                         <FormLabel className="m-1">Event Date</FormLabel>
                         <FormControl>
-                          <Popover >
+                          <Popover>
                             <PopoverTrigger asChild>
                               <Button
                                 variant={"outline"}
                                 className={cn(
                                   "w-[240px] justify-start text-left font-normal mt-2 mr-2",
-                                  !date && "text-muted-foreground"
+                                  !date && "text-muted-foreground",
                                 )}
                               >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
-                                {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                {date ? (
+                                  format(date, "PPP")
+                                ) : (
+                                  <span>Pick a date</span>
+                                )}
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
                               <Calendar
                                 mode="single"
                                 selected={date}
                                 onSelect={(date: Date | undefined) => {
-                                  if (date) form.setValue("date", date)
+                                  if (date) form.setValue("date", date);
                                 }}
                                 initialFocus
                               />
@@ -323,8 +339,14 @@ export default function DashboardEvents({
                         </FormMessage>
                       </div>
                       <div className="flex flex-col">
-                        <Label htmlFor="picture" className="m-1">Event Poster</Label>
-                        <Input id="picture" type="file" className="p-0 mt-2 w-[275px]" />
+                        <Label htmlFor="picture" className="m-1">
+                          Event Poster
+                        </Label>
+                        <Input
+                          id="picture"
+                          type="file"
+                          className="p-0 mt-2 w-[275px]"
+                        />
                       </div>
                     </div>
                     <div className="flex flex-row justify-between ">
@@ -334,7 +356,9 @@ export default function DashboardEvents({
                           name="semesterId"
                           render={({ field }) => (
                             <>
-                              <FormLabel htmlFor="semesterId" className="m-1">Semester</FormLabel>
+                              <FormLabel htmlFor="semesterId" className="m-1">
+                                Semester
+                              </FormLabel>
                               <FormControl>
                                 {/* Custom Combobox for Semester */}
                                 <Select onValueChange={field.onChange}>
@@ -344,9 +368,16 @@ export default function DashboardEvents({
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {[{ id: "test", name: "test" }].map((semester, index) => (
-                                      <SelectItem value={semester.id} key={index}>{semester.name}</SelectItem>
-                                    ))}
+                                    {[{ id: "test", name: "test" }].map(
+                                      (semester, index) => (
+                                        <SelectItem
+                                          value={semester.id}
+                                          key={index}
+                                        >
+                                          {semester.name}
+                                        </SelectItem>
+                                      ),
+                                    )}
                                   </SelectContent>
                                 </Select>
                               </FormControl>
@@ -363,7 +394,9 @@ export default function DashboardEvents({
                           name="categoryId"
                           render={({ field }) => (
                             <>
-                              <FormLabel htmlFor="categoryId" className="m-1">Category</FormLabel>
+                              <FormLabel htmlFor="categoryId" className="m-1">
+                                Category
+                              </FormLabel>
                               <FormControl>
                                 {/* Custom Combobox for Semester */}
                                 <Select onValueChange={field.onChange}>
@@ -373,9 +406,16 @@ export default function DashboardEvents({
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {[{ id: "test", name: "test" }].map((category, index) => (
-                                      <SelectItem value={category.id} key={index}>{category.name}</SelectItem>
-                                    ))}
+                                    {[{ id: "test", name: "test" }].map(
+                                      (category, index) => (
+                                        <SelectItem
+                                          value={category.id}
+                                          key={index}
+                                        >
+                                          {category.name}
+                                        </SelectItem>
+                                      ),
+                                    )}
                                   </SelectContent>
                                 </Select>
                               </FormControl>
@@ -387,7 +427,13 @@ export default function DashboardEvents({
                         />
                       </div>
                     </div>
-                    <Button variant="default" type="submit" className="w-full text-white mt-5">Create</Button>
+                    <Button
+                      variant="default"
+                      type="submit"
+                      className="w-full text-white mt-5"
+                    >
+                      Create
+                    </Button>
                   </div>
                 </form>
               </Form>
