@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -77,11 +77,23 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
 
   const apiUtils = api.useUtils();
 
+  const { mutateAsync: createSystemUpdate } =
+    api.system.createSystemUpdate.useMutation({
+      onSuccess: async (data) => {
+        await apiUtils.system.getSystemUpdates.invalidate();
+      },
+    });
+
   const { mutateAsync: createEvent, isLoading: loadingCreate } =
     api.event.create.useMutation({
       onSuccess: async (data) => {
         selectEvent(data);
         await apiUtils.event.getAll.invalidate();
+        await createSystemUpdate({
+          referenceId: data.id,
+          description: `Created a new event: ${data.title}`,
+          type: "EVENT_CREATE",
+        });
         toast({
           title: "Event Created!",
           description: "Your event has been created successfully.",
@@ -91,13 +103,91 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
 
   const { mutateAsync: updateEvent, isLoading: loadingUpdate } =
     api.event.update.useMutation({
-      onSuccess: async (data) => {
-        selectEvent(data);
-        await apiUtils.event.getAll.invalidate();
-        toast({
-          title: "Event Updated!",
-          description: "Your event has been updated successfully.",
-        });
+      onSettled: async (data, error, variables, context) => {
+        if (error) {
+          return;
+        }
+        if (data && selectedEvent) {
+          // filter out the old event from the selected event
+          const oldData = selectedEvent;
+
+          // Determine which fields were updated by comparing with the existing event
+          const updatedFields = [];
+
+          if (data.title !== oldData.title) updatedFields.push("title");
+
+          if (data.description !== oldData.description)
+            updatedFields.push("description");
+
+          if (!isSameDay(data.date, oldData.date)) updatedFields.push("date");
+
+          if (data.semesterId !== oldData.semesterId)
+            updatedFields.push("semesterId");
+
+          if (data.categoryId !== oldData.categoryId)
+            updatedFields.push("categoryId");
+
+          if (data.link !== oldData.link) updatedFields.push("link");
+
+          // TODO @SauceX22 poster changes system update
+          // if (data.organizers !== oldData.organizers) {
+          //    updatedFields.push("organizers");
+          // }
+          // TODO @SauceX22 organizer changes system update
+          // if (data.organizers !== oldData.organizers) {
+          //    updatedFields.push("organizers");
+          // }
+          // TODO @SauceX22 images changes system update
+          // if (data.images !== oldData.images) {
+          //    updatedFields.push("images");
+          // }
+
+          if (updatedFields.length > 0) {
+            // Construct a descriptive message based on the updated fields
+            // use the updatedFields array to construct the message (mention from and to values)
+            // e.g. "Title changed from 'Old Title' to 'New Title'"
+            // separate each field with a comma
+            // for semester and category, use the number of semester, and name of the category instead of the id
+            const updateDescription = `Updated event ${
+              data.title
+            } Updated fields: ${updatedFields
+              .map((field) => {
+                if (field === "semesterId") {
+                  return `"Semester" from "${semesters?.find(
+                    (semester) => semester.id === oldData.semesterId,
+                  )?.number}" to "${semesters?.find(
+                    (semester) => semester.id === data.semesterId,
+                  )?.number}"`;
+                }
+                if (field === "categoryId") {
+                  return `"Category" from "${categories?.find(
+                    (category) => category.id === oldData.categoryId,
+                  )?.name}" to "${categories?.find(
+                    (category) => category.id === data.categoryId,
+                  )?.name}"`;
+                }
+                return `"${field.charAt(0).toUpperCase()}${field.slice(
+                  1,
+                )}" from "${
+                  (oldData as Record<string, unknown>)[field] as string
+                }" to "${(data as Record<string, unknown>)[field] as string}"`;
+              })
+              .join(", ")}`;
+
+            // Create a system update with the specific type and description
+            await createSystemUpdate({
+              referenceId: data.id,
+              description: updateDescription,
+              type: "EVENT_UPDATE",
+            });
+          }
+          selectEvent(data);
+          await apiUtils.event.getAll.invalidate();
+          toast({
+            title: "Event Updated!",
+            description: "Your event has been updated successfully.",
+          });
+        }
       },
     });
 
