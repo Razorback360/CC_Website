@@ -12,8 +12,7 @@ import {
 import { Icons } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import UserProfile from "@/pages/dashboard/components/user-profile";
-import Nav from "@/pages/dashboard/components/nav";
+import Nav from "@/components/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -49,12 +48,13 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { RouterOutputs, api } from "@/utils/api";
-import EventList from "@/pages/dashboard/components/events-list";
+import EventList from "@/components/dashboard/components/events-list";
 import EventDisplay from "./event-display";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Event } from "@prisma/client";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { UserProfile } from "@/components/core/user-profile";
 
 interface DashboardEventsProps {
   defaultLayout: number[] | undefined;
@@ -71,7 +71,6 @@ export default function DashboardEvents({
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [isCreatingNewEvent, setIsCreatingNewEvent] = useState(false);
 
-  // if there's no data returned from the api, use placeholder data
   const { data: events, refetch } = api.event.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       if (!selectedEvent && !isCreatingNewEvent) {
@@ -142,7 +141,7 @@ export default function DashboardEvents({
                 isCollapsed ? "h-fit" : "px-2",
               )}
             >
-              <UserProfile />
+              <UserProfile isCollapsed={isCollapsed} />
             </div>
             <Separator />
             <Nav

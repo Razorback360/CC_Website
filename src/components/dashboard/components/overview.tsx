@@ -4,7 +4,7 @@ import { Icons } from "@/components/icons";
 
 import { UserProfile } from "@/components/core/user-profile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Nav from "@/pages/dashboard/components/nav";
+import Nav from "@/components/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";

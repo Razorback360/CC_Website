@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardEvents from "@/pages/dashboard/components/events-dashboard";
+import DashboardEvents from "@/components/dashboard/components/events-dashboard";
 
 const Dashboard = () => {
   return (
