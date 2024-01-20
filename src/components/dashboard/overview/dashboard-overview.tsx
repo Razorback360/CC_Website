@@ -19,55 +19,51 @@ export default function DashboardOverview({
   return (
     <>
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-        <div className="flex items-center px-4 py-3">
-          <h1 className="text-xl font-bold">Club Overview</h1>
+        <div className="flex items-center px-4 py-4">
+          <h1 className="text-4xl font-bold">Club Overview</h1>
         </div>
         <Separator />
         <h1 className="font-semibold text-lg m-5 -mb-1">Club Statistics</h1>
-        <div className="flex flex-row w-full justify-around">
-          <Card className="w-1/2 m-5">
+        <div className="grid grid-cols-2 gap-2 p-4">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Events
-              </CardTitle>
-              <Icons.events />
+              <CardTitle className="text-xl font-bold">Total Events</CardTitle>
+              <Icons.events size={28} />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">600</div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs mt-2 text-muted-foreground">
                 +20.1% from last month
               </p>
             </CardContent>
           </Card>
-          <Card className="w-1/2 m-5">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-xl font-bold">
                 Documentations
               </CardTitle>
-              <Icons.eventsRemain />
+              <Icons.eventsRemain size={28} />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">560</div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs mt-2 text-muted-foreground">
                 +180.1% from last month
               </p>
             </CardContent>
           </Card>
-        </div>
-        <div className="flex flex-row w-full -mt-5 justify-around">
-          <Card className="w-1/2 m-5">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Images</CardTitle>
-              <Icons.media />
+              <CardTitle className="text-xl font-bold">Images</CardTitle>
+              <Icons.media size={28} />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">400</div>
             </CardContent>
           </Card>
-          <Card className="w-1/2 m-5">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Members</CardTitle>
-              <Icons.users />
+              <CardTitle className="text-xl font-bold">Members</CardTitle>
+              <Icons.users size={28} />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">50</div>
@@ -96,17 +92,14 @@ export default function DashboardOverview({
           {/* END */}
         </ScrollArea>
       </ResizablePanel>
-      <ResizableHandle withHandle />
+      <ResizableHandle withHandle={false} />
       <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
-        <div className="flex items-center px-4 py-3">
-          <h1 className="text-xl font-bold">
-            <br />
-          </h1>
+        <div className="flex items-center p-4">
+          <h1 className="font-bold text-4xl">Upcoming Events</h1>
         </div>
         <Separator />
-        <h1 className="font-semibold text-lg m-5">Upcoming Events</h1>
-        <ScrollArea className="h-[87vh] ">
-          <div className="flex flex-col gap-2 p-4 pt-0">
+        <ScrollArea className="h-[95vh]">
+          <div className="flex flex-col gap-2 p-4">
             {[
               {
                 id: "#21321",

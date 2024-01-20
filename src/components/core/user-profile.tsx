@@ -53,7 +53,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
           variant="ghost"
           className={cn(
             "group flex h-full w-full flex-row items-center justify-between rounded-none",
-            isCollapsed ? "p-2" : "p-2",
+            isCollapsed ? "p-2" : "px-2 py-4",
           )}
         >
           {isCollapsed ? (

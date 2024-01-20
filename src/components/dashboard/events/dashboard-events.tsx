@@ -129,7 +129,7 @@ export default function DashboardEvents({
       <ResizableHandle withHandle={false} />
       <ResizablePanel defaultSize={defaultLayout[2]}>
         <div className={cn("ml-auto flex items-center px-4 py-2 max-h-16")}>
-          <h1 className="font-semibold text-lg">
+          <h1 className="font-bold text-lg">
             {selectedEvent
               ? `Editing Event: ${selectedEvent?.title}`
               : "Creating an Event"}
