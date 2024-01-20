@@ -1,35 +1,28 @@
 import * as React from "react";
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  File,
-  Inbox,
-  MessagesSquare,
-  PenBox,
-  Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
-} from "lucide-react";
-
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Icons } from "@/components/icons";
-
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
 import UserProfile from "@/pages/dashboard/components/user-profile";
-import RecentActivityDisplay from "@/pages/dashboard/components/recent-activity";
-import EventList from "@/pages/dashboard/components/events-list";
 import Nav from "@/pages/dashboard/components/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
 
 interface MailProps {
   defaultLayout: number[] | undefined;
@@ -76,7 +69,7 @@ export default function DashboardOverview({
             }}
             className={cn(
               isCollapsed &&
-                "min-w-[50px] transition-all duration-300 ease-in-out",
+              "min-w-[50px] transition-all duration-300 ease-in-out",
             )}
           >
             <div
@@ -97,6 +90,7 @@ export default function DashboardOverview({
                   icon: Icons.chart,
                   variant: "default",
                   href: "/dashboard/test",
+                  href: "/dashboard/overview"
                 },
                 {
                   title: "Events",
@@ -124,44 +118,144 @@ export default function DashboardOverview({
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-            <Tabs defaultValue="upcoming-events">
-              <div className="flex items-center px-4 py-2">
-                <h1 className="text-xl font-bold">Inbox</h1>
-                <TabsList className="ml-auto">
-                  <TabsTrigger
-                    value="upcoming-events"
-                    className="text-zinc-600 dark:text-zinc-200"
-                  >
-                    Upcoming Events
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="other"
-                    className="text-zinc-600 dark:text-zinc-200"
-                  >
-                    Other
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-              <Separator />
-              <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <form>
-                  <div className="relative">
-                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search" className="pl-8" />
+            <div className="flex items-center px-4 py-3">
+              <h1 className="text-xl font-bold">Club Overview</h1>
+            </div>
+            <Separator />
+            <h1 className="font-semibold text-lg m-5 -mb-1">Club Statistics</h1>
+            <div className="flex flex-row w-full justify-around">
+              <Card className="w-1/2 m-5">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Total Events
+                  </CardTitle>
+                  <Icons.events />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">600</div>
+                  <p className="text-xs text-muted-foreground">
+                    +20.1% from last month
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="w-1/2 m-5">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Documentations
+                  </CardTitle>
+                  <Icons.eventsRemain />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">560</div>
+                  <p className="text-xs text-muted-foreground">
+                    +180.1% from last month
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="flex flex-row w-full -mt-5 justify-around">
+              <Card className="w-1/2 m-5">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Images
+                  </CardTitle>
+                  <Icons.media />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">400</div>
+                </CardContent>
+              </Card>
+              <Card className="w-1/2 m-5">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Members
+                  </CardTitle>
+                  <Icons.users />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">50</div>
+                </CardContent>
+              </Card>
+            </div>
+            <Separator className="m-auto w-11/12" />
+            <h1 className="font-semibold text-lg m-5 -mb-1">Recent Activity</h1>
+            <ScrollArea className="h-[48vh] border pt-5 mx-5 mt-5 rounded-xl">
+              <div className="space-y-8 mx-5">
+                {/* TODO: Codeblock below up until comment to be used as a return to recentActivity.map() */}
+                <div className="flex items-center border rounded-xl px-5 py-3">
+                  <Avatar className="h-9 w-9">
+                    <AvatarImage src="/avatars/01.png" alt="Avatar" />
+                    <AvatarFallback>OM</AvatarFallback>
+                  </Avatar>
+                  <div className="ml-4 space-y-1">
+                    <p className="text-sm font-medium leading-none">Olivia Martin</p>
+                    <p className="text-sm text-muted-foreground">
+                      Created event
+                    </p>
                   </div>
-                </form>
+                  <div className="ml-auto font-medium">2024/06/02</div>
+                </div>
               </div>
-              <TabsContent value="upcoming-events" className="m-0">
-                {/* <EventList /> */}
-              </TabsContent>
-              <TabsContent value="other" className="m-0">
-                {/* <EventList /> */}
-              </TabsContent>
-            </Tabs>
+              {/* END */}
+            </ScrollArea>
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={defaultLayout[2]}>
-            <RecentActivityDisplay />
+          <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
+            <div className="flex items-center px-4 py-3">
+              <h1 className="text-xl font-bold"><br /></h1>
+            </div>
+            <Separator />
+            <h1 className="font-semibold text-lg m-5">Upcoming Events</h1>
+            <ScrollArea className="h-[87vh] ">
+              <div className="flex flex-col gap-2 p-4 pt-0">
+                {[{ id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" },
+                { id: "#21321", title: "Test Event", category: "Workshop", date: "2024/06/02", semester: "232", description: "Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet" }].map((event, index) => {
+                  return (
+                    <button
+                      key={index}
+                      className={cn(
+                        "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                      )}
+
+                    >
+                      <div className="flex w-full flex-col gap-1">
+                        <div className="flex items-center">
+                          <div className="flex items-center gap-2">
+                            <div className="font-semibold">{event.title}</div>
+                          </div>
+                          <div
+                            className={cn(
+                              "ml-auto text-xs text-foreground"
+                            )}
+                          >
+                            {event.date}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="line-clamp-2 text-xs text-muted-foreground">
+                        {event.description.substring(0, 300)}
+                      </div>
+                      <div className="flex items-center gap-2">
+
+                        <Badge variant="secondary">
+                          {event.category}
+                        </Badge>
+                        <Badge variant="secondary">
+                          {event.semester}
+                        </Badge>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </ScrollArea>
           </ResizablePanel>
         </ResizablePanelGroup>
       </TooltipProvider>
