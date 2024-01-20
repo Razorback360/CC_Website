@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
+import { cn, getNameInitials } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -121,7 +121,11 @@ export default function DashboardOverview({
                               src={activity.Author.profileImage ?? ""}
                               alt="Avatar"
                             />
-                            <AvatarFallback>OM</AvatarFallback>
+                            <AvatarFallback>
+                              {getNameInitials(
+                                activity.Author.name ?? "UNKNOWN",
+                              )}
+                            </AvatarFallback>
                           </Avatar>
                           <div className="ml-4 space-y-1">
                             <p className="text-sm font-medium leading-none">
