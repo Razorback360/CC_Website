@@ -9,6 +9,8 @@ import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { api } from "@/utils/api";
+import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 interface DashboardLayoutProps {
   defaultLayout: number[];
@@ -19,6 +21,8 @@ export default function DashboardOverview({
 }: DashboardLayoutProps) {
   const { data: semesterStats, isLoading: semesterStatsLoading } =
     api.utils.getSemesterStats.useQuery();
+  const { data: recentActivity, isLoading: recentActivityLoading } =
+    api.system.getSystemUpdates.useQuery();
 
   return (
     <>
@@ -100,22 +104,50 @@ export default function DashboardOverview({
           </CardHeader>
           <Separator />
           <CardContent className="h-[48vh] p-4">
-            <ScrollArea className="">
-              {/* TODO: Codeblock below up until comment to be used as a return to recentActivity.map() */}
-              <Card className="flex items-center px-4 py-4">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                  <AvatarFallback>OM</AvatarFallback>
-                </Avatar>
-                <div className="ml-4 space-y-1">
-                  <p className="text-sm font-medium leading-none">
-                    Olivia Martin
-                  </p>
-                  <p className="text-sm text-muted-foreground">Created event</p>
-                </div>
-                <div className="ml-auto font-medium">2024/06/02</div>
-              </Card>
-              {/* END */}
+            <ScrollArea>
+              <div className="flex flex-col gap-2">
+                {recentActivityLoading
+                  ? "Loading..."
+                  : recentActivity
+                  ? recentActivity.map((activity, index) => {
+                      return (
+                        <Button
+                          key={index}
+                          className="flex items-center h-fit px-4 py-4"
+                          variant="outline"
+                        >
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={activity.Author.image ?? ""}
+                              alt="Avatar"
+                            />
+                            <AvatarFallback>OM</AvatarFallback>
+                          </Avatar>
+                          <div className="ml-4 space-y-1">
+                            <p className="text-sm font-medium leading-none">
+                              {activity.Author.name ?? "Unknown"}
+                            </p>
+                            <p className="text-sm text-muted-foreground text-start">
+                              {/* convert to a simple title case from "EVENT_UPDATE" */}
+                              {activity.type
+                                .split("_")
+                                .map((word) => {
+                                  return (
+                                    word.charAt(0).toUpperCase() +
+                                    word.slice(1).toLowerCase()
+                                  );
+                                })
+                                .join(" ")}
+                            </p>
+                          </div>
+                          <div className="ml-auto ">
+                            {format(activity.date, "dd MMM yyyy")}
+                          </div>
+                        </Button>
+                      );
+                    })
+                  : "Failed to load data"}
+              </div>
             </ScrollArea>
           </CardContent>
         </Card>
