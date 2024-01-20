@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Event } from "@prisma/client";
 import { type RouterOutputs } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
+import { format } from "date-fns";
 
 type EventListProps = {
   events: RouterOutputs["event"]["getAll"];
@@ -51,7 +52,7 @@ export default function EventList({
                         : "text-muted-foreground",
                     )}
                   >
-                    {event.date.toLocaleDateString()}
+                    {format(new Date(event.date), "dd/MM/yyyy")}
                   </div>
                 </div>
               </div>
