@@ -34,6 +34,7 @@ import {
 import { api } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Icons } from "@/components/icons";
+import { useSystemUpdates } from "@/utils/hooks/use-selected-event copy";
 
 const addEventFormSchema = z.object({
   title: z.string().min(2).max(50),
@@ -77,19 +78,14 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
 
   const apiUtils = api.useUtils();
 
-  const { mutateAsync: createSystemUpdate } =
-    api.system.createSystemUpdate.useMutation({
-      onSuccess: async (data) => {
-        await apiUtils.system.getSystemUpdates.invalidate();
-      },
-    });
+  const { createSystemUpdateAsync } = useSystemUpdates();
 
   const { mutateAsync: createEvent, isLoading: loadingCreate } =
     api.event.create.useMutation({
       onSuccess: async (data) => {
         selectEvent(data);
         await apiUtils.event.getAll.invalidate();
-        await createSystemUpdate({
+        await createSystemUpdateAsync({
           referenceId: data.id,
           description: `Created a new event: ${data.title}`,
           type: "EVENT_CREATE",
@@ -105,7 +101,11 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
     api.event.update.useMutation({
       onSettled: async (data, error, variables, context) => {
         if (error) {
-          return;
+          toast({
+            title: "Failed to update event!",
+            description: error.message,
+            variant: "destructive",
+          });
         }
         if (data && selectedEvent) {
           // filter out the old event from the selected event
@@ -175,7 +175,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
               .join(", ")}`;
 
             // Create a system update with the specific type and description
-            await createSystemUpdate({
+            await createSystemUpdateAsync({
               referenceId: data.id,
               description: updateDescription,
               type: "EVENT_UPDATE",

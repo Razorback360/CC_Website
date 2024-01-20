@@ -55,6 +55,7 @@ import { Event } from "@prisma/client";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { UserProfile } from "@/components/core/user-profile";
+import { useSystemUpdates } from "@/utils/hooks/use-selected-event copy";
 
 interface DashboardLayoutProps {
   defaultLayout: number[];
@@ -76,16 +77,32 @@ export default function DashboardEvents({
   });
 
   const apiUtils = api.useUtils();
+  const { createSystemUpdateAsync } = useSystemUpdates();
 
   const { mutateAsync: deleteEvent, isLoading: loadingDelete } =
     api.event.delete.useMutation({
-      onSuccess: async (data) => {
-        selectEvent(data);
-        await apiUtils.event.getAll.invalidate();
-        toast({
-          title: "Event Deleted!",
-          description: "Your event has been deleted successfully.",
-        });
+      onSettled: async (data, error, variables, context) => {
+        if (error) {
+          toast({
+            title: "Failed to delete event!",
+            description: error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+        if (data) {
+          await createSystemUpdateAsync({
+            referenceId: data.id,
+            description: `Deleted event: ${data.title}`,
+            type: "EVENT_DELETE",
+          });
+          selectEvent(data);
+          await apiUtils.event.getAll.invalidate();
+          toast({
+            title: "Event Deleted!",
+            description: "Your event has been deleted successfully.",
+          });
+        }
       },
     });
 
