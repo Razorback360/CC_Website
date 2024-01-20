@@ -49,7 +49,7 @@ export default function Nav({ links = [], isCollapsed }: NavProps) {
                       isActive && "bg-accent text-white", // Add active styles here
                     )}
                   >
-                    <link.icon className="h-4 w-4" />
+                    <link.icon className="h-6 w-6" />
                     <span className="sr-only">{link.title}</span>
                   </Link>
                 </TooltipTrigger>
@@ -71,14 +71,14 @@ export default function Nav({ links = [], isCollapsed }: NavProps) {
               key={index}
               href={link.href}
               className={cn(
-                buttonVariants({ variant: link.variant, size: "sm" }),
+                buttonVariants({ variant: link.variant, size: "lg" }),
                 link.variant === "default" &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                "justify-start",
+                "justify-start text-lg px-4",
                 isActive && "bg-accent text-white", // Add active styles here
               )}
             >
-              <link.icon className="mr-2 h-4 w-4" />
+              <link.icon className="mr-4 h-6 w-6" />
               {link.title}
               {link.label && (
                 <span

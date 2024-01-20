@@ -53,7 +53,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
           variant="ghost"
           className={cn(
             "group flex h-full w-full flex-row items-center justify-between rounded-none",
-            isCollapsed ? "p-2" : "px-2 py-4",
+            isCollapsed ? "p-2" : "px-3 py-6",
           )}
         >
           {isCollapsed ? (
@@ -102,12 +102,9 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         align="center"
         alignOffset={20}
       >
-        <div className="flex flex-row justify-between">
-          <DropdownMenuLabel className="my-auto text-lg">
-            My Account
-          </DropdownMenuLabel>
-          <ThemeToggle />
-        </div>
+        <DropdownMenuLabel className="my-auto text-lg">
+          My Account
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
