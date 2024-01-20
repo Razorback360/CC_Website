@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-export function EventList() {
+export default function EventList() {
   // TODO fetch upcoming events
   return (
     <ScrollArea className="h-full">
