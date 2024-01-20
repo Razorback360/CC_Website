@@ -132,6 +132,7 @@ enum SystemUpdateType {
     EVENT_CREATE
     EVENT_UPDATE // title/description/date/category/semester
     EVENT_DELETE
+    // TODO add update creations for those ---
     EVENT_IMAGES_ADD
     EVENT_IMAGES_DELETE
     EVENT_DOCUMENTATION_ADD
@@ -139,6 +140,7 @@ enum SystemUpdateType {
     MEMBER_ADD
     MEMBER_UPDATE // enable/disable/role/tags
     MEMBER_DELETE
+    // ----------------------------------------
 }
 
 model SystemUpdate {
