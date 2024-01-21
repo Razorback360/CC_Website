@@ -22,6 +22,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import {
@@ -35,6 +36,7 @@ import { api } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Icons } from "@/components/icons";
 import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
+import { Switch } from "@/components/ui/switch";
 
 const addEventFormSchema = z.object({
   title: z.string().min(2).max(50),
@@ -43,6 +45,7 @@ const addEventFormSchema = z.object({
   semesterId: z.string().min(1), // Add validation if needed
   categoryId: z.string().min(1), // Add validation if needed
   link: z.string().url().min(0),
+  public: z.boolean()
 });
 
 type EventDisplayProps = {
@@ -60,6 +63,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       semesterId: "",
       categoryId: "",
       link: "",
+      public: false
     },
   });
 
@@ -129,6 +133,8 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
 
           if (data.link !== oldData.link) updatedFields.push("link");
 
+          if (data.public !== oldData.public) updatedFields.push("public")
+
           // TODO @SauceX22 poster changes system update
           // if (data.organizers !== oldData.organizers) {
           //    updatedFields.push("organizers");
@@ -148,31 +154,29 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
             // e.g. "Title changed from 'Old Title' to 'New Title'"
             // separate each field with a comma
             // for semester and category, use the number of semester, and name of the category instead of the id
-            const updateDescription = `Updated event ${
-              data.title
-            } Updated fields: ${updatedFields
-              .map((field) => {
-                if (field === "semesterId") {
-                  return `"Semester" from "${semesters?.find(
-                    (semester) => semester.id === oldData.semesterId,
-                  )?.number}" to "${semesters?.find(
-                    (semester) => semester.id === data.semesterId,
-                  )?.number}"`;
-                }
-                if (field === "categoryId") {
-                  return `"Category" from "${categories?.find(
-                    (category) => category.id === oldData.categoryId,
-                  )?.name}" to "${categories?.find(
-                    (category) => category.id === data.categoryId,
-                  )?.name}"`;
-                }
-                return `"${field.charAt(0).toUpperCase()}${field.slice(
-                  1,
-                )}" from "${
-                  (oldData as Record<string, unknown>)[field] as string
-                }" to "${(data as Record<string, unknown>)[field] as string}"`;
-              })
-              .join(", ")}`;
+            const updateDescription = `Updated event ${data.title
+              } Updated fields: ${updatedFields
+                .map((field) => {
+                  if (field === "semesterId") {
+                    return `"Semester" from "${semesters?.find(
+                      (semester) => semester.id === oldData.semesterId,
+                    )?.number}" to "${semesters?.find(
+                      (semester) => semester.id === data.semesterId,
+                    )?.number}"`;
+                  }
+                  if (field === "categoryId") {
+                    return `"Category" from "${categories?.find(
+                      (category) => category.id === oldData.categoryId,
+                    )?.name}" to "${categories?.find(
+                      (category) => category.id === data.categoryId,
+                    )?.name}"`;
+                  }
+                  return `"${field.charAt(0).toUpperCase()}${field.slice(
+                    1,
+                  )}" from "${(oldData as Record<string, unknown>)[field] as string
+                    }" to "${(data as Record<string, unknown>)[field] as string}"`;
+                })
+                .join(", ")}`;
 
             // Create a system update with the specific type and description
             await createSystemUpdateAsync({
@@ -200,6 +204,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         semesterId: selectedEvent.semesterId,
         categoryId: selectedEvent.categoryId,
         link: selectedEvent.link,
+        public: selectedEvent.public
       });
     } else {
       form.reset({
@@ -209,6 +214,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         semesterId: "",
         categoryId: "",
         link: "",
+        public: false
       });
     }
   }, [selectedEvent]);
@@ -293,7 +299,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                             className={cn(
                               "font-normal mt-2 mr-2",
                               !form.getValues("date") &&
-                                "text-muted-foreground",
+                              "text-muted-foreground",
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -392,7 +398,28 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                   </div>
                 )}
               />
-            </div>
+            </div >
+            <FormField
+              control={form.control}
+              name="public"
+              render={({ field }) => (
+                <div className="mt-2 w-full flex flex-col">
+                  <FormLabel className="m-1">Public</FormLabel>
+                  <div className="flex flex-row gap-2 mt-2 m-1">
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Set event as public or private.
+                  </FormDescription>
+                  
+                  </div>
+                </div>
+              )}
+            />
           </div>
           <Button
             variant="default"

@@ -100,7 +100,7 @@ export default function EventList({
                     </ContextMenuIconItem>
                   </AlertDialogTrigger>
                   <ContextMenuSeparator />
-                  <ContextMenuCheckboxItem checked>
+                  <ContextMenuCheckboxItem checked={event.public}>
                     Public
                   </ContextMenuCheckboxItem>
                   <ContextMenuCheckboxItem>
