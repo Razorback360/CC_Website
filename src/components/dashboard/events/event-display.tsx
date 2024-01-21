@@ -34,7 +34,7 @@ import {
 import { api } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { Icons } from "@/components/icons";
-import { useSystemUpdates } from "@/utils/hooks/use-selected-event copy";
+import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
 
 const addEventFormSchema = z.object({
   title: z.string().min(2).max(50),

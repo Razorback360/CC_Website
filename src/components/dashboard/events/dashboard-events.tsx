@@ -55,7 +55,7 @@ import { Event } from "@prisma/client";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { UserProfile } from "@/components/core/user-profile";
-import { useSystemUpdates } from "@/utils/hooks/use-selected-event copy";
+import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
 
 interface DashboardLayoutProps {
   defaultLayout: number[];
