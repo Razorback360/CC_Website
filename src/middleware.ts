@@ -14,8 +14,8 @@ export function middleware(req: NextRequest) {
   )
     return NextResponse.next();
   // make sure to check only for /linktree, not allowing stuff after it like /linktree/username or /linktreeadsfasdjhf
-  if (env.NODE_ENV === "production" && pathname !== "/linktree") {
-    return NextResponse.redirect(new URL("/linktree", req.nextUrl));
-  }
+  // if (env.NODE_ENV === "production" && pathname !== "/linktree") {
+  //   return NextResponse.redirect(new URL("/linktree", req.nextUrl));
+  // }
   return NextResponse.next();
 }
