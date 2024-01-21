@@ -30,7 +30,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "next-i18next";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { cn, handleLocaleChange } from "@/lib/utils";
+import { cn, getNameInitials, handleLocaleChange } from "@/lib/utils";
 import { useRouter } from "next/router";
 import { Icons } from "@/components/icons";
 
@@ -58,18 +58,18 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         >
           {isCollapsed ? (
             <Avatar className="h-10 w-10">
-              <AvatarImage src={session?.user?.image ?? undefined} />
+              <AvatarImage src={session?.user?.profileImage ?? undefined} />
               <AvatarFallback>
-                <Skeleton className="group-hover:border" />
+                {getNameInitials(session?.user.name ?? "UNKNOWN")}
               </AvatarFallback>
             </Avatar>
           ) : (
             <>
               <div className="flex items-center space-x-2">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={session?.user?.image ?? undefined} />
+                  <AvatarImage src={session?.user?.profileImage ?? undefined} />
                   <AvatarFallback>
-                    <Skeleton className="group-hover:border" />
+                    {getNameInitials(session?.user.name ?? "UNKNOWN")}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-shrink h-full max-w-full flex-grow flex-col items-start">

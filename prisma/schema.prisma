@@ -67,8 +67,10 @@ model User {
     tags      String[]
     Semesters Semester[]
     Events    Event[]
-    // </Custom>
     Image     Image[]
+
+    SystemUpdate SystemUpdate[]
+    // </Custom>
 
     @@unique([id, name])
 }
@@ -124,4 +126,31 @@ model Image {
 
     Uploader   User   @relation(fields: [uploaderId], references: [id])
     uploaderId String
+}
+
+enum SystemUpdateType {
+    EVENT_CREATE
+    EVENT_UPDATE // title/description/date/category/semester
+    EVENT_DELETE
+    // TODO add update creations for those ---
+    EVENT_IMAGES_ADD
+    EVENT_IMAGES_DELETE
+    EVENT_DOCUMENTATION_ADD
+    EVENT_DOCUMENTATION_DELETE
+    MEMBER_ADD
+    MEMBER_UPDATE // enable/disable/role/tags
+    MEMBER_DELETE
+    // ----------------------------------------
+}
+
+model SystemUpdate {
+    id          String           @id @default(cuid())
+    type        SystemUpdateType
+    referenceId String // id of the record that was updated
+    description String           @db.Text
+    date        DateTime         @default(now())
+
+    // Relation to the user who made the update
+    Author   User   @relation(fields: [authorId], references: [id])
+    authorId String
 }

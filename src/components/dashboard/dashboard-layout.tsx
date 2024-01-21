@@ -12,8 +12,11 @@ import {
 } from "@/components/ui/resizable";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 
 type DashboardLayoutProps = {
+  pageTitle: string;
+  description: string;
   children: React.ReactNode;
   defaultLayout: number[] | undefined;
   defaultCollapsed?: boolean;
@@ -21,6 +24,8 @@ type DashboardLayoutProps = {
 };
 
 const DashboardLayout = ({
+  pageTitle,
+  description,
   defaultLayout = [265, 440, 655],
   defaultCollapsed = false,
   navCollapsedSize = 0,
@@ -34,85 +39,94 @@ const DashboardLayout = ({
   });
 
   return (
-    <TooltipProvider delayDuration={0}>
-      <ResizablePanelGroup
-        direction="horizontal"
-        onLayout={(sizes: number[]) => {
-          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes,
-          )}`;
-        }}
-        className="max-h-screen items-stretch"
-      >
-        <ResizablePanel
-          defaultSize={defaultLayout[0]}
-          collapsedSize={navCollapsedSize}
-          collapsible={true}
-          minSize={17}
-          maxSize={22}
-          onCollapse={() => {
-            setIsCollapsed(true);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              true,
+    <>
+      <Head>
+        <title>
+          {pageTitle} | {"KFUPM CC"}
+        </title>
+        <meta name="description" content={description} />
+      </Head>
+      <TooltipProvider delayDuration={0}>
+        <ResizablePanelGroup
+          direction="horizontal"
+          onLayout={(sizes: number[]) => {
+            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+              sizes,
             )}`;
           }}
-          onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-              false,
-            )}`;
-          }}
-          className={cn(
-            isCollapsed && "min-w-fit transition-all duration-300 ease-in-out",
-          )}
+          className="max-h-screen items-stretch select-none"
         >
-          <div
+          <ResizablePanel
+            defaultSize={defaultLayout[0]}
+            collapsedSize={navCollapsedSize}
+            collapsible={true}
+            minSize={17}
+            maxSize={22}
+            onCollapse={() => {
+              setIsCollapsed(true);
+              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+                true,
+              )}`;
+            }}
+            onExpand={() => {
+              setIsCollapsed(false);
+              document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+                false,
+              )}`;
+            }}
             className={cn(
-              "flex h-fit items-center justify-center",
-              isCollapsed ? "h-fit w-fit" : "",
+              isCollapsed &&
+                "min-w-fit transition-all duration-300 ease-in-out",
             )}
           >
-            <UserProfile isCollapsed={isCollapsed} />
-          </div>
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Overview",
-                label: "128",
-                icon: Icons.chart,
-                variant: "ghost",
-                href: "/dashboard/overview",
-              },
-              {
-                title: "Events",
-                label: "9",
-                icon: Icons.events,
-                variant: "ghost",
-                href: "/dashboard/events",
-              },
-              {
-                title: "Members",
-                label: "",
-                icon: Icons.users,
-                variant: "ghost",
-                href: "#",
-              },
-              {
-                title: "Privileges",
-                label: "23",
-                icon: Icons.dCheck,
-                variant: "ghost",
-                href: "#",
-              },
-            ]}
-          />
-        </ResizablePanel>
-        <ResizableHandle withHandle={false} />
-        {children}
-      </ResizablePanelGroup>
-    </TooltipProvider>
+            <div
+              className={cn(
+                "flex h-fit items-center justify-center",
+                isCollapsed ? "h-fit w-fit" : "",
+              )}
+            >
+              <UserProfile isCollapsed={isCollapsed} />
+            </div>
+            <Separator />
+            <Nav
+              isCollapsed={isCollapsed}
+              links={[
+                {
+                  title: "Overview",
+                  label: "",
+                  icon: Icons.chart,
+                  variant: "ghost",
+                  href: "/dashboard/overview",
+                },
+                {
+                  title: "Events",
+                  label: "",
+                  icon: Icons.events,
+                  variant: "ghost",
+                  href: "/dashboard/events",
+                },
+                {
+                  title: "Members",
+                  label: "",
+                  icon: Icons.users,
+                  variant: "ghost",
+                  href: "#",
+                },
+                {
+                  title: "Privileges",
+                  label: "",
+                  icon: Icons.dCheck,
+                  variant: "ghost",
+                  href: "#",
+                },
+              ]}
+            />
+          </ResizablePanel>
+          <ResizableHandle withHandle={false} />
+          {children}
+        </ResizablePanelGroup>
+      </TooltipProvider>
+    </>
   );
 };
 
