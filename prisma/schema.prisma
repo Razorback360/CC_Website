@@ -120,7 +120,7 @@ model Semester {
 
 enum AttachmentType {
     EVENT_POSTER
-    EVENT_attachment
+    EVENT_IMAGE
     EVENT_VIDEO
     EVENT_DOC
 }
@@ -128,7 +128,7 @@ enum AttachmentType {
 model Attachment {
     id   String         @id @default(cuid())
     src  String         @db.Text
-    type AttachmentType @default(EVENT_attachment)
+    type AttachmentType @default(EVENT_IMAGE)
 
     Event   Event  @relation(fields: [eventId], references: [id])
     eventId String
