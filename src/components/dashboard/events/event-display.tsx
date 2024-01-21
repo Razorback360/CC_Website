@@ -40,9 +40,9 @@ const addEventFormSchema = z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2).max(500),
   date: z.date(), // You can use a specific date format validation here
-  semesterId: z.string(), // Add validation if needed
-  categoryId: z.string(), // Add validation if needed
-  link: z.string().url(),
+  semesterId: z.string().min(1), // Add validation if needed
+  categoryId: z.string().min(1), // Add validation if needed
+  link: z.string().url().min(0),
 });
 
 type EventDisplayProps = {
@@ -261,12 +261,12 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
               name="link"
               render={({ field }) => (
                 <div className="mt-2 flex flex-col gap-2">
-                  <FormLabel htmlFor="link">Link</FormLabel>
+                  <FormLabel htmlFor="link">Form Link</FormLabel>
                   <FormControl className="">
-                    <Textarea
-                      className="max-h-72"
+                    <Input
+                      type="text"
                       id="link"
-                      placeholder="Event Link"
+                      placeholder="https://docs.google.com/forms/..."
                       {...field}
                     />
                   </FormControl>

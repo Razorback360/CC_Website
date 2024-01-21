@@ -28,7 +28,7 @@ export const eventRouter = createTRPCRouter({
         title: z.string().min(1),
         description: z.string().min(1),
         date: z.date(),
-        link: z.string().min(1),
+        link: z.string().min(0),
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
       }),
