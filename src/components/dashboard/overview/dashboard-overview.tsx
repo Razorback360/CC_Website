@@ -13,13 +13,13 @@ import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import RecentActivityCard from "@/components/dashboard/overview/recent-activity-card";
 
-interface DashboardLayoutProps {
+interface DashboardOverviewProps {
   defaultLayout: number[];
 }
 
 export default function DashboardOverview({
   defaultLayout,
-}: DashboardLayoutProps) {
+}: DashboardOverviewProps) {
   const { data: semesterStats, isLoading: semesterStatsLoading } =
     api.utils.getSemesterStats.useQuery();
   const { data: recentActivity, isLoading: recentActivityLoading } =

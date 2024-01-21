@@ -18,13 +18,13 @@ import DeleteEventPopup from "@/components/popups/delete-event-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
 
-interface DashboardLayoutProps {
+interface DashboardEventsProps {
   defaultLayout: number[];
 }
 
 export default function DashboardEvents({
   defaultLayout,
-}: DashboardLayoutProps) {
+}: DashboardEventsProps) {
   const { selectedEvent, selectEvent } = useSelectedEvent();
   const [isCreatingNewEvent, setIsCreatingNewEvent] = useState(false);
 
