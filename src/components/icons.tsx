@@ -33,6 +33,7 @@ import {
   FaLinkedin as LinkedinIcon,
   FaSearch as Search,
   FaHistory as History,
+  FaUpload,
 } from "react-icons/fa";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
@@ -203,4 +204,5 @@ export const Icons = {
   logOut: LogOut,
   edit: MdEdit,
   history: History,
+  upload: FaUpload,
 };
