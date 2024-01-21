@@ -74,7 +74,7 @@ model User {
     tags      String[]
     Semesters Semester[]
     Events    Event[]
-    Image     Image[]
+    Images    Image[]
 
     SystemUpdate SystemUpdate[]
     // </Custom>
