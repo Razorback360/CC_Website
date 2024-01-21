@@ -34,6 +34,7 @@ import {
   FaSearch as Search,
   FaHistory as History,
 } from "react-icons/fa";
+import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import { FaChartSimple as Chart } from "react-icons/fa6";
@@ -201,6 +202,7 @@ export const Icons = {
   youtube: Youtube,
   whatsapp: WhatsappIcon,
   logOut: LogOut,
+  caretUpDown: CaretUpDown,
   edit: MdEdit,
   history: History,
 };
