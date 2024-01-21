@@ -61,6 +61,12 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
+        email: user.email,
+        name: user.name,
+        studentId: user.studentId,
+        image: user.image,
+        profileImage: user.profileImage,
+        role: user.role,
       },
     }),
     signIn: async ({ user, account, profile, email, credentials }) => {
