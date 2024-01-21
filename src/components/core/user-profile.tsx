@@ -33,6 +33,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn, getNameInitials, handleLocaleChange } from "@/lib/utils";
 import { useRouter } from "next/router";
 import { Icons } from "@/components/icons";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   isCollapsed?: boolean;
@@ -80,6 +81,12 @@ export const UserProfile = ({ isCollapsed }: Props) => {
                   </h4>
                   <div className="text-xs font-medium text-muted-foreground truncate">
                     {session?.user?.email ?? <Skeleton className="h-4 w-20" />}
+                    <Badge
+                      className="text-[0.65rem] font-semibold ml-1 px-1 py-0"
+                      variant="default"
+                    >
+                      {session?.user?.role}
+                    </Badge>
                   </div>
                 </div>
               </div>
