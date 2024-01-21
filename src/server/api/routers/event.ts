@@ -31,6 +31,7 @@ export const eventRouter = createTRPCRouter({
         link: z.string().min(0),
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
+        public: z.boolean()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -40,6 +41,7 @@ export const eventRouter = createTRPCRouter({
           description: input.description,
           date: input.date,
           link: input.link,
+          public: input.public,
           Category: {
             connect: {
               id: input.categoryId,
@@ -63,6 +65,7 @@ export const eventRouter = createTRPCRouter({
         link: z.string().min(1).optional(),
         categoryId: z.string().min(1).optional(),
         semesterId: z.string().min(1).optional(),
+        public: z.boolean().optional()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -75,6 +78,7 @@ export const eventRouter = createTRPCRouter({
           description: input.description,
           date: input.date,
           link: input.link,
+          public: input.public,
           Category: {
             connect: {
               id: input.categoryId,
