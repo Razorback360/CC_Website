@@ -92,8 +92,10 @@ export default function EventList({
                   <ContextMenuItem inset>Upload Images</ContextMenuItem>
                   <AlertDialogTrigger asChild>
                     <ContextMenuIconItem
-                      className={cn("text-red-500")}
-                      disabled={!selectedEvent || loadingDelete}
+                      className={cn(
+                        "text-red-500 border border-red-500/20 bg-red-500/10 focus:bg-red-500/50",
+                      )}
+                      disabled={loadingDelete}
                       icon={<Icons.trash />}
                     >
                       Delete Event
