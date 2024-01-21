@@ -32,9 +32,22 @@ import {
   FaTwitter as TwitterIcon,
   FaLinkedin as LinkedinIcon,
   FaSearch as Search,
+  FaHistory as History,
 } from "react-icons/fa";
 import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
+import { MdEdit } from "react-icons/md";
+import { FaChartSimple as Chart } from "react-icons/fa6";
+import { FaClipboardList as Events } from "react-icons/fa";
+import { FaUsers as Users } from "react-icons/fa";
+import { FaUserCheck as DoubleCheck } from "react-icons/fa";
+import { GiHamburgerMenu as MenuOpen } from "react-icons/gi";
+import { IoClose as MenuClose } from "react-icons/io5";
+import { IoPersonSharp as Person } from "react-icons/io5";
+import { MdEventAvailable as EventsDone } from "react-icons/md";
+import { RiListCheck3 as EventsRemain } from "react-icons/ri";
+import { VscDebugBreakpointDataUnverified as Point } from "react-icons/vsc";
+import { IoLink as Link } from "react-icons/io5";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -151,6 +164,17 @@ export const Icons = {
   help: HelpCircle,
   pizza: Pizza,
   sun: Sun,
+  chart: Chart,
+  events: Events,
+  users: Users,
+  dCheck: DoubleCheck,
+  menuOpen: MenuOpen,
+  menuClose: MenuClose,
+  person: Person,
+  eventsDone: EventsDone,
+  eventsRemain: EventsRemain,
+  point: Point,
+  link: Link,
   moon: Moon,
   laptop: Laptop,
   microsoft: MicrosoftIcon,
@@ -179,4 +203,6 @@ export const Icons = {
   whatsapp: WhatsappIcon,
   logOut: LogOut,
   caretUpDown: CaretUpDown,
+  edit: MdEdit,
+  history: History,
 };

@@ -10,7 +10,7 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/kfupm_cc",
     linkedin: "https://linkedin.com/company/kfupmcclub/",
     youtube: "https://www.youtube.com/channel/UC53CPMNo35_d3q3QV7Hzu8w",
-    github: "https://github.com/CCKFUPM/",
+    github: "https://github.com/CCKFUPM/CC_Website",
     email: "",
   },
 };
@@ -19,6 +19,7 @@ export const siteConfig: SiteConfig = {
 export const HeaderFooterExclusionRoutes = [
   "/auth/login",
   "/auth/register",
-  "/dashboard",
+  "/dashboard/overview",
+  "/dashboard/events",
   "/linktree",
 ];

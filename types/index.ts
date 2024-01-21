@@ -21,3 +21,10 @@ export type Member = {
   team: string;
   status: boolean;
 };
+
+export type Event = {
+  id: number;
+  name: string;
+  description: string;
+  link: string;
+};

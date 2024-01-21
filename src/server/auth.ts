@@ -32,6 +32,7 @@ declare module "next-auth" {
     email: string;
 
     studentId: string;
+    profileImage?: string;
     role: UserRole;
   }
 }
