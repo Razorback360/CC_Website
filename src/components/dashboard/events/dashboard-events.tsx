@@ -1,61 +1,22 @@
 import React, { useState } from "react";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Icons } from "@/components/icons";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import Nav from "@/components/dashboard/nav";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
 import {
   Tooltip,
-  TooltipProvider,
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormField,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { RouterOutputs, api } from "@/utils/api";
+import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
+import { api } from "@/utils/api";
 import EventList from "@/components/dashboard/events/events-list";
 import EventDisplay from "./event-display";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
-import { Event } from "@prisma/client";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { UserProfile } from "@/components/core/user-profile";
-import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
+import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
 
 interface DashboardLayoutProps {
   defaultLayout: number[];
@@ -76,35 +37,9 @@ export default function DashboardEvents({
     },
   });
 
-  const apiUtils = api.useUtils();
-  const { createSystemUpdateAsync } = useSystemUpdates();
-
-  const { mutateAsync: deleteEvent, isLoading: loadingDelete } =
-    api.event.delete.useMutation({
-      onSettled: async (data, error, variables, context) => {
-        if (error) {
-          toast({
-            title: "Failed to delete event!",
-            description: error.message,
-            variant: "destructive",
-          });
-          return;
-        }
-        if (data) {
-          await createSystemUpdateAsync({
-            referenceId: data.id,
-            description: `Deleted event: ${data.title}`,
-            type: "EVENT_DELETE",
-          });
-          selectEvent(data);
-          await apiUtils.event.getAll.invalidate();
-          toast({
-            title: "Event Deleted!",
-            description: "Your event has been deleted successfully.",
-          });
-        }
-      },
-    });
+  const { mutateAsync: deleteEvent, loading: loadingDelete } = useDeleteEvent(
+    setIsCreatingNewEvent,
+  );
 
   return (
     <DeleteEventPopup
