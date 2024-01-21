@@ -31,7 +31,8 @@ export const eventRouter = createTRPCRouter({
         link: z.string().min(0),
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
-        public: z.boolean()
+        public: z.boolean(),
+        src: z.string()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -52,6 +53,17 @@ export const eventRouter = createTRPCRouter({
               id: input.semesterId,
             },
           },
+          Attachments: {
+            create: {
+              src: input.src,
+              type: "EVENT_POSTER",
+              Uploader: {
+                connect: {
+                  id: ctx.session.user.id
+                }
+              }
+            }
+          }
         },
       });
     }),
