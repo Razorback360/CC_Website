@@ -43,6 +43,18 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  events: {
+    async linkAccount({ user, profile, account }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          name: profile.name,
+          image: profile.image,
+          profileImage: profile.image,
+        },
+      });
+    },
+  },
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -56,18 +68,18 @@ export const authOptions: NextAuthOptions = {
       if (env.NODE_ENV === "development") {
         return true;
       }
-      const allowedEmails = await db.userAllowedList.findMany({});
-      if (!allowedEmails) {
+      const registeredUsers = await db.user.findMany({});
+      if (!registeredUsers) {
         throw new Error(
           "Unable to reach server data at this time, try again later",
         );
       }
-      // only allow users with an email in the allowedEmails array
-      // and if the user is enabled
+      // only allow users with a user record that is also enabled to sign in
       if (
-        allowedEmails.some(
-          (allowedEmail) =>
-            allowedEmail.email === user.email && allowedEmail.enabled === true,
+        registeredUsers.some(
+          (registeredUser) =>
+            registeredUser.email === user.email &&
+            registeredUser.enabled === true,
         )
       ) {
         return true;
@@ -88,6 +100,7 @@ export const authOptions: NextAuthOptions = {
       id: "azure-ad",
       name: "Microsoft",
       clientId: env.AZURE_AD_B2C_CLIENT_ID,
+      allowDangerousEmailAccountLinking: true,
       clientSecret: env.AZURE_AD_B2C_CLIENT_SECRET,
       wellKnown: `https://login.microsoftonline.com/${env.AZURE_AD_B2C_TENANT_NAME}/v2.0/.well-known/openid-configuration`,
       authorization: {
