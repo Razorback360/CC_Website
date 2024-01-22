@@ -21,14 +21,17 @@ import {
 } from "@/components/ui/dialog";
 import LabelsInput from "@/components/labels-input";
 import React from "react";
+import { api } from "@/utils/api";
+import { UserRole } from "@prisma/client";
+import { Switch } from "@/components/ui/switch";
 
 const addMemberFormSchema = z.object({
-  recordName: z.string().min(2).max(50),
   studentId: z.string().min(2).max(10),
   major: z.string().min(2).max(50),
   position: z.string().min(2).max(20),
-  privileges: z.string().min(2).max(100),
-  tags: z.array(z.string().min(2).max(15)).min(0),
+  enabled: z.boolean().default(true),
+  role: z.nativeEnum(UserRole).default("MEMBER"),
+  tags: z.array(z.string().min(2).max(15)),
 });
 
 type AddNewMemberFormDialogProps = {
@@ -42,19 +45,36 @@ export default function AddNewMemberFormDialog({
   const form = useForm<z.infer<typeof addMemberFormSchema>>({
     resolver: zodResolver(addMemberFormSchema),
     defaultValues: {
-      recordName: "",
       studentId: "",
       major: "",
       position: "",
+      enabled: true,
+      role: "MEMBER",
       // TODO @SauceX22 add default privilege setting
-      privileges: "",
       tags: [],
     },
   });
 
-  function onSubmit(data: z.infer<typeof addMemberFormSchema>) {
+  const { mutateAsync: addMember } = api.user.addMember.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Member Added",
+        description: `The member "${form.getValues(
+          "studentId",
+        )}" has been added successfully.`,
+      });
+    },
+  });
+
+  async function onSubmit(data: z.infer<typeof addMemberFormSchema>) {
     // Do something with the form values.
-    console.log(data);
+    await addMember({
+      studentId: data.studentId,
+      enabled: data.enabled,
+      role: data.role,
+      tags: [...data.tags, `${data.major} Major`, `${data.position} Position`],
+    });
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -67,33 +87,13 @@ export default function AddNewMemberFormDialog({
 
   return (
     <Dialog {...props} onOpenChange={(open) => !open && form.reset()}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      {children}
       <DialogContent className="">
         <DialogHeader>
           <DialogTitle>Add member</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="recordName"
-              render={({ field }) => (
-                <div className="grid grid-cols-4 items-center gap-2">
-                  <FormLabel htmlFor="record-name">Member Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="col-span-3"
-                      id="record-name"
-                      placeholder="Example Name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="col-start-2 col-span-3">
-                    {form.formState.errors.recordName?.message}
-                  </FormMessage>
-                </div>
-              )}
-            />
             <FormField
               control={form.control}
               name="studentId"
@@ -104,13 +104,37 @@ export default function AddNewMemberFormDialog({
                     <Input
                       className="col-span-3"
                       id="student-id"
-                      placeholder="S20xxxxxxx"
+                      placeholder="s20xxxxxxx"
                       {...field}
                     />
                   </FormControl>
                   <FormMessage className="col-start-2 col-span-3">
                     {form.formState.errors.studentId?.message}
                   </FormMessage>
+                </div>
+              )}
+            />
+            {/* form field with a tooltip for the enabled flag */}
+            <FormField
+              control={form.control}
+              name="enabled"
+              render={({ field }) => (
+                <div className="grid grid-cols-4 items-center gap-2">
+                  <FormLabel htmlFor="enabled">User Enabled</FormLabel>
+                  <FormControl>
+                    <Switch
+                      id="enabled"
+                      ref={field.ref}
+                      name={field.name}
+                      disabled={field.disabled}
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                  </FormControl>
+                  <FormDescription className="col-start-2 col-span-3">
+                    Whether the member is allowed to login or not
+                  </FormDescription>
                 </div>
               )}
             />
@@ -144,32 +168,12 @@ export default function AddNewMemberFormDialog({
                     <Input
                       className="col-span-3"
                       id="position"
-                      placeholder="Media-related Position"
+                      placeholder="Media Manager"
                       {...field}
                     />
                   </FormControl>
                   <FormMessage className="col-start-2 col-span-3">
                     {form.formState.errors.position?.message}
-                  </FormMessage>
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="privileges"
-              render={({ field }) => (
-                <div className="grid grid-cols-4 items-center gap-2">
-                  <FormLabel htmlFor="privileges">Member Privileges</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="col-span-3"
-                      id="privileges"
-                      placeholder="No Editing Privileges"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="col-start-2 col-span-3">
-                    {form.formState.errors.privileges?.message}
                   </FormMessage>
                 </div>
               )}
@@ -187,7 +191,7 @@ export default function AddNewMemberFormDialog({
                       setLabels={(labels) => form.setValue("tags", labels)}
                       className="col-span-3"
                       id="tags"
-                      placeholder="(e.g. '2020', 'photo editor')"
+                      placeholder='(e.g. "2020", "photo editor")'
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
@@ -203,6 +207,9 @@ export default function AddNewMemberFormDialog({
                       }}
                     />
                   </FormControl>
+                  <FormDescription className="col-start-2 col-span-3">
+                    Press <b>↵ &quot;Enter&quot;</b> after each tag to add it
+                  </FormDescription>
                   <FormMessage className="col-start-2 col-span-3">
                     {form.formState.errors.tags?.message}
                   </FormMessage>
