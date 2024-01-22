@@ -83,9 +83,13 @@ export const UserProfile = ({ isCollapsed }: Props) => {
                     {session?.user?.email ?? <Skeleton className="h-4 w-20" />}
                     <Badge
                       className="text-[0.65rem] font-semibold ml-1 px-1 py-0"
-                      variant="default"
+                      variant={
+                        session?.user?.role === "ADMIN" ? "default" : "outline"
+                      }
                     >
-                      {session?.user?.role}
+                      {session?.user?.role ?? (
+                        <Skeleton className="h-full w-full" />
+                      )}
                     </Badge>
                   </div>
                 </div>
