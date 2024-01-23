@@ -5,7 +5,7 @@ import DashboardLayout from "@/components/dashboard/dashboard-layout";
 const Overview = () => {
   return (
     <DashboardLayout
-      pageTitle="Dashboard Overview"
+      pageTitle="Overview Dashboard"
       description="General overview of your club."
       defaultLayout={[265, 440, 655]}
       navCollapsedSize={0}

@@ -44,13 +44,6 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// table to store users allowed to sign in
-model UserAllowedList {
-    id      String  @id @default(cuid())
-    email   String  @unique
-    enabled Boolean @default(true)
-}
-
 enum UserRole {
     ADMIN
     MEMBER
@@ -67,6 +60,7 @@ model User {
 
     // <Custom>
     studentId    String
+    enabled      Boolean  @default(true)
     profileImage String?
     role         UserRole @default(MEMBER)
 
@@ -137,7 +131,7 @@ model Attachment {
     src  String         @db.Text
     type AttachmentType @default(EVENT_IMAGE)
 
-    Event   Event  @relation(fields: [eventId], references: [id])
+    Event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
     eventId String
 
     Uploader   User   @relation(fields: [uploaderId], references: [id])
@@ -167,6 +161,6 @@ model SystemUpdate {
     date        DateTime         @default(now())
 
     // Relation to the user who made the update
-    Author   User   @relation(fields: [authorId], references: [id])
+    Author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
     authorId String
 }
