@@ -3,7 +3,6 @@ import MemberCard from "@/components/dashboard/MemberCard";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Member } from "types";
 import DashboardLayout from "@/components/dashboard/dashboard-layout";
 import DashboardMembers from "@/components/dashboard/members/dashboard-members";
 
