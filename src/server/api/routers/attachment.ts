@@ -11,11 +11,11 @@ import {
 import { env } from "@/env.mjs";
 import { supabase } from "@/utils/supabase";
 
-export const imageRouter = createTRPCRouter({
-  getImage: publicProcedure
+export const attachmentRouter = createTRPCRouter({
+  getAttachment: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const image = await ctx.db.image.findUnique({
+      const attachment = await ctx.db.attachment.findUnique({
         where: {
           id: input.id,
         },
@@ -26,18 +26,18 @@ export const imageRouter = createTRPCRouter({
       });
 
       return {
-        ...image,
+        ...attachment,
       };
     }),
-  getImagesByUploader: publicProcedure
+  getAttachmentsByUploader: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const images = await ctx.db.user.findUnique({
+      const attachments = await ctx.db.user.findUnique({
         where: {
           id: input.id,
         },
         select: {
-          Images: {
+          Attachments: {
             include: {
               Event: true,
               Uploader: true,
@@ -47,18 +47,18 @@ export const imageRouter = createTRPCRouter({
       });
 
       return {
-        images,
+        attachments,
       };
     }),
-  getImagesByEvent: publicProcedure
+  getAttachmentsByEvent: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const images = await ctx.db.event.findUnique({
+      const attachments = await ctx.db.event.findUnique({
         where: {
           id: input.id,
         },
         select: {
-          Images: {
+          Attachments: {
             include: {
               Event: true,
               Uploader: true,
@@ -68,37 +68,37 @@ export const imageRouter = createTRPCRouter({
       });
 
       return {
-        images,
+        attachments,
       };
     }),
   create: protectedProcedure
-    .input(z.object({ src: z.string(), eventId: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.image.create({
-        data: {
-          src: input.src,
-          eventId: input.eventId,
-          uploaderId: ctx.session.user.id,
-        },
-      });
-    }),
+  .input(z.object({src: z.string(), eventId: z.string()}))
+  .mutation(async ({ctx, input}) => {
+    await ctx.db.attachment.create({
+      data: {
+        src: input.src,
+        eventId: input.eventId,
+        uploaderId: ctx.session.user.id
+      }
+    })
+  }),
   delete: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      const image = await ctx.db.image.findUnique({
-        where: {
-          id: input.id,
-        },
-      });
+  .input(z.object({id: z.string()}))
+  .mutation(async ({ctx, input}) => {
+    const attachment = await ctx.db.attachment.findUnique({
+      where: {
+        id: input.id
+      }
+    })
+    
+    await supabase.storage
+    .from(env.NEXT_PUBLIC_SUPABASE_IMAGE_BUCKET)
+    .remove([attachment?.src.split(`${env.NEXT_PUBLIC_SUPABASE_IMAGE_BUCKET}/`)[1]!])
 
-      await supabase.storage
-        .from(env.SUPABASE_IMAGE_BUCKET)
-        .remove([image?.src.split(`${env.SUPABASE_IMAGE_BUCKET}/`)[1]!]);
-
-      await ctx.db.image.delete({
-        where: {
-          id: input.id,
-        },
-      });
-    }),
+    await ctx.db.attachment.delete({
+      where: {
+        id: input.id
+      }
+    })
+  })
 });

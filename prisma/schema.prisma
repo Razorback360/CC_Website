@@ -44,13 +44,6 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// table to store users allowed to sign in
-model UserAllowedList {
-    id      String  @id @default(cuid())
-    email   String  @unique
-    enabled Boolean @default(true)
-}
-
 enum UserRole {
     ADMIN
     MEMBER
@@ -67,14 +60,15 @@ model User {
 
     // <Custom>
     studentId    String
+    enabled      Boolean  @default(true)
     profileImage String?
     role         UserRole @default(MEMBER)
 
-    links     String[]
-    tags      String[]
-    Semesters Semester[]
-    Events    Event[]
-    Images    Image[]
+    links       String[]
+    tags        String[]
+    Semesters   Semester[]
+    Events      Event[]
+    Attachments Attachment[]
 
     SystemUpdate SystemUpdate[]
     // </Custom>
@@ -103,9 +97,10 @@ model Event {
     title       String
     description String   @db.Text
     date        DateTime
+    public      Boolean  @default(true)
 
-    Organizers User[]
-    Images     Image[]
+    Organizers  User[]
+    Attachments Attachment[]
 
     Semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
     semesterId String
@@ -124,11 +119,19 @@ model Semester {
     Events  Event[]
 }
 
-model Image {
-    id  String @id @default(cuid())
-    src String @db.Text
+enum AttachmentType {
+    EVENT_POSTER
+    EVENT_IMAGE
+    EVENT_VIDEO
+    EVENT_DOC
+}
 
-    Event   Event  @relation(fields: [eventId], references: [id])
+model Attachment {
+    id   String         @id @default(cuid())
+    src  String         @db.Text
+    type AttachmentType @default(EVENT_IMAGE)
+
+    Event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
     eventId String
 
     Uploader   User   @relation(fields: [uploaderId], references: [id])
@@ -140,8 +143,8 @@ enum SystemUpdateType {
     EVENT_UPDATE // title/description/date/category/semester
     EVENT_DELETE
     // TODO add update creations for those ---
-    EVENT_IMAGES_ADD
-    EVENT_IMAGES_DELETE
+    EVENT_ATTACHMENTS_ADD
+    EVENT_ATTACHMENTS_DELETE
     EVENT_DOCUMENTATION_ADD
     EVENT_DOCUMENTATION_DELETE
     MEMBER_ADD
@@ -158,6 +161,6 @@ model SystemUpdate {
     date        DateTime         @default(now())
 
     // Relation to the user who made the update
-    Author   User   @relation(fields: [authorId], references: [id])
+    Author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
     authorId String
 }

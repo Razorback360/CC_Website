@@ -74,7 +74,7 @@ export default function Nav({ links = [], isCollapsed }: NavProps) {
                 buttonVariants({ variant: link.variant, size: "lg" }),
                 link.variant === "default" &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                "justify-start text-lg px-4",
+                "justify-start text-md px-4",
                 isActive && "bg-accent text-white", // Add active styles here
               )}
             >
