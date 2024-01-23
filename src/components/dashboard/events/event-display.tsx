@@ -56,7 +56,7 @@ const addEventFormSchema = z.object({
   .refine((file: FileList|undefined) => file?.length == 1, 'File is required.')
   .refine((file: FileList) => ACCEPTED_IMAGE_TYPES.includes(file.item(0)?.type ?? ""), 'Must be a PNG, JPG, JPEG, or WEBP.')
   .refine((file: FileList) => file.item(0)?.size ?? 0 <= MAX_FILE_SIZE, `Max file size is 3MB.`),
-  src: z.string()
+  src: z.string().optional()
 });
 
 
@@ -91,9 +91,11 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
     if (isCreatingNewEvent) {
       // TODO: fix this shit
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
-      await supabase.storage.from("images").upload(`${data.title}/poster/${data.poster[0].name}`, data.poster[0])
+      console.log(await supabase.storage.from("images").upload(`${data.title}/poster/${data.poster[0].name}`, data.poster[0]))
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      data.src = `${data.title}/poster/${data.poster[0].name}` 
+      data.src = `${data.title}/poster/${data.poster[0].name}`
+      console.log("data")
+      console.log(data)
       await createEvent(data);
     }
   }
