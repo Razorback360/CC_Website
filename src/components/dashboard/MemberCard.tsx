@@ -1,40 +1,123 @@
-import { Member } from "types";
+import { type User } from "@prisma/client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getNameInitials } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import {
+  ContextMenuItem,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuIconItem,
+  ContextMenuSeparator,
+  ContextMenuCheckboxItem,
+  ContextMenu,
+} from "@/components/ui/context-menu";
+
+import { cn } from "@/lib/utils";
+import { Icons } from "@/components/icons";
+import DeleteMemberPopup from "@/components/popups/delete-member-popup";
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useSelectedMember } from "@/utils/hooks/use-selected-member";
+import { api } from "@/utils/api";
+import { Button } from "@/components/ui/button";
 
 type Props = {
-  info: Member;
+  member: User;
 } & React.HTMLAttributes<HTMLImageElement>;
 
-const MemberCard = (props: Props) => {
-  const info = props.info;
+const MemberCard = ({ member }: Props) => {
+  const { selectedMember, selectMember } = useSelectedMember();
+  const apiUtils = api.useUtils();
+
+  const { mutateAsync: deleteMember, isLoading: loadingDelete } =
+    api.user.delete.useMutation({
+      onSuccess: async () => {
+        await apiUtils.user.getAll.invalidate();
+      },
+    });
+
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-2 outline outline-1 outline-primary rounded-sm py-2 px-4">
-      <img
-        src={info.img}
-        alt="person"
-        className="rounded-full w-full lg:w-[80px]"
-      />
-      <div className="flex  justify-between w-full">
-        <div className="flex flex-col lg:gap-0 gap-2  justify-start">
-          <h2 className="text-xl text-primary font-bold">{info.name}</h2>
-          <p>
-            <span className="font-bold">{info.position}</span> |{" "}
-            <span>{info.major}</span>
-          </p>
-        </div>
-        <div className="flex flex-col gap-2 justify-center">
-          <p className="bg-primary rounded-sm text-center text-white px-5">
-            {info.team}
-          </p>
-          <p
-            className={`${
-              info.status ? "bg-green-400" : "bg-red-400"
-            } rounded-sm text-center text-white px-5`}
+    <DeleteMemberPopup
+      memberName={selectedMember?.name ?? "_UNDEFINED_"}
+      // eslint-disable-next-line @typescript-eslint/require-await
+      onConfirm={async () => {
+        if (!selectedMember) return;
+        await deleteMember({ id: selectedMember.id });
+      }}
+    >
+      <ContextMenu>
+        <ContextMenuTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "transition-all h-32 w-full p-0",
+              selectedMember?.id === member.id && "bg-muted",
+            )}
+            onClick={() => {
+              selectMember(member);
+            }}
           >
-            {info.status ? "Active" : "Removed"}
-          </p>
-        </div>
-      </div>
-    </div>
+            <div
+              className={cn(
+                "flex flex-row gap-4 justify-start p-4 items-center h-full w-full",
+                member.name === null && "blur-sm",
+              )}
+            >
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={member.profileImage ?? undefined} />
+                <AvatarFallback>
+                  {getNameInitials(member.name ?? "UNKNOWN")}
+                </AvatarFallback>
+              </Avatar>
+              <div
+                className={cn(
+                  "flex flex-col items-start justify-start w-full h-full",
+                  selectedMember?.id === member.id && "",
+                )}
+              >
+                <h2 className="text-xl font-bold h-fit">
+                  {member.name ?? `${member.studentId} (Unsingned)`}
+                </h2>
+                <div className="flex flex-row flex-wrap items-start h-full w-full justify-start gap-1 mt-1">
+                  <Badge variant="default" className="w-fit">
+                    {member.role}
+                  </Badge>
+                  <p
+                    className={`${
+                      member.enabled ? "bg-green-500" : "bg-red-500"
+                    } rounded-sm text-center px-3`}
+                  >
+                    {member.enabled ? "Active" : "Removed"}
+                  </p>
+                  {member.tags?.map((tag, index) => (
+                    <Badge
+                      variant="outline"
+                      key={index}
+                      className="bg-primary rounded-sm text-white px-2  text-sm"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Button>
+        </ContextMenuTrigger>
+        <ContextMenuContent className="w-64">
+          <AlertDialogTrigger asChild>
+            <ContextMenuIconItem
+              className={cn("text-red-500")}
+              disabled={!selectedMember || loadingDelete}
+              icon={<Icons.trash />}
+            >
+              Delete Event
+            </ContextMenuIconItem>
+          </AlertDialogTrigger>
+          <ContextMenuSeparator />
+          <ContextMenuCheckboxItem checked>Public</ContextMenuCheckboxItem>
+          <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+        </ContextMenuContent>
+      </ContextMenu>
+    </DeleteMemberPopup>
   );
 };
 

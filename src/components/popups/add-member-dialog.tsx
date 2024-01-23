@@ -25,12 +25,12 @@ import { api } from "@/utils/api";
 import { UserRole } from "@prisma/client";
 import { Switch } from "@/components/ui/switch";
 
-const addMemberFormSchema = z.object({
+export const addMemberFormSchema = z.object({
   studentId: z.string().min(2).max(10),
   major: z.string().min(2).max(50),
   position: z.string().min(2).max(20),
   enabled: z.boolean().default(true),
-  role: z.nativeEnum(UserRole).default("MEMBER"),
+  role: z.nativeEnum(UserRole),
   tags: z.array(z.string().min(2).max(15)),
 });
 
