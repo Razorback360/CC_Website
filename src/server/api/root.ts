@@ -1,4 +1,9 @@
 import { eventRouter } from "@/server/api/routers/event";
+import { semesterRouter } from "@/server/api/routers/semester";
+import { userRouter } from "@/server/api/routers/user";
+import { utilsRouter } from "@/server/api/routers/utils";
+import { imageRouter } from "@/server/api/routers/image";
+import { systemRouter } from "@/server/api/routers/system";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
@@ -7,7 +12,12 @@ import { createTRPCRouter } from "@/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: eventRouter,
+  event: eventRouter,
+  semester: semesterRouter,
+  user: userRouter,
+  utils: utilsRouter,
+  image: imageRouter,
+  system: systemRouter,
 });
 
 // export type definition of API

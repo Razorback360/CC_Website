@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/router";
 import { HeaderFooterExclusionRoutes } from "@/config/site";
 import SignoutPopup from "@/components/popups/SignoutPopup";
+import { Toaster } from "./ui/toaster";
 
 type Props = {
   children: React.ReactNode;
@@ -30,6 +31,7 @@ const AppLayout = ({ children, ...props }: Props) => {
           <Separator className="w-full" />
         )}
         {children}
+        <Toaster />
         {!HeaderFooterExclusionRoutes.includes(pathname) && (
           <section className="mt-4 w-full">
             <Separator className="w-full my-4" />

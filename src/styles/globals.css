@@ -52,7 +52,7 @@
     --ring: 221.2 83.2% 53.3%;
 
     /* Border-radius for elements */
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {

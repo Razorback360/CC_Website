@@ -44,6 +44,13 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+// table to store users allowed to sign in
+model UserAllowedList {
+    id      String  @id @default(cuid())
+    email   String  @unique
+    enabled Boolean @default(true)
+}
+
 enum UserRole {
     ADMIN
     MEMBER
@@ -59,13 +66,17 @@ model User {
     sessions      Session[]
 
     // <Custom>
-    studentId String
-    role      UserRole @default(MEMBER)
+    studentId    String
+    profileImage String?
+    role         UserRole @default(MEMBER)
 
     links     String[]
     tags      String[]
     Semesters Semester[]
     Events    Event[]
+    Images    Image[]
+
+    SystemUpdate SystemUpdate[]
     // </Custom>
 
     @@unique([id, name])
@@ -94,12 +105,15 @@ model Event {
     date        DateTime
 
     Organizers User[]
+    Images     Image[]
 
     Semester   Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
     semesterId String
 
     Category   EventCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     categoryId String
+
+    link String @db.Text
 }
 
 model Semester {
@@ -108,4 +122,42 @@ model Semester {
 
     Members User[]
     Events  Event[]
+}
+
+model Image {
+    id  String @id @default(cuid())
+    src String @db.Text
+
+    Event   Event  @relation(fields: [eventId], references: [id])
+    eventId String
+
+    Uploader   User   @relation(fields: [uploaderId], references: [id])
+    uploaderId String
+}
+
+enum SystemUpdateType {
+    EVENT_CREATE
+    EVENT_UPDATE // title/description/date/category/semester
+    EVENT_DELETE
+    // TODO add update creations for those ---
+    EVENT_IMAGES_ADD
+    EVENT_IMAGES_DELETE
+    EVENT_DOCUMENTATION_ADD
+    EVENT_DOCUMENTATION_DELETE
+    MEMBER_ADD
+    MEMBER_UPDATE // enable/disable/role/tags
+    MEMBER_DELETE
+    // ----------------------------------------
+}
+
+model SystemUpdate {
+    id          String           @id @default(cuid())
+    type        SystemUpdateType
+    referenceId String // id of the record that was updated
+    description String           @db.Text
+    date        DateTime         @default(now())
+
+    // Relation to the user who made the update
+    Author   User   @relation(fields: [authorId], references: [id])
+    authorId String
 }
