@@ -34,31 +34,28 @@ export default function Home() {
   const data = {
     events: [
       {
-        name: "Event Name",
+        name: "ICS 108 Help Session",
         term: "T231",
         image: "/event (1).jpg",
-        content: "Lorem impsum dolor amet Lorem impsum dolor amet",
+        content: "Help session for ICS 108 students",
       },
       {
-        name: "Event Name",
+        name: "ICS 253 Help Session",
         term: "T231",
         image: "/event (2).jpg",
-        content:
-          "Lorem impsum dolor amet Lorem impsum dolor amet Lorem impsum dolor amet",
+        content: "Help session for ICS 253 students",
       },
       {
-        name: "Event Name",
+        name: "Hack Me",
         term: "T231",
         image: "/event (3).jpg",
-        content:
-          "Lorem impsum dolor amet Lorem impsum dolor amet Lorem impsum dolor amet",
+        content: "Learn how Cybersecurity works",
       },
       {
-        name: "Event Name",
+        name: "Git And Github Workshop",
         term: "T231",
         image: "/event (4).jpg",
-        content:
-          "Lorem impsum dolor amet Lorem impsum dolor amet Lorem impsum dolor amet",
+        content: "Learn how to use git and github",
       },
     ],
     members: [
