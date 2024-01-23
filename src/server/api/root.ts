@@ -2,7 +2,7 @@ import { eventRouter } from "@/server/api/routers/event";
 import { semesterRouter } from "@/server/api/routers/semester";
 import { userRouter } from "@/server/api/routers/user";
 import { utilsRouter } from "@/server/api/routers/utils";
-import { imageRouter } from "@/server/api/routers/image";
+import { attachmentRouter } from "@/server/api/routers/attachment";
 import { systemRouter } from "@/server/api/routers/system";
 import { createTRPCRouter } from "@/server/api/trpc";
 
@@ -16,7 +16,7 @@ export const appRouter = createTRPCRouter({
   semester: semesterRouter,
   user: userRouter,
   utils: utilsRouter,
-  image: imageRouter,
+  attachment: attachmentRouter,
   system: systemRouter,
 });
 
