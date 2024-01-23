@@ -15,17 +15,17 @@ import { Badge } from "@/components/ui/badge";
 export default function Home() {
   const slides = [
     {
-      src: "/landing-page-hero.jpg",
+      src: "/event (1).jpg",
       label: "Image 1",
       description: "This is test image 1",
     },
     {
-      src: "/landing-page-hero.jpg",
+      src: "/event (2).jpg",
       label: "Image 2",
       description: "This is test image 2",
     },
     {
-      src: "/landing-page-hero.jpg",
+      src: "/event (3).jpg",
       label: "Image 1",
       description: "This is test image 2",
     },
@@ -36,27 +36,27 @@ export default function Home() {
       {
         name: "Event Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (1).jpg",
         content: "Lorem impsum dolor amet Lorem impsum dolor amet",
       },
       {
         name: "Event Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (2).jpg",
         content:
           "Lorem impsum dolor amet Lorem impsum dolor amet Lorem impsum dolor amet",
       },
       {
         name: "Event Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (3).jpg",
         content:
           "Lorem impsum dolor amet Lorem impsum dolor amet Lorem impsum dolor amet",
       },
       {
         name: "Event Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (4).jpg",
         content:
           "Lorem impsum dolor amet Lorem impsum dolor amet Lorem impsum dolor amet",
       },
@@ -65,25 +65,25 @@ export default function Home() {
       {
         name: "Member Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (1).jpg",
         role: "Leader",
       },
       {
         name: "Member Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (1).jpg",
         role: "Leader",
       },
       {
         name: "Member Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (1).jpg",
         role: "Leader",
       },
       {
         name: "Member Name",
         term: "T231",
-        image: "/landing-page-hero.jpg",
+        image: "/event (1).jpg",
         role: "Leader",
       },
     ],
