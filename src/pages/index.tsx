@@ -100,7 +100,7 @@ export default function Home() {
         <div className=" m-5 z-50">
           <ImageCarousel slides={slides} className="h-96 md:h-96" />
         </div>
-        <section className="justify-center items-center w-full flex flex-col mt-10">
+        <section className="justify-center items-center m-auto flex flex-col mt-10 w-2/3">
           <h1 className="text-2xl font-bold">Featured Events</h1>
           <div className="grid grid-cols-2 gap-4 pt-8 px-4 w-full h-full items-center justify-center flex-wrap">
             {data.events.map((el, index) => {
@@ -112,7 +112,7 @@ export default function Home() {
                   <CardHeader className="p-2 min-h-full">
                     <img
                       src={el.image}
-                      className="object-cover max-w-[12rem] min-h-full rounded-md"
+                      className="max-w-[12rem] h-full rounded-md"
                     ></img>
                   </CardHeader>
                   <div className="flex flex-col h-full w-full justify-between">

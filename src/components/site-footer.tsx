@@ -26,6 +26,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         </div>
         <div className="flex items-center justify-center gap-4 px-8 flex-row md:gap-2 md:px-0">
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             href={siteConfig.links.twitter}
             title={siteConfig.links.twitter}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2 "
@@ -37,6 +39,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             />
           </a>
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             href={siteConfig.links.linkedin}
             title={siteConfig.links.linkedin}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
@@ -45,6 +49,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             <Icons.linkedin className="hover:cursor-pointer  ml-4" />
           </a>
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             href={siteConfig.links.github}
             title={siteConfig.links.github}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
@@ -53,6 +59,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             <Icons.gitHub className="hover:cursor-pointer  ml-4" />
           </a>
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             href={siteConfig.links.youtube}
             title={siteConfig.links.youtube}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
@@ -61,6 +69,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             <Icons.youtube className="hover:cursor-pointer  ml-4" />
           </a>
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             href={siteConfig.links.whatsapp}
             title={siteConfig.links.whatsapp}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
@@ -69,6 +79,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             <Icons.whatsapp className="hover:cursor-pointer  ml-4" />
           </a>
           <a
+            target="_blank"
+            rel="noopener noreferrer"
             href={siteConfig.links.email}
             title={siteConfig.links.email}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
@@ -99,24 +111,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             className="font-medium underline underline-offset-4"
           >
             Vercel
-          </a>
-          . Illustrations by{" "}
-          <a
-            href="https://popsy.co"
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4"
-          >
-            Popsy
-          </a>
-          . The source code is available on{" "}
-          <a
-            href={siteConfig.links.youtube}
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4"
-          >
-            GitHub
           </a>
           .
         </p>
