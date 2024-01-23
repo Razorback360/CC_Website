@@ -53,10 +53,10 @@ const addEventFormSchema = z.object({
   public: z.boolean(),
   poster: z
   .any()
-  .refine((file) => file?.length == 1, 'File is required.')
-  .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file[0]?.type), 'Must be a PNG, JPG, JPEG, or WEBP.')
-  .refine((file) => file[0]?.size <= MAX_FILE_SIZE, `Max file size is 3MB.`),
-  src: z.string().optional()
+  .refine((file: FileList|undefined) => file?.length == 1, 'File is required.')
+  .refine((file: FileList) => ACCEPTED_IMAGE_TYPES.includes(file.item(0)?.type ?? ""), 'Must be a PNG, JPG, JPEG, or WEBP.')
+  .refine((file: FileList) => file.item(0)?.size ?? 0 <= MAX_FILE_SIZE, `Max file size is 3MB.`),
+  src: z.string()
 });
 
 
@@ -77,7 +77,8 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       categoryId: "",
       link: "",
       public: false,
-      poster: undefined
+      poster: undefined,
+      src: "sssss"
     },
   });
 
@@ -88,8 +89,11 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       await updateEvent({ ...data, id: selectedEvent.id });
     }
     if (isCreatingNewEvent) {
+      // TODO: fix this shit
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
       await supabase.storage.from("images").upload(`${data.title}/poster/${data.poster[0].name}`, data.poster[0])
-      data.src = `${data.title}/poster/${data.poster[0].name}` as string
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      data.src = `${data.title}/poster/${data.poster[0].name}` 
       await createEvent(data);
     }
   }
@@ -359,7 +363,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                       </FormLabel>
                       <Input id="picture" type="file" className="p-0 mt-2" {...posterRef}/>
                       <FormMessage>
-                        {form.formState.errors.poster?.message}
+                        {form.formState.errors.poster?.message as string}
                       </FormMessage>
                     </>
                   )}

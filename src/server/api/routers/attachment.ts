@@ -92,8 +92,8 @@ export const attachmentRouter = createTRPCRouter({
     })
     
     await supabase.storage
-    .from(env.SUPABASE_IMAGE_BUCKET)
-    .remove([attachment?.src.split(`${env.SUPABASE_IMAGE_BUCKET}/`)[1]!])
+    .from(env.NEXT_PUBLIC_SUPABASE_IMAGE_BUCKET)
+    .remove([attachment?.src.split(`${env.NEXT_PUBLIC_SUPABASE_IMAGE_BUCKET}/`)[1]!])
 
     await ctx.db.attachment.delete({
       where: {
