@@ -8,9 +8,11 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { LocaleSwitcher } from "@/components/core/locale_switcher";
 import { Separator } from "@/components/ui/separator";
+import { useSession } from "next-auth/react";
 
 function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   const router = useRouter();
+  const { data: session } = useSession();
   return (
     <footer
       className={cn(
@@ -114,7 +116,12 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           </a>
           .
         </p>
-        <p className="text-center text-sm leading-loose md:text-left">
+        <p
+          className={cn(
+            "text-center text-sm leading-loose md:text-left",
+            session?.user && "hidden",
+          )}
+        >
           Already a member?{" "}
           <Button
             onClick={async () => await router.push("/auth/login")}
