@@ -106,10 +106,10 @@ export default function Home() {
                   key={index}
                   className="flex flex-row items-center gap-2 rounded-md p-2 text-sm transition-all h-52"
                 >
-                  <CardHeader className="p-2 min-h-full">
+                  <CardHeader className="p-2 min-h-full h-full w-72 rounded">
                     <img
                       src={el.image}
-                      className="max-w-[12rem] h-full rounded-md"
+                      className="object-contain m-auto rounded"
                     ></img>
                   </CardHeader>
                   <div className="flex flex-col h-full w-full justify-between">
