@@ -8,83 +8,102 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import React from "react";
+import Autoplay from "embla-carousel-autoplay";
+
+const slides = [
+  {
+    src: "/event (1).jpg",
+    label: "Image 1",
+    description: "This is test image 1",
+  },
+  {
+    src: "/event (2).jpg",
+    label: "Image 2",
+    description: "This is test image 2",
+  },
+  {
+    src: "/event (3).jpg",
+    label: "Image 1",
+    description: "This is test image 2",
+  },
+  {
+    src: "/event (4).jpg",
+    label: "Image 1",
+    description: "This is test image 2",
+  },
+];
+// the data is for rendering the events and members cards
+const data = {
+  events: [
+    {
+      name: "ICS 108 Help Session",
+      term: "T231",
+      image: "/event (1).jpg",
+      content: "Help session for ICS 108 students",
+    },
+    {
+      name: "ICS 253 Help Session",
+      term: "T231",
+      image: "/event (2).jpg",
+      content: "Help session for ICS 253 students",
+    },
+    {
+      name: "Hack Me",
+      term: "T231",
+      image: "/event (3).jpg",
+      content: "Learn how Cybersecurity works",
+    },
+    {
+      name: "Git And Github Workshop",
+      term: "T231",
+      image: "/event (4).jpg",
+      content: "Learn how to use git and github",
+    },
+  ],
+  members: [
+    {
+      name: "Member Name",
+      term: "T231",
+      image: "/event (1).jpg",
+      role: "Leader",
+    },
+    {
+      name: "Member Name",
+      term: "T231",
+      image: "/event (1).jpg",
+      role: "Leader",
+    },
+    {
+      name: "Member Name",
+      term: "T231",
+      image: "/event (1).jpg",
+      role: "Leader",
+    },
+    {
+      name: "Member Name",
+      term: "T231",
+      image: "/event (1).jpg",
+      role: "Leader",
+    },
+  ],
+};
 
 export default function Home() {
-  const slides = [
-    {
-      src: "/event (1).jpg",
-      label: "Image 1",
-      description: "This is test image 1",
-    },
-    {
-      src: "/event (2).jpg",
-      label: "Image 2",
-      description: "This is test image 2",
-    },
-    {
-      src: "/event (3).jpg",
-      label: "Image 1",
-      description: "This is test image 2",
-    },
-  ];
-  // the data is for rendering the events and members cards
-  const data = {
-    events: [
-      {
-        name: "ICS 108 Help Session",
-        term: "T231",
-        image: "/event (1).jpg",
-        content: "Help session for ICS 108 students",
-      },
-      {
-        name: "ICS 253 Help Session",
-        term: "T231",
-        image: "/event (2).jpg",
-        content: "Help session for ICS 253 students",
-      },
-      {
-        name: "Hack Me",
-        term: "T231",
-        image: "/event (3).jpg",
-        content: "Learn how Cybersecurity works",
-      },
-      {
-        name: "Git And Github Workshop",
-        term: "T231",
-        image: "/event (4).jpg",
-        content: "Learn how to use git and github",
-      },
-    ],
-    members: [
-      {
-        name: "Member Name",
-        term: "T231",
-        image: "/event (1).jpg",
-        role: "Leader",
-      },
-      {
-        name: "Member Name",
-        term: "T231",
-        image: "/event (1).jpg",
-        role: "Leader",
-      },
-      {
-        name: "Member Name",
-        term: "T231",
-        image: "/event (1).jpg",
-        role: "Leader",
-      },
-      {
-        name: "Member Name",
-        term: "T231",
-        image: "/event (1).jpg",
-        role: "Leader",
-      },
-    ],
-  };
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true }),
+  );
 
   return (
     <>
@@ -94,8 +113,36 @@ export default function Home() {
       </Head>
       <div className="w-[99vw]">
         {/* hero image */}
-        <div className=" m-5 z-50">
-          <ImageCarousel slides={slides} className="h-96 md:h-96" />
+        <div className="m-4 z-50">
+          {/* <ImageCarousel slides={slides} className="h-96 md:h-96" /> */}
+          <Carousel
+            className="w-2/3 mx-auto h-[32rem]"
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[plugin.current]}
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+          >
+            <CarouselContent className="-ml-4">
+              {slides.map((slide, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 pl-4">
+                  <div className="md:px-0 px-1 py-1">
+                    <Card className="p-4 h-[32rem]">
+                      <img
+                        className="object-contain object-center m-auto rounded h-full"
+                        alt={slide.description}
+                        src={slide.src}
+                      />
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="w-12 h-12 my-auto" />
+            <CarouselNext className="w-12 h-12 my-auto" />
+          </Carousel>
         </div>
         <section className="justify-center items-center m-auto flex flex-col mt-10 w-2/3">
           <h1 className="text-2xl font-bold">Featured Events</h1>
