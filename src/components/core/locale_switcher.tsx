@@ -57,7 +57,7 @@ export const SAFlag = () => {
       >
         <defs>
           <clipPath id="a">
-            <path fill-opacity=".7" d="M124 0h496v496H124z" />
+            <path fillOpacity=".7" d="M124 0h496v496H124z" />
           </clipPath>
         </defs>
         <g
