@@ -16,11 +16,4 @@ export const siteConfig: SiteConfig = {
 };
 
 // routes that should not have the header or footer
-export const HeaderFooterExclusionRoutes = [
-  "/auth/login",
-  "/auth/register",
-  "/dashboard/overview",
-  "/dashboard/events",
-  "/dashboard/members",
-  "/linktree",
-];
+export const HeaderFooterInclusionRoutes = ["/"];
