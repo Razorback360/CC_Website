@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -24,22 +25,22 @@ import Autoplay from "embla-carousel-autoplay";
 
 const slides = [
   {
-    src: "/event (1).jpg",
+    src: "/1-1.jpg",
     label: "Image 1",
     description: "This is test image 1",
   },
   {
-    src: "/event (2).jpg",
+    src: "/1-1.jpg",
     label: "Image 2",
     description: "This is test image 2",
   },
   {
-    src: "/event (3).jpg",
+    src: "/1-1.jpg",
     label: "Image 1",
     description: "This is test image 2",
   },
   {
-    src: "/event (4).jpg",
+    src: "/1-1.jpg",
     label: "Image 1",
     description: "This is test image 2",
   },
@@ -50,25 +51,25 @@ const data = {
     {
       name: "ICS 108 Help Session",
       term: "T231",
-      image: "/event (1).jpg",
+      image: "/1-1.jpg",
       content: "Help session for ICS 108 students",
     },
     {
       name: "ICS 253 Help Session",
       term: "T231",
-      image: "/event (2).jpg",
+      image: "/1-1.jpg",
       content: "Help session for ICS 253 students",
     },
     {
       name: "Hack Me",
       term: "T231",
-      image: "/event (3).jpg",
+      image: "/1-1.jpg",
       content: "Learn how Cybersecurity works",
     },
     {
       name: "Git And Github Workshop",
       term: "T231",
-      image: "/event (4).jpg",
+      image: "/1-1.jpg",
       content: "Learn how to use git and github",
     },
   ],
@@ -76,34 +77,44 @@ const data = {
     {
       name: "Member Name",
       term: "T231",
-      image: "/event (1).jpg",
+      image: "/1-1.jpg",
       role: "Leader",
     },
     {
       name: "Member Name",
       term: "T231",
-      image: "/event (1).jpg",
+      image: "/1-1.jpg",
       role: "Leader",
     },
     {
       name: "Member Name",
       term: "T231",
-      image: "/event (1).jpg",
+      image: "/1-1.jpg",
       role: "Leader",
     },
     {
       name: "Member Name",
       term: "T231",
-      image: "/event (1).jpg",
+      image: "/1-1.jpg",
       role: "Leader",
     },
   ],
 };
 
+const pluginSettings = {
+  delay: 200,
+  stopOnMouseEnter: false,
+  stopOnInteraction: false,
+  active: true,
+  playOnInit: true,
+};
+
 export default function Home() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true }),
-  );
+  const plugin1 = React.useRef(Autoplay(pluginSettings));
+  const [api1, setApi1] = React.useState<CarouselApi>();
+  const [api2, setApi2] = React.useState<CarouselApi>();
+  const [api3, setApi3] = React.useState<CarouselApi>();
+  const [api4, setApi4] = React.useState<CarouselApi>();
 
   return (
     <>
@@ -111,38 +122,123 @@ export default function Home() {
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
       </Head>
-      <div className="w-[99vw]">
-        {/* hero image */}
-        <div className="m-4 z-50">
-          {/* <ImageCarousel slides={slides} className="h-96 md:h-96" /> */}
-          <Carousel
-            className="w-2/3 mx-auto h-[32rem]"
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            plugins={[plugin.current]}
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
+      <div className="w-full">
+        <div className="greeting/carousel-section flex flex-row items-center relative justify-between h-[80vh] w-full bg-red-800 select-none">
+          <div
+            className="flex flex-col items-center justify-center w-64 text-primary text-xl font-extrabold font-mono"
+            style={{ textShadow: "0 0 1rem primary" }}
           >
-            <CarouselContent className="-ml-4">
-              {slides.map((slide, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 pl-4">
-                  <div className="md:px-0 px-1 py-1">
-                    <Card className="p-4 h-[32rem]">
+            KFUPM Computer Club
+          </div>
+          {/* vertical */}
+          <div className="grid grid-cols-3 grid-rows-5 items-center justify-center end-0 absolute h-[80vh]  w-fit max-w-[40%] aspect-[3/5]">
+            {/* small package */}
+            {/* TODO try yazeed's og carousel */}
+            <div className="col-span-1 row-span-1 row-start-1 aspect-square">
+              <Carousel
+                setApi={setApi1}
+                className="h-full w-full overflow-hidden"
+                orientation="vertical"
+                dir="rtl"
+                opts={{
+                  loop: true,
+                  direction: "rtl",
+                  axis: "y",
+                }}
+                plugins={[plugin1.current]}
+                onMouseEnter={plugin1.current.stop}
+                onMouseLeave={plugin1.current.reset}
+              >
+                <CarouselContent className="w-full h-full m-0">
+                  {slides.map((slide, index) => (
+                    <CarouselItem key={index} className="p-0">
                       <img
-                        className="object-contain object-center m-auto rounded h-full"
+                        className="object-contain object-center h-full w-full"
                         alt={slide.description}
                         src={slide.src}
                       />
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="w-12 h-12 my-auto" />
-            <CarouselNext className="w-12 h-12 my-auto" />
-          </Carousel>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
+            <div className="col-span-1 row-span-1 row-start-2 aspect-square">
+              <Carousel
+                setApi={setApi2}
+                className="h-full w-full overflow-hidden"
+                orientation="vertical"
+                opts={{
+                  loop: true,
+                  axis: "y",
+                }}
+                plugins={[plugin1.current]}
+                onMouseEnter={plugin1.current.stop}
+                onMouseLeave={plugin1.current.reset}
+              >
+                <CarouselContent className="w-full h-full m-0">
+                  {slides.map((slide, index) => (
+                    <CarouselItem key={index} className="p-0 w-full h-full">
+                      <img
+                        className="object-cover object-center h-full w-full"
+                        alt={slide.description}
+                        src={slide.src}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
+            <div className="col-span-2 row-span-2 col-start-2 aspect-square">
+              <Carousel
+                setApi={setApi3}
+                className="h-full w-full"
+                orientation="horizontal"
+                opts={{
+                  loop: true,
+                }}
+                plugins={[plugin1.current]}
+                onMouseEnter={plugin1.current.stop}
+                onMouseLeave={plugin1.current.reset}
+              >
+                <CarouselContent className="m-0">
+                  {slides.map((slide, index) => (
+                    <CarouselItem key={index} className="p-0">
+                      <img
+                        className="object-cover object-start h-full w-full"
+                        alt={slide.description}
+                        src={slide.src}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
+            <div className="col-span-3 row-span-3 aspect-square">
+              <Carousel
+                setApi={setApi4}
+                className="h-full w-full"
+                orientation="horizontal"
+                opts={{
+                  loop: true,
+                }}
+                plugins={[plugin1.current]}
+                onMouseEnter={plugin1.current.stop}
+                onMouseLeave={plugin1.current.reset}
+              >
+                <CarouselContent className=" m-0">
+                  {slides.map((slide, index) => (
+                    <CarouselItem key={index} className="p-0 w-full h-full">
+                      <img
+                        className="object-contain object-center "
+                        alt={slide.description}
+                        src={slide.src}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
+          </div>
         </div>
         <section className="justify-center items-center m-auto flex flex-col mt-10 w-2/3">
           <h1 className="text-2xl font-bold">Featured Events</h1>
