@@ -123,7 +123,7 @@ export default function Home() {
         <meta name="description" content="Home of KFUPM's Computer Club" />
       </Head>
       <div className="w-full">
-        <div className="greeting/carousel-section flex flex-row items-center relative justify-between h-[80vh] w-full bg-red-800 select-none">
+        <div className="greeting/carousel-section flex flex-row items-center justify-between max-h-[90vh] h-fit w-full bg-red-800 select-none">
           <div
             className="flex flex-col items-center justify-center w-64 text-primary text-xl font-extrabold font-mono"
             style={{ textShadow: "0 0 1rem primary" }}
@@ -131,9 +131,7 @@ export default function Home() {
             KFUPM Computer Club
           </div>
           {/* vertical */}
-          <div className="grid grid-cols-3 grid-rows-5 items-center justify-center end-0 absolute h-[80vh]  w-fit max-w-[40%] aspect-[3/5]">
-            {/* small package */}
-            {/* TODO try yazeed's og carousel */}
+          <div className="grid grid-cols-3 grid-rows-5 items-center justify-center max-h-[90vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
             <div className="col-span-1 row-span-1 row-start-1 aspect-square">
               <Carousel
                 setApi={setApi1}
