@@ -20,13 +20,13 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         "flex flex-col items-center justify-between py-2 gap-4 h-fit w-full",
       )}
     >
-      <div className="flex flex-row pt-4 px-8 w-full justify-between">
+      <div className="flex md:flex-row flex-col pt-4 px-8 w-full justify-between">
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0 md:h-fit">
           <ThemeToggle />
           <Separator orientation="vertical" />
           <LocaleSwitcher />
         </div>
-        <div className="flex items-center justify-center gap-4 px-8 flex-row md:gap-2 md:px-0">
+        <div className="flex items-center justify-center flex-wrap gap-4 px-8 flex-row md:gap-2 md:px-0">
           <a
             target="_blank"
             rel="noopener noreferrer"
@@ -34,7 +34,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.twitter}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2 "
           >
-            <p>Twitter</p>
             <Icons.twitter
               title={siteConfig.links.twitter}
               className="hover:cursor-pointer  ml-4"
@@ -47,7 +46,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.linkedin}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <p>Linkedin</p>
             <Icons.linkedin className="hover:cursor-pointer  ml-4" />
           </a>
           <a
@@ -57,7 +55,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.github}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <p>Github</p>
             <Icons.gitHub className="hover:cursor-pointer  ml-4" />
           </a>
           <a
@@ -67,7 +64,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.youtube}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <p>Youtube</p>
             <Icons.youtube className="hover:cursor-pointer  ml-4" />
           </a>
           <a
@@ -77,7 +73,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.whatsapp}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <p>Whatsapp</p>
             <Icons.whatsapp className="hover:cursor-pointer  ml-4" />
           </a>
           <a
@@ -87,7 +82,6 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.email}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <p>Email</p>
             <Icons.email className="hover:cursor-pointer ml-4" />
           </a>
         </div>
