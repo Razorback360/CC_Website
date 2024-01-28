@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { HeaderFooterInclusionRoutes } from "@/config/site";
 import SignoutPopup from "@/components/popups/SignoutPopup";
 import { Toaster } from "./ui/toaster";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 type Props = {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ const AppLayout = ({ children, ...props }: Props) => {
   }, [locale]);
 
   return (
-    <div className="flex min-h-full flex-col items-center justify-center">
+    <div className="h-full w-full flex-col items-center justify-center">
       <SignoutPopup>
         {/* exclude header and footer from specified list of pages */}
         {HeaderFooterInclusionRoutes.includes(pathname) && <SiteHeader />}
@@ -32,6 +33,7 @@ const AppLayout = ({ children, ...props }: Props) => {
         )}
         {children}
         <Toaster />
+        <TailwindIndicator />
         {HeaderFooterInclusionRoutes.includes(pathname) && (
           <section className="mt-4 w-full">
             <Separator className="w-full my-4" />
