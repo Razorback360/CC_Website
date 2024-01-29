@@ -52,24 +52,32 @@ const SiteHeader = (props: Props) => {
         className={cn(
           // "flex max-w-fit  fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full dark:bg-black bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] pr-2 pl-8 py-2  items-center justify-center space-x-4",
           // className,
-          "flex justify-between items-center lg:text-xl md:text-lg sm:px-6 px-5 py-2 hover:px-7 bg-background outline outline-2 outline-border hover:outline-none hover:bg-accent",
-          "select-none h-fit z-50 transition-all duration-200 shadow-lg fixed inset-x-0 mx-auto w-fit min-w-[20%] top-4 rounded-lg ",
+          "flex justify-between items-center lg:text-xl md:text-lg sm:px-6 px-5 sm:py-1 py-2 hover:px-7 bg-background outline outline-2 outline-border hover:outline-none hover:bg-accent",
+          "select-none h-fit z-50 transition-all duration-200 shadow-lg fixed sm:inset-x-0 inset-x-4 mx-auto sm:w-fit min-w-[20%] top-4 rounded-lg ",
         )}
       >
-        <Icons.logo className="sm:h-16 h-10 sm:w-16 w-10 cursor-pointer sm:mr-4" />
+        <Icons.logo className="sm:h-16 h-14 sm:w-16 w-14 cursor-pointer sm:mr-4" />
         <ul
           className={cn(
             "flex flex-row items-center text-center justify-center w-full",
             // sideMenuOpen ? "active" : "",
           )}
         >
-          <Button className="px-3" variant="link" asChild>
+          <Button
+            className="text-2xl sm:px-3 sm:text-base"
+            variant="link"
+            asChild
+          >
             <Link href="...">
               <Icons.aboutUs className="block sm:hidden" />
               <span className="hidden sm:block text-sm">About Us</span>
             </Link>
           </Button>
-          <Button className="px-3" variant="link" asChild>
+          <Button
+            className="text-2xl sm:px-3 sm:text-base"
+            variant="link"
+            asChild
+          >
             <Link href="...">
               <Icons.events className="block sm:hidden" />
               <span className="hidden sm:block text-sm">Events</span>

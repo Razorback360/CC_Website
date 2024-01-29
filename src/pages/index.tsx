@@ -122,7 +122,7 @@ export default function Home() {
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
       </Head>
-      <div className="w-full">
+      <div className="w-full sm:mt-0 mt-[6.3rem]">
         <div className="greeting/carousel-section flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none">
           <div
             className="flex flex-col items-center justify-center w-64 text-primary text-xl font-extrabold font-mono"
