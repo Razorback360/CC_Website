@@ -10,18 +10,17 @@ import {
 } from "@/components/ui/card";
 import {
   Carousel,
-  CarouselApi,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import React from "react";
-import Autoplay from "embla-carousel-autoplay";
+import Autoplay, { AutoplayOptionsType } from "embla-carousel-autoplay";
+import Spotlight from "@/components/ui/spotlight";
 
 const slides = [
   {
@@ -101,16 +100,13 @@ const data = {
   ],
 };
 
-const pluginSettings = {
-  delay: 200,
-  stopOnMouseEnter: false,
-  stopOnInteraction: false,
-  active: true,
+const autoplayOpts = {
+  delay: 2000,
+  stopOnInteraction: true,
   playOnInit: true,
-};
+} as AutoplayOptionsType;
 
 export default function Home() {
-  const plugin1 = React.useRef(Autoplay(pluginSettings));
   const [api1, setApi1] = React.useState<CarouselApi>();
   const [api2, setApi2] = React.useState<CarouselApi>();
   const [api3, setApi3] = React.useState<CarouselApi>();
@@ -121,31 +117,55 @@ export default function Home() {
       <Head>
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
+        {/* import pacifico and dancing script fonts */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <div className="w-full sm:mt-0 mt-[6.3rem]">
         <div className="greeting/carousel-section flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none">
-          <div
-            className="flex flex-col items-center justify-center w-64 text-primary text-xl font-extrabold font-mono"
-            style={{ textShadow: "0 0 1rem primary" }}
-          >
-            KFUPM Computer Club
+          <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
+          <div className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold">
+            <span
+              className="text-[10rem] leading-none text-foreground"
+              style={{
+                fontFamily: "Dancing Script",
+                WebkitBackgroundClip: "text",
+                // add text shadow (not box shadow)
+              }}
+            >
+              Welcome
+            </span>
+            <br />
+            <span
+              className="text-[6rem]"
+              style={{
+                // gradient primary to green
+                background: "linear-gradient(to right, #1D4ED8, #10B981)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              KFUPM
+            </span>
+            <span className="text-[8rem] text-primary">Computer Club</span>
           </div>
           {/* vertical */}
-          <div className="grid grid-cols-3 grid-rows-5 items-center justify-center max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
+          <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
             <div className="col-span-1 row-span-1 row-start-1 aspect-square">
               <Carousel
-                setApi={setApi1}
-                className="h-full w-full overflow-hidden"
-                orientation="vertical"
+                className="embla h-full w-full overflow-hidden"
+                orientation="horizontal"
                 dir="rtl"
                 opts={{
                   loop: true,
                   direction: "rtl",
-                  axis: "y",
                 }}
-                plugins={[plugin1.current]}
-                onMouseEnter={plugin1.current.stop}
-                onMouseLeave={plugin1.current.reset}
+                setApi={setApi1}
+                plugins={[Autoplay(autoplayOpts)]}
+                onMouseEnter={api1?.plugins()?.autoplay?.stop}
+                onMouseLeave={() => api1?.plugins()?.autoplay?.play()}
               >
                 <CarouselContent className="w-full h-full m-0">
                   {slides.map((slide, index) => (
@@ -162,16 +182,15 @@ export default function Home() {
             </div>
             <div className="col-span-1 row-span-1 row-start-2 aspect-square">
               <Carousel
-                setApi={setApi2}
-                className="h-full w-full overflow-hidden"
-                orientation="vertical"
+                className="embla h-full w-full overflow-hidden"
+                orientation="horizontal"
                 opts={{
                   loop: true,
-                  axis: "y",
                 }}
-                plugins={[plugin1.current]}
-                onMouseEnter={plugin1.current.stop}
-                onMouseLeave={plugin1.current.reset}
+                setApi={setApi2}
+                plugins={[Autoplay(autoplayOpts)]}
+                onMouseEnter={api2?.plugins()?.autoplay?.stop}
+                onMouseLeave={() => api2?.plugins()?.autoplay?.play()}
               >
                 <CarouselContent className="w-full h-full m-0">
                   {slides.map((slide, index) => (
@@ -188,15 +207,15 @@ export default function Home() {
             </div>
             <div className="col-span-2 row-span-2 col-start-2 aspect-square">
               <Carousel
-                setApi={setApi3}
-                className="h-full w-full"
+                className="embla h-full w-full"
                 orientation="horizontal"
                 opts={{
                   loop: true,
                 }}
-                plugins={[plugin1.current]}
-                onMouseEnter={plugin1.current.stop}
-                onMouseLeave={plugin1.current.reset}
+                setApi={setApi3}
+                plugins={[Autoplay(autoplayOpts)]}
+                onMouseEnter={api3?.plugins()?.autoplay?.stop}
+                onMouseLeave={() => api3?.plugins()?.autoplay?.play()}
               >
                 <CarouselContent className="m-0">
                   {slides.map((slide, index) => (
@@ -213,15 +232,17 @@ export default function Home() {
             </div>
             <div className="col-span-3 row-span-3 aspect-square">
               <Carousel
-                setApi={setApi4}
-                className="h-full w-full"
+                className="embla h-full w-full"
                 orientation="horizontal"
+                dir="rtl"
                 opts={{
                   loop: true,
+                  direction: "rtl",
                 }}
-                plugins={[plugin1.current]}
-                onMouseEnter={plugin1.current.stop}
-                onMouseLeave={plugin1.current.reset}
+                setApi={setApi4}
+                plugins={[Autoplay(autoplayOpts)]}
+                onMouseEnter={api4?.plugins()?.autoplay?.stop}
+                onMouseLeave={() => api4?.plugins()?.autoplay?.play()}
               >
                 <CarouselContent className=" m-0">
                   {slides.map((slide, index) => (
