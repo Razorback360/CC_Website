@@ -22,6 +22,7 @@ import React from "react";
 import Autoplay, { AutoplayOptionsType } from "embla-carousel-autoplay";
 import Spotlight from "@/components/landing-page/spotlight";
 import { cn } from "@/lib/utils";
+import ScrollIndicatorArrows from "../components/scroll-indicator-arrows";
 
 const slides = [
   {
@@ -280,12 +281,7 @@ export default function Home() {
               </Carousel>
             </div>
           </div>
-          {/* position middle of the screen down to indicate scrolling past the first section of the page */}
-          <div className="absolute bottom-0 inset-x-0 flex justify-center items-end pb-20 w-full h-screen opacity-50">
-            <div className="chevron w-9 h-2"></div>
-            <div className="chevron w-9 h-2"></div>
-            <div className="chevron w-9 h-2"></div>
-          </div>
+          <ScrollIndicatorArrows />
         </div>
         <section className="justify-center items-center m-auto flex flex-col mt-10 w-2/3">
           <h1 className="text-2xl font-bold">Featured Events</h1>
