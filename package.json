@@ -69,6 +69,7 @@
     "embla-carousel-react": "^8.0.0-rc19",
     "flowbite": "^2.1.1",
     "flowbite-react": "^0.6.4",
+    "framer-motion": "^11.0.3",
     "i18next": "^23.7.6",
     "jotai": "^2.6.2",
     "lucide-react": "^0.289.0",
