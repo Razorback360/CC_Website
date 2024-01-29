@@ -18,7 +18,7 @@ function ScrollIndicatorArrows() {
   return (
     <div
       className={cn(
-        "absolute bottom-0 inset-x-0 flex justify-center items-end pb-20 w-full h-screen transition-opacity duration-300",
+        "absolute bottom-0 inset-x-0 flex justify-center items-end mb-20 w-full h-fit transition-opacity duration-300",
         visible ? "opacity-50" : "opacity-0",
       )}
     >
