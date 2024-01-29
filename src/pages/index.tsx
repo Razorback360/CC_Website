@@ -20,7 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import React from "react";
 import Autoplay, { AutoplayOptionsType } from "embla-carousel-autoplay";
-import Spotlight from "@/components/ui/spotlight";
+import Spotlight from "@/components/landing-page/spotlight";
+import { cn } from "@/lib/utils";
 
 const slides = [
   {
@@ -117,9 +118,19 @@ export default function Home() {
       <Head>
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
-        {/* import pacifico and dancing script fonts */}
+        {/* import pacifico and dancing script, and inter fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </Head>
@@ -128,28 +139,27 @@ export default function Home() {
           <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
           <div className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold">
             <span
-              className="text-[10rem] leading-none text-foreground"
+              className="text-[12rem] leading-none text-foreground"
               style={{
                 fontFamily: "Dancing Script",
                 WebkitBackgroundClip: "text",
-                // add text shadow (not box shadow)
               }}
             >
-              Welcome
+              Welcome to
             </span>
             <br />
             <span
-              className="text-[6rem]"
+              className="text-[8rem] text-center"
               style={{
-                // gradient primary to green
+                fontFamily: "Inter",
                 background: "linear-gradient(to right, #1D4ED8, #10B981)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              KFUPM
+              KFUPM <br />
+              Computer Club
             </span>
-            <span className="text-[8rem] text-primary">Computer Club</span>
           </div>
           {/* vertical */}
           <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
@@ -165,7 +175,10 @@ export default function Home() {
                 setApi={setApi1}
                 plugins={[Autoplay(autoplayOpts)]}
                 onMouseEnter={api1?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => api1?.plugins()?.autoplay?.play()}
+                onMouseLeave={() => {
+                  api1?.plugins()?.autoplay?.reset();
+                  api1?.plugins()?.autoplay?.play();
+                }}
               >
                 <CarouselContent className="w-full h-full m-0">
                   {slides.map((slide, index) => (
@@ -190,7 +203,10 @@ export default function Home() {
                 setApi={setApi2}
                 plugins={[Autoplay(autoplayOpts)]}
                 onMouseEnter={api2?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => api2?.plugins()?.autoplay?.play()}
+                onMouseLeave={() => {
+                  api2?.plugins()?.autoplay?.reset();
+                  api2?.plugins()?.autoplay?.play();
+                }}
               >
                 <CarouselContent className="w-full h-full m-0">
                   {slides.map((slide, index) => (
@@ -215,7 +231,10 @@ export default function Home() {
                 setApi={setApi3}
                 plugins={[Autoplay(autoplayOpts)]}
                 onMouseEnter={api3?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => api3?.plugins()?.autoplay?.play()}
+                onMouseLeave={() => {
+                  api3?.plugins()?.autoplay?.reset();
+                  api3?.plugins()?.autoplay?.play();
+                }}
               >
                 <CarouselContent className="m-0">
                   {slides.map((slide, index) => (
@@ -242,7 +261,10 @@ export default function Home() {
                 setApi={setApi4}
                 plugins={[Autoplay(autoplayOpts)]}
                 onMouseEnter={api4?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => api4?.plugins()?.autoplay?.play()}
+                onMouseLeave={() => {
+                  api4?.plugins()?.autoplay?.reset();
+                  api4?.plugins()?.autoplay?.play();
+                }}
               >
                 <CarouselContent className=" m-0">
                   {slides.map((slide, index) => (
@@ -257,6 +279,12 @@ export default function Home() {
                 </CarouselContent>
               </Carousel>
             </div>
+          </div>
+          {/* position middle of the screen down to indicate scrolling past the first section of the page */}
+          <div className="absolute bottom-0 inset-x-0 flex justify-center items-end pb-20 w-full h-screen opacity-50">
+            <div className="chevron w-9 h-2"></div>
+            <div className="chevron w-9 h-2"></div>
+            <div className="chevron w-9 h-2"></div>
           </div>
         </div>
         <section className="justify-center items-center m-auto flex flex-col mt-10 w-2/3">
