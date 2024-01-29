@@ -47,6 +47,7 @@ import { IoPersonSharp as Person } from "react-icons/io5";
 import { MdEventAvailable as EventsDone } from "react-icons/md";
 import { RiListCheck3 as EventsRemain } from "react-icons/ri";
 import { VscDebugBreakpointDataUnverified as Point } from "react-icons/vsc";
+import { HiMiniUserGroup } from "react-icons/hi2";
 import { IoLink as Link } from "react-icons/io5";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
@@ -54,6 +55,7 @@ type IconProps = React.HTMLAttributes<SVGElement>;
 export type Icon = React.ElementType<IconProps>;
 
 export const Icons = {
+  aboutUs: HiMiniUserGroup,
   logo: (props: IconProps) => (
     <svg
       {...props}
