@@ -150,15 +150,7 @@ export default function Home() {
               Welcome to
             </span>
             <br />
-            <span
-              className="text-[8rem] text-center"
-              style={{
-                fontFamily: "Inter",
-                background: "linear-gradient(to right, #1D4ED8, #10B981)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
+            <span className="text-[8rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
               KFUPM <br />
               Computer Club
             </span>
