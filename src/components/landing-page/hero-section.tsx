@@ -1,13 +1,15 @@
 import {
   Carousel,
-  CarouselApi,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 import React from "react";
-import Autoplay, { AutoplayOptionsType } from "embla-carousel-autoplay";
+import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
 import Spotlight from "@/components/landing-page/spotlight";
 import ScrollIndicatorArrows from "@/components/scroll-indicator-arrows";
+
+import { useScroll, useTransform, motion } from "framer-motion";
 
 const slides = [
   {
@@ -43,8 +45,21 @@ const HeroSection = () => {
   const [api2, setApi2] = React.useState<CarouselApi>();
   const [api3, setApi3] = React.useState<CarouselApi>();
   const [api4, setApi4] = React.useState<CarouselApi>();
+
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["end end", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
+
   return (
-    <section className="hero flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none">
+    <motion.section
+      style={{ opacity }}
+      ref={heroRef}
+      className="hero flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
+    >
       <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
       <div className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold">
         <span
@@ -182,7 +197,7 @@ const HeroSection = () => {
         </div>
       </div>
       <ScrollIndicatorArrows />
-    </section>
+    </motion.section>
   );
 };
 
