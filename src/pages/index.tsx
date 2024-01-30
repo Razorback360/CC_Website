@@ -137,7 +137,7 @@ export default function Home() {
         />
       </Head>
       <div className="w-full sm:mt-0 mt-[6.3rem]">
-        <div className="greeting/carousel-section flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none">
+        <section className="greeting/carousel-section flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none">
           <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
           <div className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold">
             <span
@@ -275,7 +275,20 @@ export default function Home() {
             </div>
           </div>
           <ScrollIndicatorArrows />
-        </div>
+        </section>
+        <section className="flex flex-col items-center justify-center w-full h-full md:p-16 p-8 bg-primary">
+          <h1 className="text-8xl text-center text-primary-foreground font-extrabold">
+            Our Vision
+          </h1>
+          <p className="text-center text-xl mt-8 max-w-3xl text-primary-foreground font-bold">
+            Enhancing and Preparing Students for the Job Market or Further
+            Studies, Which Actively Contributes to SAUDI ARABIA&apos;S VISION
+            2030. It Aligns with the Vision&apos;s Goals of Developing a Highly
+            Skilled Workforce and Promoting Educational Excellence, Ensuring
+            that Students are Equipped to Contribute to the Country&apos;s
+            Economic and Technological Growth.
+          </p>
+        </section>
         <section className="justify-center items-center m-auto flex flex-col mt-10 w-2/3">
           <h1 className="text-2xl font-bold">Featured Events</h1>
           <div className="grid grid-cols-2 gap-4 pt-8 px-4 w-full h-full items-center justify-center flex-wrap">
