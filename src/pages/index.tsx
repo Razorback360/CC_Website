@@ -1,52 +1,9 @@
 import Head from "next/head";
-import { ImageCarousel } from "@/components/ui/ImageCarousel";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Carousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import React from "react";
-import Autoplay, { AutoplayOptionsType } from "embla-carousel-autoplay";
-import Spotlight from "@/components/landing-page/spotlight";
-import { cn } from "@/lib/utils";
-import ScrollIndicatorArrows from "../components/scroll-indicator-arrows";
-import MomentumScroll from "@/components/landing-page/momentum-scroll";
+import { StickyScroll } from "@/components/landing-page/sticky-scroll-reveal";
+import { api } from "@/utils/api";
+import HeroSection from "@/components/landing-page/hero-section";
 
-const slides = [
-  {
-    src: "/1-1.jpg",
-    label: "Image 1",
-    description: "This is test image 1",
-  },
-  {
-    src: "/1-1.jpg",
-    label: "Image 2",
-    description: "This is test image 2",
-  },
-  {
-    src: "/1-1.jpg",
-    label: "Image 1",
-    description: "This is test image 2",
-  },
-  {
-    src: "/1-1.jpg",
-    label: "Image 1",
-    description: "This is test image 2",
-  },
-];
 // the data is for rendering the events and members cards
 const data = {
   events: [
@@ -103,20 +60,11 @@ const data = {
   ],
 };
 
-const autoplayOpts = {
-  delay: 2000,
-  stopOnInteraction: true,
-  playOnInit: true,
-} as AutoplayOptionsType;
-
 export default function Home() {
-  const [api1, setApi1] = React.useState<CarouselApi>();
-  const [api2, setApi2] = React.useState<CarouselApi>();
-  const [api3, setApi3] = React.useState<CarouselApi>();
-  const [api4, setApi4] = React.useState<CarouselApi>();
+  const { data: events } = api.event.getAll.useQuery();
 
   return (
-    <MomentumScroll>
+    <>
       <Head>
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
@@ -137,145 +85,7 @@ export default function Home() {
         />
       </Head>
       <div className="w-full sm:mt-0 mt-[6.3rem]">
-        <section className="greeting/carousel-section flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none">
-          <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
-          <div className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold">
-            <span
-              className="text-[12rem] leading-none text-foreground"
-              style={{
-                fontFamily: "Dancing Script",
-                WebkitBackgroundClip: "text",
-              }}
-            >
-              Welcome to
-            </span>
-            <br />
-            <span className="text-[8rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
-              KFUPM <br />
-              Computer Club
-            </span>
-          </div>
-          {/* vertical */}
-          <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
-            <div className="col-span-1 row-span-1 row-start-1 aspect-square">
-              <Carousel
-                className="embla h-full w-full overflow-hidden"
-                orientation="horizontal"
-                dir="rtl"
-                opts={{
-                  loop: true,
-                  direction: "rtl",
-                }}
-                setApi={setApi1}
-                plugins={[Autoplay(autoplayOpts)]}
-                onMouseEnter={api1?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => {
-                  api1?.plugins()?.autoplay?.reset();
-                  api1?.plugins()?.autoplay?.play();
-                }}
-              >
-                <CarouselContent className="w-full h-full m-0">
-                  {slides.map((slide, index) => (
-                    <CarouselItem key={index} className="p-0">
-                      <img
-                        className="object-contain object-center h-full w-full"
-                        alt={slide.description}
-                        src={slide.src}
-                      />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
-            </div>
-            <div className="col-span-1 row-span-1 row-start-2 aspect-square">
-              <Carousel
-                className="embla h-full w-full overflow-hidden"
-                orientation="horizontal"
-                opts={{
-                  loop: true,
-                }}
-                setApi={setApi2}
-                plugins={[Autoplay(autoplayOpts)]}
-                onMouseEnter={api2?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => {
-                  api2?.plugins()?.autoplay?.reset();
-                  api2?.plugins()?.autoplay?.play();
-                }}
-              >
-                <CarouselContent className="w-full h-full m-0">
-                  {slides.map((slide, index) => (
-                    <CarouselItem key={index} className="p-0 w-full h-full">
-                      <img
-                        className="object-cover object-center h-full w-full"
-                        alt={slide.description}
-                        src={slide.src}
-                      />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
-            </div>
-            <div className="col-span-2 row-span-2 col-start-2 aspect-square">
-              <Carousel
-                className="embla h-full w-full"
-                orientation="horizontal"
-                opts={{
-                  loop: true,
-                }}
-                setApi={setApi3}
-                plugins={[Autoplay(autoplayOpts)]}
-                onMouseEnter={api3?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => {
-                  api3?.plugins()?.autoplay?.reset();
-                  api3?.plugins()?.autoplay?.play();
-                }}
-              >
-                <CarouselContent className="m-0">
-                  {slides.map((slide, index) => (
-                    <CarouselItem key={index} className="p-0">
-                      <img
-                        className="object-cover object-start h-full w-full"
-                        alt={slide.description}
-                        src={slide.src}
-                      />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
-            </div>
-            <div className="col-span-3 row-span-3 aspect-square">
-              <Carousel
-                className="embla h-full w-full"
-                orientation="horizontal"
-                dir="rtl"
-                opts={{
-                  loop: true,
-                  direction: "rtl",
-                }}
-                setApi={setApi4}
-                plugins={[Autoplay(autoplayOpts)]}
-                onMouseEnter={api4?.plugins()?.autoplay?.stop}
-                onMouseLeave={() => {
-                  api4?.plugins()?.autoplay?.reset();
-                  api4?.plugins()?.autoplay?.play();
-                }}
-              >
-                <CarouselContent className=" m-0">
-                  {slides.map((slide, index) => (
-                    <CarouselItem key={index} className="p-0 w-full h-full">
-                      <img
-                        className="object-contain object-center "
-                        alt={slide.description}
-                        src={slide.src}
-                      />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
-            </div>
-          </div>
-          <ScrollIndicatorArrows />
-        </section>
+        <HeroSection />
         <section className="flex flex-col items-center justify-center w-full h-full md:p-16 p-8 bg-primary">
           <h1 className="text-8xl text-center text-primary-foreground font-extrabold">
             Our Vision
@@ -382,6 +192,6 @@ export default function Home() {
                   </div>
                 </Card> */}
       </div>
-    </MomentumScroll>
+    </>
   );
 }
