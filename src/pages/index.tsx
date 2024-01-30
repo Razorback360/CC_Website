@@ -23,6 +23,7 @@ import Autoplay, { AutoplayOptionsType } from "embla-carousel-autoplay";
 import Spotlight from "@/components/landing-page/spotlight";
 import { cn } from "@/lib/utils";
 import ScrollIndicatorArrows from "../components/scroll-indicator-arrows";
+import MomentumScroll from "@/components/landing-page/momentum-scroll";
 
 const slides = [
   {
@@ -115,7 +116,7 @@ export default function Home() {
   const [api4, setApi4] = React.useState<CarouselApi>();
 
   return (
-    <>
+    <MomentumScroll>
       <Head>
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
@@ -376,6 +377,6 @@ export default function Home() {
                   </div>
                 </Card> */}
       </div>
-    </>
+    </MomentumScroll>
   );
 }
