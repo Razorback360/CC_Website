@@ -43,14 +43,14 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       animate={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
       }}
-      className="flex justify-between items-start relative pl-10 pr-20 py-20 gap-10"
+      className="flex justify-between items-start relative pl-10 pr-20 py-32 gap-10"
       style={{
         // number of events * 100vh
         height: `${(events?.length ?? 3) * 100}vh`,
       }}
       ref={ref}
     >
-      <div className="div relative flex flex-col items-start w-full h-full py-10">
+      <div className="div relative flex flex-col items-start w-full h-full">
         {events?.map((event, index) => (
           <EventCard key={event.title + index} item={event} index={index} />
         ))}
@@ -60,8 +60,11 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
           background: linearGradients[activeCard % linearGradients.length],
         }}
         className={cn(
-          "hidden lg:flex flex-col xl:h-[50vh] 2xl:h-[70vh] aspect-[15/16]",
-          "p-4 rounded-lg sticky top-1/2 translate-y-[-50%] justify-between items-center",
+          "hidden lg:flex flex-col aspect-[15/16]",
+          // inset y = rest of the height of the screen / 2
+          "xl:h-[50vh] 2xl:h-[70vh] xl:inset-y-[25vh] 2xl:inset-y-[15vh]",
+          "lg:h-[40vh] lg:inset-y-[30vh]",
+          "p-4 rounded-lg sticky justify-between items-center",
         )}
       >
         <Image
