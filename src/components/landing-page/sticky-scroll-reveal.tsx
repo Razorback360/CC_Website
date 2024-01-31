@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { compareAsc, isAfter } from "date-fns";
+import { type RouterOutputs } from "@/utils/api";
 
 export const activeEventAtom = atom<number>(0);
 
@@ -22,7 +23,7 @@ export const useActiveEvent = () => {
 };
 
 interface StickyScrollProps {
-  events: (Event & object)[] | undefined;
+  events: RouterOutputs["event"]["getAll"] | undefined;
 }
 
 export const StickyScroll = ({ events }: StickyScrollProps) => {
@@ -90,7 +91,11 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       >
         <Image
           className="rounded-lg select-none"
-          src="/event (1).jpg"
+          src={
+            upcomingEvents?.at(activeCard)?.Attachments.at(0)?.src ??
+            `/event (${(activeCard % 4) + 1}).jpg`
+            // TODO @SauceX22 "/images/no_poster.jpg" add a no poster found image
+          }
           loading="lazy"
           width={1920}
           height={1080}
