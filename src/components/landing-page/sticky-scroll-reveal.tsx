@@ -32,12 +32,18 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
     offset: ["start start", "end start"],
   });
 
-  const backgroundColors = ["#0f172a", "#000", "#171717"];
+  const backgroundColors = ["#0f172a", "#171717", "#2d3748", "#1a202c"];
   const linearGradients = [
     "linear-gradient(to bottom right, #06b6d4, #10b981)",
     "linear-gradient(to bottom right, #ec4899, #6366f1)",
     "linear-gradient(to bottom right, #f97316, #eab308)",
+    "linear-gradient(to bottom right, #f59e0b, #84cc16)",
+    "linear-gradient(to bottom right, #f472b6, #7c3aed)",
+    "linear-gradient(to bottom right, #ff0000, #00ff00)",
+    "linear-gradient(to bottom right, #0000ff, #ffff00)",
+    "linear-gradient(to bottom right, #ff00ff, #00ffff)",
   ];
+
   return (
     <motion.section
       animate={{
@@ -60,10 +66,10 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
           background: linearGradients[activeCard % linearGradients.length],
         }}
         className={cn(
-          "hidden lg:flex flex-col aspect-[15/16]",
+          "hidden lg:flex flex-col aspect-[19/23]",
           // inset y = rest of the height of the screen / 2
-          "xl:h-[50vh] 2xl:h-[70vh] xl:inset-y-[25vh] 2xl:inset-y-[15vh]",
-          "lg:h-[40vh] lg:inset-y-[30vh]",
+          "2xl:h-[80vh] 2xl:inset-y-[10vh] xl:h-[65vh] xl:inset-y-[17.5vh]",
+          "lg:h-[50vh] lg:inset-y-[25vh]",
           "p-4 rounded-lg sticky justify-between items-center",
         )}
       >
@@ -77,7 +83,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
           objectFit="contain"
           alt="event image"
         />
-        <Button className="w-full" size="xl" variant="outline" asChild>
+        <Button className="w-full mt-4" size="xl" variant="outline" asChild>
           <Link href="#">View</Link>
         </Button>
       </motion.div>
