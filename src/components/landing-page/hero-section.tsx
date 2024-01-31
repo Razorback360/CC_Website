@@ -9,7 +9,12 @@ import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
 import Spotlight from "@/components/landing-page/spotlight";
 import ScrollIndicatorArrows from "@/components/scroll-indicator-arrows";
 
-import { useScroll, useTransform, motion } from "framer-motion";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  useMotionValueEvent,
+} from "framer-motion";
 
 const slides = [
   {
@@ -55,6 +60,24 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
 
   const parallaxText = useTransform(scrollYProgress, [0, 0.9], [0, -200]);
+  const parallaxCarousels1 = useTransform(scrollYProgress, [0, 0.4], [0, -200]);
+  const parallaxCarousels2 = useTransform(scrollYProgress, [0, 0.6], [0, -200]);
+  const parallaxCarousels3 = useTransform(scrollYProgress, [0, 0.7], [0, -200]);
+  const parallaxCarousels4 = useTransform(scrollYProgress, [0, 0.9], [0, -200]);
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (progress > 0) {
+      api1?.plugins()?.autoplay?.stop();
+      api2?.plugins()?.autoplay?.stop();
+      api3?.plugins()?.autoplay?.stop();
+      api4?.plugins()?.autoplay?.stop();
+    } else {
+      api1?.plugins()?.autoplay?.play();
+      api2?.plugins()?.autoplay?.play();
+      api3?.plugins()?.autoplay?.play();
+      api4?.plugins()?.autoplay?.play();
+    }
+  });
 
   return (
     <motion.section
@@ -87,7 +110,12 @@ const HeroSection = () => {
       </motion.div>
       {/* vertical */}
       <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
-        <div className="col-span-1 row-span-1 row-start-1 aspect-square">
+        <motion.div
+          style={{
+            y: parallaxCarousels1,
+          }}
+          className="col-span-1 row-span-1 row-start-1 aspect-square"
+        >
           <Carousel
             className="embla h-full w-full overflow-hidden"
             orientation="horizontal"
@@ -116,8 +144,13 @@ const HeroSection = () => {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
-        <div className="col-span-1 row-span-1 row-start-2 aspect-square">
+        </motion.div>
+        <motion.div
+          style={{
+            y: parallaxCarousels2,
+          }}
+          className="col-span-1 row-span-1 row-start-2 aspect-square"
+        >
           <Carousel
             className="embla h-full w-full overflow-hidden"
             orientation="horizontal"
@@ -144,8 +177,13 @@ const HeroSection = () => {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
-        <div className="col-span-2 row-span-2 col-start-2 aspect-square">
+        </motion.div>
+        <motion.div
+          style={{
+            y: parallaxCarousels3,
+          }}
+          className="col-span-2 row-span-2 col-start-2 aspect-square"
+        >
           <Carousel
             className="embla h-full w-full"
             orientation="horizontal"
@@ -172,8 +210,13 @@ const HeroSection = () => {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
-        <div className="col-span-3 row-span-3 aspect-square">
+        </motion.div>
+        <motion.div
+          style={{
+            y: parallaxCarousels4,
+          }}
+          className="col-span-3 row-span-3 aspect-square"
+        >
           <Carousel
             className="embla h-full w-full"
             orientation="horizontal"
@@ -202,7 +245,7 @@ const HeroSection = () => {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
+        </motion.div>
       </div>
       <ScrollIndicatorArrows />
     </motion.section>
