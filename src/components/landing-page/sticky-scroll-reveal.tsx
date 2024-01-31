@@ -127,7 +127,7 @@ const EventCard = ({ item, index }: EventCardProps) => {
         type: "inertia",
         ease: [0.5, 0, 0.5, 1],
       }}
-      className="max-h-screen h-[90vh] min-w-[30vw]"
+      className="max-h-screen h-[90vh] min-w-[30vw] text-white"
     >
       <motion.h2
         initial={{
@@ -136,7 +136,7 @@ const EventCard = ({ item, index }: EventCardProps) => {
         animate={{
           opacity: activeCard === index ? 1 : 0.3,
         }}
-        className="text-7xl font-bold text-secondary-foreground"
+        className="text-7xl font-bold"
       >
         {item.title}
       </motion.h2>
@@ -147,7 +147,7 @@ const EventCard = ({ item, index }: EventCardProps) => {
         animate={{
           opacity: activeCard === index ? 1 : 0.3,
         }}
-        className="text-xl text-secondary-foreground max-w-4xl h-fit w-full mt-12"
+        className="text-xl max-w-4xl h-fit w-full mt-12"
       >
         {item.description}
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis,
