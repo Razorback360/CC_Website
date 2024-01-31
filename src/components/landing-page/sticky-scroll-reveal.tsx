@@ -78,7 +78,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
         ))}
       </div>
       <motion.div
-        style={{
+        animate={{
           background: linearGradients[activeCard % linearGradients.length],
         }}
         className={cn(
