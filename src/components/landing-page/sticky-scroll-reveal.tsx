@@ -7,6 +7,7 @@ import { atom, useAtom } from "jotai";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { compareAsc, isAfter } from "date-fns";
 
 export const activeEventAtom = atom<number>(0);
 
@@ -44,6 +45,20 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
     "linear-gradient(to bottom right, #ff00ff, #00ffff)",
   ];
 
+  const sortedEvents = events?.sort((a, b) => {
+    // orders according to the date (closest to current date first)
+    return compareAsc(a.date, b.date);
+  });
+
+  const pastEvents = sortedEvents?.filter((event) => {
+    // filters out events that have already passed
+    return isAfter(new Date(), event.date);
+  });
+  const upcomingEvents = sortedEvents?.filter((event) => {
+    // filters out events that have already passed
+    return isAfter(event.date, new Date());
+  });
+
   return (
     <motion.section
       animate={{
@@ -52,12 +67,12 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       className="flex justify-between items-start relative pl-10 pr-20 py-32 gap-10"
       style={{
         // number of events * 100vh
-        height: `${(events?.length ?? 3) * 100}vh`,
+        height: `${(upcomingEvents?.length ?? 3) * 100}vh`,
       }}
       ref={ref}
     >
       <div className="div relative flex flex-col items-start w-full h-full">
-        {events?.map((event, index) => (
+        {upcomingEvents?.map((event, index) => (
           <EventCard key={event.title + index} item={event} index={index} />
         ))}
       </div>
