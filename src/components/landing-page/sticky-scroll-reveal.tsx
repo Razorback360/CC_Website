@@ -56,7 +56,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
         animate={{
           background: linearGradients[activeCard % linearGradients.length],
         }}
-        className="hidden lg:block h-[60vh] aspect-square flex-shrink-0 rounded-md bg-white sticky inset-y-[20vh] overflow-hidden"
+        className="hidden lg:block h-[60vh] aspect-square flex-shrink-0 rounded-md bg-transparent sticky inset-y-[20vh] overflow-hidden"
       ></motion.div>
     </motion.section>
   );
@@ -78,12 +78,12 @@ const EventCard = ({ item, index }: EventCardProps) => {
 
   const size = useTransform(
     scrollYProgress,
-    [0, 0.45, 0.55, 1],
+    [0, 0.4, 0.55, 1],
     [0.7, 1, 1, 0.7],
   );
   const startPadding = useTransform(
     scrollYProgress,
-    [0, 0.45, 0.55, 1],
+    [0, 0.4, 0.55, 1],
     ["0%", "10%", "10%", "0%"],
   );
 
@@ -101,7 +101,7 @@ const EventCard = ({ item, index }: EventCardProps) => {
         paddingLeft: startPadding,
       }}
       transition={{
-        type: "spring",
+        type: "inertia",
         ease: [0.5, 0, 0.5, 1],
       }}
       className="h-full min-h-[90vh]"
