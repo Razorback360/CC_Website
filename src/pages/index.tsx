@@ -88,6 +88,8 @@ export default function Home() {
       <div className="w-full sm:mt-0 mt-[6.3rem]">
         <HeroSection />
         <VisionSection />
+        <StickyScroll events={events} />
+        {/* {data.events.map((el, index) => {
               return (
                 <Card
                   key={index}
@@ -125,9 +127,8 @@ export default function Home() {
                   </div>
                 </Card>
               );
-            })}
-          </div>
-        </section>
+            })} */}
+        {/* </div> */}
         {/* <section className="justify-center items-center w-full flex flex-col mt-10">
           <h1 className="text-2xl font-bold">Featured Members</h1>
           <div className="flex flex-row w-full h-full items-center justify-center flex-wrap">
