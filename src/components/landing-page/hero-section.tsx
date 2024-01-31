@@ -68,10 +68,10 @@ const HeroSection = () => {
           y: parallaxText,
           opacity,
         }}
-        className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold"
+        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold"
       >
         <span
-          className="text-[12rem] leading-none text-foreground"
+          className="2xl:text-[12rem] xl:text-[10rem] lg:text-[8rem] md:text-[7rem] leading-none text-foreground"
           style={{
             fontFamily: "Dancing Script",
             WebkitBackgroundClip: "text",
@@ -80,7 +80,7 @@ const HeroSection = () => {
           Welcome to
         </span>
         <br />
-        <span className="text-[8rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
+        <span className="2xl:text-[7rem] xl:text-[6rem] lg:text-[5rem] md:text-[4rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
           KFUPM <br />
           Computer Club
         </span>
