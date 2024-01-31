@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { type Event } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { atom, useAtom } from "jotai";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 export const activeEventAtom = atom<number>(0);
 
@@ -40,7 +43,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       animate={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
       }}
-      className="flex justify-between items-start relative pl-10 pr-20 py-20"
+      className="flex justify-between items-start relative pl-10 pr-20 py-20 gap-10"
       style={{
         // number of events * 100vh
         height: `${(events?.length ?? 3) * 100}vh`,
@@ -53,11 +56,28 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
         ))}
       </div>
       <motion.div
-        animate={{
+        style={{
           background: linearGradients[activeCard % linearGradients.length],
         }}
-        className="hidden lg:block h-[60vh] aspect-square flex-shrink-0 rounded-md bg-transparent sticky inset-y-[20vh] overflow-hidden"
-      ></motion.div>
+        className={cn(
+          "hidden lg:flex flex-col xl:h-[50vh] 2xl:h-[70vh] aspect-[15/16]",
+          "p-4 rounded-lg sticky top-1/2 translate-y-[-50%] justify-between items-center",
+        )}
+      >
+        <Image
+          className="rounded-lg select-none"
+          src="/event (1).jpg"
+          loading="lazy"
+          width={1920}
+          height={1080}
+          layout="responsive"
+          objectFit="contain"
+          alt="event image"
+        />
+        <Button className="w-full" size="xl" variant="outline" asChild>
+          <Link href="#">View</Link>
+        </Button>
+      </motion.div>
     </motion.section>
   );
 };
@@ -104,7 +124,7 @@ const EventCard = ({ item, index }: EventCardProps) => {
         type: "inertia",
         ease: [0.5, 0, 0.5, 1],
       }}
-      className="h-full min-h-[90vh]"
+      className="max-h-screen h-[90vh] min-w-[30vw]"
     >
       <motion.h2
         initial={{
@@ -124,7 +144,7 @@ const EventCard = ({ item, index }: EventCardProps) => {
         animate={{
           opacity: activeCard === index ? 1 : 0.3,
         }}
-        className="text-xl text-secondary-foreground max-w-4xl w-full mt-12"
+        className="text-xl text-secondary-foreground max-w-4xl h-fit w-full mt-12"
       >
         {item.description}
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis,

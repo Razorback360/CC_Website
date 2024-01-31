@@ -19,7 +19,7 @@ const VisionSection = () => {
         "flex flex-col items-center justify-center w-full h-[150vh] md:p-40 p-8 bg-primary",
       )}
     >
-      <div className="sticky inset-y-80">
+      <div className="sticky top-1/2 translate-y-[-50%]">
         <h1 className="text-8xl text-center text-primary-foreground font-extrabold">
           Our Vision
         </h1>
