@@ -30,7 +30,7 @@ const SiteHeader = (props: Props) => {
 
     if (direction < 0) {
       setVisible(true);
-    } else if (direction > 0.025) {
+    } else if (direction > 0.00025) {
       setVisible(false);
     }
   });
