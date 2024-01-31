@@ -43,7 +43,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       className="flex justify-between items-start relative pl-10 pr-20 py-20"
       style={{
         // number of events * 100vh
-        height: `${events?.length ?? 3 * 100}vh`,
+        height: `${(events?.length ?? 3) * 100}vh`,
       }}
       ref={ref}
     >
