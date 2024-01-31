@@ -54,6 +54,8 @@ const HeroSection = () => {
 
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
 
+  const parallaxText = useTransform(scrollYProgress, [0, 0.9], [0, -200]);
+
   return (
     <motion.section
       style={{ opacity }}
@@ -61,7 +63,13 @@ const HeroSection = () => {
       className="hero flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
     >
       <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
-      <div className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold">
+      <motion.div
+        style={{
+          y: parallaxText,
+          opacity,
+        }}
+        className="flex flex-col items-center justify-center w-full text-primary text-6xl font-extrabold"
+      >
         <span
           className="text-[12rem] leading-none text-foreground"
           style={{
@@ -76,7 +84,7 @@ const HeroSection = () => {
           KFUPM <br />
           Computer Club
         </span>
-      </div>
+      </motion.div>
       {/* vertical */}
       <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
         <div className="col-span-1 row-span-1 row-start-1 aspect-square">
