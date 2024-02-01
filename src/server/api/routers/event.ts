@@ -23,6 +23,25 @@ export const eventRouter = createTRPCRouter({
       },
     });
   }),
+  getAllPublic: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.event.findMany({
+      where: {
+        public: true,
+      },
+      include: {
+        Semester: true,
+        Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+  }),
   getAllCategories: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.eventCategory.findMany({});
   }),

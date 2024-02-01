@@ -62,7 +62,7 @@ const data = {
 };
 
 export default function Home() {
-  const { data: events } = api.event.getAll.useQuery();
+  const { data: events } = api.event.getAllPublic.useQuery();
 
   return (
     <>
