@@ -83,17 +83,14 @@ const HeroSection = () => {
     <motion.section
       style={{ opacity }}
       ref={heroRef}
-      className="hero flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
+      className="hero relative flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
     >
       <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
-      <Image
-        className="select-none z-10 absolute opacity-5 -rotate-[10deg] aspect-square left-[-40%] scale-x-[-1]"
+      <img
+        className="select-none z-10 absolute opacity-5 -rotate-[10deg] left-[-10%] scale-x-[-1] blur-sm"
+        draggable={false}
         src="/main-01.png"
         loading="eager"
-        width={1024}
-        height={1024}
-        layout="responsive"
-        objectFit="contain"
         alt="backgroung image"
       />
       <motion.div
