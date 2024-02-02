@@ -71,6 +71,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
         height: `${(upcomingEvents?.length ?? 3) * 100}vh`,
       }}
       ref={ref}
+      id="events"
     >
       <div className="div relative flex flex-col items-start w-full h-full">
         {upcomingEvents?.map((event, index) => (

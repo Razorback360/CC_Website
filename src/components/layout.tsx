@@ -24,7 +24,7 @@ const AppLayout = ({ children, ...props }: Props) => {
   }, [locale]);
 
   return (
-    <div className="h-full w-full flex-col items-center justify-center">
+    <div className="h-full w-full flex-col items-center justify-center scroll-smooth">
       <SignoutPopup>
         {/* exclude header and footer from specified list of pages */}
         {HeaderFooterInclusionRoutes.includes(pathname) && <SiteHeader />}

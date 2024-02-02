@@ -68,7 +68,7 @@ const SiteHeader = (props: Props) => {
             variant="link"
             asChild
           >
-            <Link href="...">
+            <Link href="#about-us">
               <Icons.aboutUs className="block sm:hidden" />
               <span className="hidden sm:block text-sm">About Us</span>
             </Link>
@@ -78,7 +78,7 @@ const SiteHeader = (props: Props) => {
             variant="link"
             asChild
           >
-            <Link href="...">
+            <Link href="#events">
               <Icons.events className="block sm:hidden" />
               <span className="hidden sm:block text-sm">Events</span>
             </Link>

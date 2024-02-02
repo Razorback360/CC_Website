@@ -14,10 +14,11 @@ const VisionSection = () => {
   return (
     <motion.section
       style={{ opacity }}
+      id="about-us"
       ref={visionRef}
       className={cn(
         "flex flex-col items-center justify-center w-full h-[170vh] md:p-40 p-8 bg-primary",
-        "bg-gradient-to-b from-primary to-[#10B981]",
+        "bg-gradient-to-br from-primary to-[#10B981]",
       )}
     >
       <div className="sticky top-1/2 translate-y-[-50%]">
