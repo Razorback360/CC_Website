@@ -13,6 +13,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+const HIDE_THRESHOLD = 0.005;
+
 const SiteHeader = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -24,10 +26,12 @@ const SiteHeader = () => {
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     const direction = current - (scrollYProgress.getPrevious() ?? 0);
 
-    if (direction < 0) {
-      setVisible(true);
-    } else if (direction > 0.00025) {
-      setVisible(false);
+    if (scrollYProgress.get() >= 0.05) {
+      if (direction < 0) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
     }
   });
 
