@@ -13,14 +13,12 @@ import {
   Trash2,
 } from "lucide-react";
 
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -89,7 +87,7 @@ export default function RecentActivityDisplay() {
                   </TooltipTrigger>
                 </PopoverTrigger>
                 <PopoverContent className="flex w-[535px] p-0">
-                  <div className="flex flex-col gap-2 border-r px-2 py-4">
+                  <div className="flex flex-col gap-2 border-e px-2 py-4">
                     <div className="px-4 text-sm font-medium">Snooze until</div>
                     <div className="grid min-w-[250px] gap-1">
                       <Button
@@ -97,7 +95,7 @@ export default function RecentActivityDisplay() {
                         className="justify-start font-normal"
                       >
                         Later today{" "}
-                        <span className="ml-auto text-muted-foreground">
+                        <span className="ms-auto text-muted-foreground">
                           {format(addHours(today, 4), "E, h:m b")}
                         </span>
                       </Button>
@@ -106,7 +104,7 @@ export default function RecentActivityDisplay() {
                         className="justify-start font-normal"
                       >
                         Tomorrow
-                        <span className="ml-auto text-muted-foreground">
+                        <span className="ms-auto text-muted-foreground">
                           {format(addDays(today, 1), "E, h:m b")}
                         </span>
                       </Button>
@@ -115,7 +113,7 @@ export default function RecentActivityDisplay() {
                         className="justify-start font-normal"
                       >
                         This weekend
-                        <span className="ml-auto text-muted-foreground">
+                        <span className="ms-auto text-muted-foreground">
                           {format(nextSaturday(today), "E, h:m b")}
                         </span>
                       </Button>
@@ -124,7 +122,7 @@ export default function RecentActivityDisplay() {
                         className="justify-start font-normal"
                       >
                         Next week
-                        <span className="ml-auto text-muted-foreground">
+                        <span className="ms-auto text-muted-foreground">
                           {format(addDays(today, 7), "E, h:m b")}
                         </span>
                       </Button>
@@ -139,7 +137,7 @@ export default function RecentActivityDisplay() {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ms-auto flex items-center gap-2">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

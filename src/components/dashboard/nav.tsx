@@ -1,15 +1,15 @@
-import Link from "next/link";
 import { type LucideIcon } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 import { type Icon } from "@/components/icons";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 interface NavProps {
@@ -59,7 +59,7 @@ export default function Nav({ links = [], isCollapsed }: NavProps) {
                 >
                   {link.title}
                   {link.label && (
-                    <span className="ml-auto text-muted-foreground">
+                    <span className="ms-auto text-muted-foreground">
                       {link.label}
                     </span>
                   )}
@@ -78,12 +78,12 @@ export default function Nav({ links = [], isCollapsed }: NavProps) {
                 isActive && "bg-accent text-white", // Add active styles here
               )}
             >
-              <link.icon className="mr-4 h-6 w-6" />
+              <link.icon className="me-4 h-6 w-6" />
               {link.title}
               {link.label && (
                 <span
                   className={cn(
-                    "ml-auto",
+                    "ms-auto",
                     link.variant === "default" &&
                       "text-background dark:text-white",
                   )}

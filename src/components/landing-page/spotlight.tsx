@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import React from "react";
+import { useRouter } from "next/router";
 
 type SpotlightProps = {
   className?: string;
@@ -7,10 +7,12 @@ type SpotlightProps = {
 };
 
 const Spotlight = ({ className, fill }: SpotlightProps) => {
+  const router = useRouter();
   return (
     <svg
       className={cn(
-        "animate-spotlight pointer-events-none absolute z-[1]  h-[169%] w-[138%] lg:w-[84%] opacity-0 ",
+        "pointer-events-none absolute z-[1]  h-[169%] w-[138%] lg:w-[84%] opacity-0 rtl:animate-spotlightRTL ltr:animate-spotlightLTR",
+
         className,
       )}
       xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +26,11 @@ const Spotlight = ({ className, fill }: SpotlightProps) => {
           cy="273.501"
           rx="1924.71"
           ry="273.501"
-          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+          transform={
+            router.locale === "en"
+              ? "matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+              : "matrix(0.822377 -0.568943 0.568943 0.822377 1155.12 2291.09)"
+          }
           fill={fill ?? "var(--color-foreground)"}
           fillOpacity="0.21"
         ></ellipse>

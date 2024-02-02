@@ -1,10 +1,8 @@
-import React from "react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { getNameInitials } from "@/lib/utils";
 import { type RouterOutputs } from "@/utils/api";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
 
 type RecentActivityCardProps = {
   activity: RouterOutputs["system"]["getSystemUpdates"][0];
@@ -19,7 +17,7 @@ const RecentActivityCard = ({ activity }: RecentActivityCardProps) => {
           {getNameInitials(activity.Author.name ?? "UNKNOWN")}
         </AvatarFallback>
       </Avatar>
-      <div className="ml-4 space-y-1">
+      <div className="ms-4 space-y-1">
         <p className="text-sm font-medium leading-none">
           {activity.Author.name ?? "Unknown"}
         </p>
@@ -33,7 +31,7 @@ const RecentActivityCard = ({ activity }: RecentActivityCardProps) => {
             .join(" ")}
         </p>
       </div>
-      <div className="ml-auto ">
+      <div className="ms-auto ">
         {/* format date with time */}
         {format(activity.date, "dd MMM yyyy - hh:mm a")}
       </div>

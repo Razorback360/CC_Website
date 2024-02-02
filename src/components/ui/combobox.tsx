@@ -1,11 +1,10 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
@@ -15,8 +14,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { useControllableState } from "@/utils/hooks/useControllableState";
-import { Icons } from "@/components/icons";
 
 interface ComboboxContextValue {
   isSelected: (value: unknown) => boolean;
@@ -153,12 +152,12 @@ export const Combobox = <TValue,>({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          className="w-full justify-between text-left font-normal"
+          className="w-full justify-between text-start font-normal"
           variant="outline"
           role="combobox"
           aria-expanded={open}
         >
-          <Icons.caretUpDown className="-mr-1.5 h-5 w-5 text-tertiary-400" />
+          <Icons.caretUpDown className="-me-1.5 h-5 w-5 text-tertiary-400" />
           {renderValue()}
         </Button>
       </PopoverTrigger>
@@ -210,7 +209,7 @@ export const ComboboxItem = <
 
   return (
     <CommandItem
-      className={cn("pl-8", className)}
+      className={cn("ps-8", className)}
       role="option"
       onSelect={() => {
         context.onSelect(value);
@@ -218,7 +217,7 @@ export const ComboboxItem = <
       }}
     >
       {context.isSelected(value) && (
-        <Icons.check className="absolute left-2 h-4 w-4" />
+        <Icons.check className="absolute start-2 h-4 w-4" />
       )}
       {children}
     </CommandItem>

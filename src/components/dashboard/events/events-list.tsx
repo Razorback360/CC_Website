@@ -8,16 +8,16 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { type RouterOutputs } from "@/utils/api";
-import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
-import { format } from "date-fns";
 import { Icons } from "@/components/icons";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { type RouterOutputs } from "@/utils/api";
 import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
+import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
+import { format } from "date-fns";
 
 type EventListProps = {
   events: RouterOutputs["event"]["getAll"];
@@ -52,7 +52,7 @@ export default function EventList({
                 <ContextMenuTrigger asChild>
                   <button
                     className={cn(
-                      "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                      "flex flex-col items-start gap-2 rounded-lg border p-3 text-start text-sm transition-all hover:bg-accent",
                       selectedEvent?.id === event.id && "bg-muted",
                     )}
                     onClick={() => {
@@ -67,7 +67,7 @@ export default function EventList({
                         </div>
                         <div
                           className={cn(
-                            "ml-auto text-xs text-foreground",
+                            "ms-auto text-xs text-foreground",
                             selectedEvent?.id === event.id
                               ? "text-foreground"
                               : "text-muted-foreground",

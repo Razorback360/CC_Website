@@ -1,17 +1,13 @@
-import * as React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn, getNameInitials } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
+import RecentActivityCard from "@/components/dashboard/overview/recent-activity-card";
+import { Badge } from "@/components/ui/badge";
 import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 import { api } from "@/utils/api";
-import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
-import RecentActivityCard from "@/components/dashboard/overview/recent-activity-card";
 
 interface DashboardOverviewProps {
   defaultLayout: number[];
@@ -98,7 +94,7 @@ export default function DashboardOverview({
         <Separator className="m-auto w-11/12" />
         <Card className="m-4">
           <CardHeader className="flex flex-row items-center ">
-            <Icons.history size={28} className="mr-4" />
+            <Icons.history size={28} className="me-4" />
             <CardTitle className="font-semibold text-2xl m-0">
               Recent Activity
             </CardTitle>
@@ -216,7 +212,7 @@ export default function DashboardOverview({
                 <button
                   key={index}
                   className={cn(
-                    "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                    "flex flex-col items-start gap-2 rounded-lg border p-3 text-start text-sm transition-all hover:bg-accent",
                   )}
                 >
                   <div className="flex w-full flex-col gap-1">
@@ -224,7 +220,7 @@ export default function DashboardOverview({
                       <div className="flex items-center gap-2">
                         <div className="font-semibold">{event.title}</div>
                       </div>
-                      <div className={cn("ml-auto text-xs text-foreground")}>
+                      <div className={cn("ms-auto text-xs text-foreground")}>
                         {event.date}
                       </div>
                     </div>

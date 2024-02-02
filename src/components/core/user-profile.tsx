@@ -79,7 +79,7 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
                   <div className="text-xs font-medium text-muted-foreground truncate">
                     {session?.user?.email ?? <Skeleton className="h-4 w-20" />}
                     <Badge
-                      className="text-[0.65rem] font-semibold ml-1 px-1 py-0"
+                      className="text-[0.65rem] font-semibold ms-1 px-1 py-0"
                       variant={
                         session?.user?.role === "ADMIN" ? "default" : "outline"
                       }
@@ -117,13 +117,13 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/dashboard/overview">
-              <User className="mr-2 h-4 w-4" />
+              <User className="me-2 h-4 w-4" />
               <span>Dashboard</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/dashboard/settings">
-              <Settings className="mr-2 h-4 w-4" />
+              <Settings className="me-2 h-4 w-4" />
               <span>Settings</span>
             </Link>
           </DropdownMenuItem>
@@ -132,24 +132,24 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             {theme === "light" ? (
-              <Icons.sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Icons.sun className="me-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             ) : (
-              <Icons.moon className="mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Icons.moon className="me-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             )}
             <span>Toggle theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem onClick={() => setTheme("light")}>
-              {theme === "light" && <Icons.check className="mr-2 h-4 w-4" />}
+              {theme === "light" && <Icons.check className="me-2 h-4 w-4" />}
               Light
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("dark")}>
-              {theme === "dark" && <Icons.check className="mr-2 h-4 w-4" />}
+              {theme === "dark" && <Icons.check className="me-2 h-4 w-4" />}
               Dark
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => setTheme("system")}>
-              {theme === "system" && <Icons.check className="mr-2 h-4 w-4" />}
+              {theme === "system" && <Icons.check className="me-2 h-4 w-4" />}
               System
             </DropdownMenuItem>
           </DropdownMenuSubContent>
@@ -158,7 +158,7 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         {/* --------- */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Icons.languages className="mr-2 h-4 w-4" />
+            <Icons.languages className="me-2 h-4 w-4" />
             <span>Language</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
@@ -168,7 +168,7 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
                 onClick={async () => await handleLocaleChange(router, "ar")}
               >
                 {router.locale === "ar" && (
-                  <Icons.check className="mr-2 h-4 w-4" />
+                  <Icons.check className="me-2 h-4 w-4" />
                 )}
                 العربية
               </DropdownMenuItem>
@@ -177,7 +177,7 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
                 onClick={async () => await handleLocaleChange(router, "en")}
               >
                 {router.locale === "en" && (
-                  <Icons.check className="mr-2 h-4 w-4" />
+                  <Icons.check className="me-2 h-4 w-4" />
                 )}
                 English
               </DropdownMenuItem>
@@ -187,7 +187,7 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         <DropdownMenuSeparator />
         <AlertDialogTrigger asChild>
           <DropdownMenuItem className="text-red-800 hover:text-red-500">
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="me-2 h-4 w-4" />
             <span>Log out</span>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

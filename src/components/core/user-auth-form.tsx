@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 
-import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
@@ -37,9 +36,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         disabled={isMicrosoftLoading}
       >
         {isMicrosoftLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
         ) : (
-          <Icons.microsoft className="mr-2 h-4 w-4" />
+          <Icons.microsoft className="me-2 h-4 w-4" />
         )}{" "}
         KFUPM Authentication
       </button>

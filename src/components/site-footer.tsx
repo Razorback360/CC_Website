@@ -27,8 +27,8 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
       )}
     >
       <div className="flex flex-row items-center gap-4 md:flex-row md:gap-2">
-        <Icons.logo className="w-16 md:mr-4" />
-        <p className="text-center md:text-base text-sm leading-none md:text-left">
+        <Icons.logo className="w-16 md:me-4" />
+        <p className="text-center md:text-base text-sm leading-none md:text-start">
           © {new Date().getFullYear()} KFUPM Computer Club - All rights
           reserved
         </p>
@@ -126,14 +126,14 @@ const LanguageToggle = () => {
             // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
             onClick={async () => await handleLocaleChange(router, "ar")}
           >
-            {router.locale === "ar" && <Icons.check className="mr-2 h-4 w-4" />}
+            {router.locale === "ar" && <Icons.check className="me-2 h-4 w-4" />}
             العربية
           </DropdownMenuItem>
           <DropdownMenuItem
             // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
             onClick={async () => await handleLocaleChange(router, "en")}
           >
-            {router.locale === "en" && <Icons.check className="mr-2 h-4 w-4" />}
+            {router.locale === "en" && <Icons.check className="me-2 h-4 w-4" />}
             English
           </DropdownMenuItem>
         </DropdownMenuContent>

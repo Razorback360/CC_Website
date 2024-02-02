@@ -19,7 +19,7 @@ const Search = () => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          className="w-6 h-6 absolute left-2 top-2"
+          className="w-6 h-6 absolute start-2 top-2"
         >
           <path
             stroke-linecap="round"

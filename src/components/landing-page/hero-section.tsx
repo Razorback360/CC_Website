@@ -1,20 +1,19 @@
-import {
-  Carousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import React from "react";
-import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
 import Spotlight from "@/components/landing-page/spotlight";
 import ScrollIndicatorArrows from "@/components/scroll-indicator-arrows";
-import Image from "next/image";
 import {
-  useScroll,
-  useTransform,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
+import {
   motion,
   useMotionValueEvent,
+  useScroll,
+  useTransform,
 } from "framer-motion";
+import React from "react";
 
 const slides = [
   {
@@ -85,9 +84,9 @@ const HeroSection = () => {
       ref={heroRef}
       className="hero relative flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
     >
-      <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
+      <Spotlight className="top-40 start-0 md:start-60 md:-top-20 absolute" />
       <img
-        className="select-none z-10 absolute opacity-5 -rotate-[10deg] left-[-10%] scale-x-[-1] blur-sm"
+        className="select-none z-10 absolute opacity-5 ltr:-rotate-[10deg] start-[-10%] ltr:scale-x-[-1] blur-sm"
         draggable={false}
         src="/main-01.png"
         loading="eager"

@@ -1,12 +1,12 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
-import ResizeObserver from "resize-observer-polyfill";
 import {
-  useScroll,
-  useTransform,
-  useSpring,
   motion,
+  useScroll,
+  useSpring,
+  useTransform,
   type SpringOptions,
 } from "framer-motion";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import ResizeObserver from "resize-observer-polyfill";
 
 interface MomentumScrollProps {
   children: React.ReactNode;
@@ -70,7 +70,7 @@ const MomentumScroll = ({ children }: MomentumScrollProps): JSX.Element => {
       <motion.div
         ref={scrollRef}
         style={{ y: springNegativeScrollY }}
-        className="scroll-container fixed top-0 left-0 w-full overflow-hidden will-change-transform"
+        className="scroll-container fixed top-0 start-0 w-full overflow-hidden will-change-transform"
       >
         {children}
       </motion.div>

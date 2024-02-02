@@ -12,6 +12,7 @@ import {
 import { atom, useAtom } from "jotai";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useRef } from "react";
 
 export const activeEventAtom = atom<number>(0);
@@ -90,7 +91,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       animate={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
       }}
-      className="flex justify-between items-start relative pl-10 pr-20 py-32 gap-10"
+      className="flex justify-between items-start relative ps-10 pe-20 py-32 gap-10"
       style={{
         // number of events * 100vh
         height: `${(upcomingEvents?.length ?? 3) * 100}vh`,
@@ -152,6 +153,7 @@ type EventCardProps = {
 const EventCard = ({ item, index }: EventCardProps) => {
   const cardRef = useRef(null);
   const { activeCard, setActiveCard } = useActiveEvent();
+  const router = useRouter();
 
   const { scrollYProgress } = useScroll({
     target: cardRef,
@@ -180,7 +182,9 @@ const EventCard = ({ item, index }: EventCardProps) => {
       ref={cardRef}
       style={{
         scale: size,
-        paddingLeft: startPadding,
+        // change padding left if en, else change padding right
+        paddingLeft: router.locale === "en" ? startPadding : undefined,
+        paddingRight: router.locale === "ar" ? startPadding : undefined,
       }}
       transition={{
         type: "inertia",

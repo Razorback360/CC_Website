@@ -1,23 +1,20 @@
-import React, { useState } from "react";
-
-import { Button } from "@/components/ui/button";
+import MemberCard from "@/components/dashboard/MemberCard";
+import MemberDisplay from "@/components/dashboard/members/member-display";
 import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
+import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
+import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
+import { cn } from "@/lib/utils";
 import { api } from "@/utils/api";
 import { useSelectedMember } from "@/utils/hooks/use-selected-member";
-import DeleteMemberPopup from "@/components/popups/delete-member-popup";
-import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
-import { DialogTrigger } from "@/components/ui/dialog";
-import MemberCard from "@/components/dashboard/MemberCard";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import MemberDisplay from "@/components/dashboard/members/member-display";
 
 type DashboardMembersProps = {
   defaultLayout: number[];
@@ -49,7 +46,7 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
           <h1 className="text-3xl font-bold">Members Management</h1>
           <Tooltip>
             <DialogTrigger asChild>
-              <TooltipTrigger asChild className="ml-auto">
+              <TooltipTrigger asChild className="ms-auto">
                 <Button variant="ghost" size="icon">
                   <Icons.add />
                   <span className="sr-only">Create Member</span>
