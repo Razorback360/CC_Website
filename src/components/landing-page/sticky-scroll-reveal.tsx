@@ -116,11 +116,11 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
         )}
       >
         <Image
-          className="rounded-lg select-none"
+          className="rounded-lg select-none max-h-full overflow-hidden"
           src={
             upcomingEvents?.at(activeCard)?.Attachments.at(0)?.src ??
-            `/event (${(activeCard % 4) + 1}).jpg`
-            // TODO @SauceX22 "/images/no_poster.jpg" add a no poster found image
+            `/event (${(activeCard % 4) + 1}).png`
+            // TODO @SauceX22 "/images/no_poster.png" add a no poster found image
           }
           loading="lazy"
           width={1920}
@@ -129,8 +129,15 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
           objectFit="contain"
           alt="event image"
         />
-        <Button className="w-full mt-4" size="xl" variant="outline" asChild>
-          <Link href="#">View</Link>
+        <Button
+          className="w-full mt-4 flex-shrink-0"
+          size="xl"
+          variant="outline"
+          asChild
+        >
+          <Link href={`/events/${upcomingEvents?.at(activeCard)?.id}`}>
+            View
+          </Link>
         </Button>
       </motion.div>
     </motion.section>
