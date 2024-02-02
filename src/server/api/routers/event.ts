@@ -100,7 +100,7 @@ export const eventRouter = createTRPCRouter({
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
         public: z.boolean(),
-        src: z.string(),
+        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -123,7 +123,8 @@ export const eventRouter = createTRPCRouter({
           },
           Attachments: {
             create: {
-              src: input.src,
+              // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
+              src: input.src as string,
               type: "EVENT_POSTER",
               Uploader: {
                 connect: {
