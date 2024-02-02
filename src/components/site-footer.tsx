@@ -36,7 +36,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
           >
             <Icons.twitter
               title={siteConfig.links.twitter}
-              className="hover:cursor-pointer  ml-4"
+              className="hover:cursor-pointer ml-4"
             />
           </a>
           <a
@@ -46,7 +46,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.linkedin}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.linkedin className="hover:cursor-pointer  ml-4" />
+            <Icons.linkedin className="hover:cursor-pointer ml-4" />
           </a>
           <a
             target="_blank"
@@ -55,7 +55,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.github}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.gitHub className="hover:cursor-pointer  ml-4" />
+            <Icons.gitHub className="hover:cursor-pointer ml-4" />
           </a>
           <a
             target="_blank"
@@ -64,7 +64,7 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.youtube}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.youtube className="hover:cursor-pointer  ml-4" />
+            <Icons.youtube className="hover:cursor-pointer ml-4" />
           </a>
           <a
             target="_blank"
@@ -73,7 +73,17 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             title={siteConfig.links.whatsapp}
             className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
           >
-            <Icons.whatsapp className="hover:cursor-pointer  ml-4" />
+            <Icons.whatsapp className="hover:cursor-pointer ml-4" />
+          </a>
+          {/* telegram */}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={siteConfig.links.telegram}
+            title={siteConfig.links.telegram}
+            className="flex items-center hover:cursor-pointer fill-secondary-foreground hover:bg-stone-200 rounded p-2"
+          >
+            <Icons.telegram className="hover:cursor-pointer ml-4" />
           </a>
           <a
             target="_blank"

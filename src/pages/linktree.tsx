@@ -102,6 +102,19 @@ const Linktree = () => {
               </div>
             </div>
           </a>
+          <a
+            href={siteConfig.links.telegram}
+            title={siteConfig.links.telegram}
+            className={iconStyles}
+            target="_blank"
+          >
+            <div className="flex flex-row justify-between sm:justify-center items-center w-full h-full">
+              <Icons.telegram className="w-8 sm:w-12 h-8 sm:h-12" />
+              <div className="self-center w-full absolute inset-x-0 sm:hidden">
+                Telegram
+              </div>
+            </div>
+          </a>
         </div>
       </main>
     </div>

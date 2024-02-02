@@ -33,6 +33,7 @@ import {
   FaLinkedin as LinkedinIcon,
   FaSearch as Search,
   FaHistory as History,
+  FaTelegram as TelegramIcon,
 } from "react-icons/fa";
 import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
 import { IoSunnyOutline as Sun } from "react-icons/io5";
@@ -203,6 +204,7 @@ export const Icons = {
   check: Check,
   youtube: Youtube,
   whatsapp: WhatsappIcon,
+  telegram: TelegramIcon,
   logOut: LogOut,
   caretUpDown: CaretUpDown,
   edit: MdEdit,
