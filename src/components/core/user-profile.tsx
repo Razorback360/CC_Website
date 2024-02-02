@@ -1,17 +1,12 @@
+import { ChevronRight, LogOut, Settings, User } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import React from "react";
-import {
-  ChevronRight,
-  Languages,
-  LogOut,
-  PlusCircle,
-  Settings,
-  User,
-} from "lucide-react";
-import { useSession } from "next-auth/react";
 
+import { Icons } from "@/components/icons";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,18 +23,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTranslation } from "next-i18next";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { cn, getNameInitials, handleLocaleChange } from "@/lib/utils";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { Icons } from "@/components/icons";
-import { Badge } from "@/components/ui/badge";
 
 type Props = {
   isCollapsed?: boolean;
+  isSiteHeader?: boolean;
 };
 
-export const UserProfile = ({ isCollapsed }: Props) => {
+export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { setTheme, theme } = useTheme();
@@ -53,8 +47,11 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         <Button
           variant="ghost"
           className={cn(
-            "group flex h-full w-full flex-row items-center justify-between rounded-none",
+            "group flex flex-row items-center justify-between",
             isCollapsed ? "p-2" : "px-3 py-4",
+            isSiteHeader
+              ? "rounded-full h-fit w-fit p-0"
+              : "rounded-none h-full w-full",
           )}
         >
           {isCollapsed ? (
@@ -118,19 +115,17 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            {/* // TODO @SauceX22 @Razorback360 add back routing once page ready */}
-            {/* //   onClick={() => router.push("/dashboard/profile")}> */}
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/overview">
+              <User className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            {/* // TODO @SauceX22 @Razorback360 add back routing once page ready */}
-            {/* //   onClick={() => router.push("/dashboard/settings")}> */}
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/settings">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -163,7 +158,7 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         {/* --------- */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Languages className="mr-2 h-4 w-4" />
+            <Icons.languages className="mr-2 h-4 w-4" />
             <span>Language</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
