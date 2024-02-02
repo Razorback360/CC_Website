@@ -30,9 +30,7 @@ const AppLayout = ({ children, ...props }: Props) => {
         {children}
         <Toaster />
         <TailwindIndicator />
-        {HeaderFooterInclusionRoutes.includes(pathname) && (
-          <SiteFooter className="mb-10" />
-        )}
+        {HeaderFooterInclusionRoutes.includes(pathname) && <SiteFooter />}
       </SignoutPopup>
     </div>
   );
