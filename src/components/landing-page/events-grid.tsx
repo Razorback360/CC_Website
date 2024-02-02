@@ -5,10 +5,11 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { type RouterOutputs } from "@/utils/api";
-import { compareAsc, format, isAfter } from "date-fns";
+import { format } from "date-fns";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 
 interface EventsGridProps {
@@ -16,28 +17,14 @@ interface EventsGridProps {
 }
 
 export const EventsGrid = ({ events }: EventsGridProps) => {
-  const sortedEvents = events?.sort((a, b) => {
-    // orders according to the date (closest to current date first)
-    return compareAsc(a.date, b.date);
-  });
-
-  const pastEvents = sortedEvents?.filter((event) => {
-    // filters out events that have already passed
-    return isAfter(new Date(), event.date);
-  });
-  const upcomingEvents = sortedEvents?.filter((event) => {
-    // filters out events that have already passed
-    return isAfter(event.date, new Date());
-  });
-
-  if (!upcomingEvents || upcomingEvents.length === 0) {
+  if (!events || events.length === 0) {
     return (
-      <div className=" select-none flex flex-col gap-8 justify-center items-center h-[150vh] bg-gray-700">
+      <div className="select-none flex flex-col gap-8 justify-center items-center h-[150vh] bg-gray-700">
         <h2
           className="animate-floating text-6xl font-extrabold text-gray-400"
           style={{ textShadow: "0 0 6rem black" }}
         >
-          No Upcoming Events
+          No Events
         </h2>
         <p
           // style={{ textShadow: "0 0 2rem black" }}
@@ -50,16 +37,13 @@ export const EventsGrid = ({ events }: EventsGridProps) => {
   }
 
   return (
-    <section className="justify-center items-center mx-auto flex flex-col w-[75%] px-16">
-      <h1 className="text-7xl font-extrabold my-12">Featured Events</h1>
-      <div className="w-full grid lg:grid-cols-2 gap-2">
-        {upcomingEvents.map((event, index) => {
-          return (
-            <EventCard key={event.title + index} event={event} index={index} />
-          );
-        })}
-      </div>
-    </section>
+    <div className="w-full grid lg:grid-cols-2 gap-2">
+      {events.map((event, index) => {
+        return (
+          <EventCard key={event.title + index} event={event} index={index} />
+        );
+      })}
+    </div>
   );
 };
 
@@ -76,14 +60,18 @@ const EventCard = ({ event, index }: EventCardProps) => {
       key={index}
       className="flex flex-row items-center rounded-md p-2 text-sm transition-all w-full h-64 flex-grow-0"
     >
-      <CardHeader className="flex items-center justify-center h-full rounded-md select-none p-2 flex-shrink-0 aspect-square  max-w-[50%] overflow-hidden">
+      <CardHeader className="relative flex items-center justify-center h-full rounded-md select-none p-2 flex-shrink-0 aspect-square max-w-[50%] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           className="h-full w-full flex-shrink-0 object-cover object-center rounded-md"
           src={
             event.Attachments.at(0)?.src ?? `/event (${(index % 4) + 1}).png`
           }
+          width={350}
+          height={350}
           loading="lazy"
+          objectFit="cover"
+          objectPosition="center"
           alt="event image"
         />
       </CardHeader>
