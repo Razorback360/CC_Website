@@ -2,54 +2,56 @@ import { cn } from "@/lib/utils";
 import {
   FaExclamationTriangle as AlertTriangle,
   FaArrowRight as ArrowRight,
+  FaAt as AtSign,
   FaCheck as Check,
-  FaCircle as Circle,
+  FaChevronDown as ChevronDown,
   FaChevronLeft as ChevronLeft,
   FaChevronRight as ChevronRight,
-  FaChevronDown as ChevronDown,
   FaChevronUp as ChevronUp,
+  FaCircle as Circle,
   FaCreditCard as CreditCard,
+  FaUserCheck as DoubleCheck,
+  FaClipboardList as Events,
   FaFile as File,
   FaFileAlt as FileText,
+  FaGithub as GitHubIcon,
   FaQuestionCircle as HelpCircle,
+  FaHistory as History,
   FaImage as Image,
   FaLaptop as Laptop,
+  FaLinkedin as LinkedinIcon,
   FaSpinner as Loader2,
+  FaSignOutAlt as LogOut,
+  FaMicrosoft as MicrosoftIcon,
   FaMoon as Moon,
   FaEllipsisV as MoreVertical,
   FaPizzaSlice as Pizza,
   FaPlus as Plus,
-  FaCog as Settings,
-  FaTrash as Trash,
-  FaUser as User,
-  FaTimes as X,
-  FaAt as AtSign,
-  FaYoutube as Youtube,
-  FaSignOutAlt as LogOut,
-  FaWhatsapp as WhatsappIcon,
-  FaMicrosoft as MicrosoftIcon,
-  FaGithub as GitHubIcon,
-  FaTwitter as TwitterIcon,
-  FaLinkedin as LinkedinIcon,
   FaSearch as Search,
-  FaHistory as History,
+  FaCog as Settings,
   FaTelegram as TelegramIcon,
+  FaTrash as Trash,
+  FaTwitter as TwitterIcon,
+  FaUser as User,
+  FaUsers as Users,
+  FaWhatsapp as WhatsappIcon,
+  FaTimes as X,
+  FaYoutube as Youtube,
 } from "react-icons/fa";
-import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
-import { IoSunnyOutline as Sun } from "react-icons/io5";
-import { MdEdit } from "react-icons/md";
 import { FaChartSimple as Chart } from "react-icons/fa6";
-import { FaClipboardList as Events } from "react-icons/fa";
-import { FaUsers as Users } from "react-icons/fa";
-import { FaUserCheck as DoubleCheck } from "react-icons/fa";
 import { GiHamburgerMenu as MenuOpen } from "react-icons/gi";
-import { IoClose as MenuClose } from "react-icons/io5";
-import { IoPersonSharp as Person } from "react-icons/io5";
-import { MdEventAvailable as EventsDone } from "react-icons/md";
+import { HiMiniUserGroup } from "react-icons/hi2";
+import {
+  IoLanguage as Languages,
+  IoLink as Link,
+  IoClose as MenuClose,
+  IoPersonSharp as Person,
+  IoSunnyOutline as Sun,
+} from "react-icons/io5";
+import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
+import { MdEventAvailable as EventsDone, MdEdit } from "react-icons/md";
 import { RiListCheck3 as EventsRemain } from "react-icons/ri";
 import { VscDebugBreakpointDataUnverified as Point } from "react-icons/vsc";
-import { HiMiniUserGroup } from "react-icons/hi2";
-import { IoLink as Link } from "react-icons/io5";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -209,4 +211,5 @@ export const Icons = {
   caretUpDown: CaretUpDown,
   edit: MdEdit,
   history: History,
+  languages: Languages,
 };
