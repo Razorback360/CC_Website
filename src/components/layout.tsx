@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import SiteHeader from "./site-header";
-import SiteFooter from "./site-footer";
-import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/router";
-import { HeaderFooterInclusionRoutes } from "@/config/site";
 import SignoutPopup from "@/components/popups/SignoutPopup";
-import { Toaster } from "./ui/toaster";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { HeaderFooterInclusionRoutes } from "@/config/site";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import SiteFooter from "./site-footer";
+import SiteHeader from "./site-header";
+import { Toaster } from "./ui/toaster";
 
 type Props = {
   children: React.ReactNode;
@@ -28,17 +27,9 @@ const AppLayout = ({ children, ...props }: Props) => {
       <SignoutPopup>
         {/* exclude header and footer from specified list of pages */}
         {HeaderFooterInclusionRoutes.includes(pathname) && <SiteHeader />}
-        {HeaderFooterInclusionRoutes.includes(pathname) && (
-          <Separator className="w-full" />
-        )}
         {children}
         <Toaster />
         <TailwindIndicator />
-        {HeaderFooterInclusionRoutes.includes(pathname) && (
-          <section className="mt-4 w-full">
-            <Separator className="w-full my-4" />
-          </section>
-        )}
         {HeaderFooterInclusionRoutes.includes(pathname) && (
           <SiteFooter className="mb-10" />
         )}
