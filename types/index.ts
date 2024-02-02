@@ -4,6 +4,7 @@ export type SiteConfig = {
   url: string;
   links: {
     whatsapp: string;
+    telegram: string;
     twitter: string;
     linkedin: string;
     youtube: string;
