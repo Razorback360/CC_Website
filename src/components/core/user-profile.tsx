@@ -1,4 +1,4 @@
-import { ChevronRight, Languages, LogOut, Settings, User } from "lucide-react";
+import { ChevronRight, LogOut, Settings, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import React from "react";
@@ -25,6 +25,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, getNameInitials, handleLocaleChange } from "@/lib/utils";
 import { useTranslation } from "next-i18next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -114,19 +115,17 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            {/* // TODO @SauceX22 @Razorback360 add back routing once page ready */}
-            {/* //   onClick={() => router.push("/dashboard/profile")}> */}
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/overview">
+              <User className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            {/* // TODO @SauceX22 @Razorback360 add back routing once page ready */}
-            {/* //   onClick={() => router.push("/dashboard/settings")}> */}
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/settings">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -156,7 +155,7 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         {/* --------- */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Languages className="mr-2 h-4 w-4" />
+            <Icons.languages className="mr-2 h-4 w-4" />
             <span>Language</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
