@@ -1,11 +1,9 @@
-import Link from "next/link";
-
-import { Button, buttonVariants } from "@/components/ui/button";
 import { UserAuthForm } from "@/components/core/user-auth-form";
 import { Icons } from "@/components/icons";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 function LoginPage() {
   const router = useRouter();
@@ -17,7 +15,7 @@ function LoginPage() {
   }
 
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
+    <div className="container flex h-screen w-screen flex-col items-center justify-center select-none">
       <Button
         onClick={() => router.push("/")}
         variant="outline"
