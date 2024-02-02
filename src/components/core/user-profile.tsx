@@ -1,17 +1,12 @@
+import { ChevronRight, Languages, LogOut, Settings, User } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import React from "react";
-import {
-  ChevronRight,
-  Languages,
-  LogOut,
-  PlusCircle,
-  Settings,
-  User,
-} from "lucide-react";
-import { useSession } from "next-auth/react";
 
+import { Icons } from "@/components/icons";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,18 +23,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTranslation } from "next-i18next";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { cn, getNameInitials, handleLocaleChange } from "@/lib/utils";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { Icons } from "@/components/icons";
-import { Badge } from "@/components/ui/badge";
 
 type Props = {
   isCollapsed?: boolean;
+  isSiteHeader?: boolean;
 };
 
-export const UserProfile = ({ isCollapsed }: Props) => {
+export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { setTheme, theme } = useTheme();
@@ -53,8 +46,11 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         <Button
           variant="ghost"
           className={cn(
-            "group flex h-full w-full flex-row items-center justify-between rounded-none",
+            "group flex flex-row items-center justify-between",
             isCollapsed ? "p-2" : "px-3 py-4",
+            isSiteHeader
+              ? "rounded-full h-fit w-fit p-0"
+              : "rounded-none h-full w-full",
           )}
         >
           {isCollapsed ? (
@@ -136,11 +132,8 @@ export const UserProfile = ({ isCollapsed }: Props) => {
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            {theme === "light" ? (
-              <Icons.sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            ) : (
-              <Icons.moon className="mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            )}
+            <Icons.sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Icons.moon className="mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span>Toggle theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>

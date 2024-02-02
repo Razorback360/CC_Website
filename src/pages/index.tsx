@@ -85,7 +85,7 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      <div className="w-full sm:mt-0 mt-[6.3rem]">
+      <div className="w-full sm:mt-0 mt-[6.3rem] transition-all">
         <HeroSection />
         <VisionSection />
         <StickyScroll events={events} />

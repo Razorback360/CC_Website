@@ -1,23 +1,19 @@
-import React, { useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { UserNav } from "./user-nav";
-import { useSession } from "next-auth/react";
+import { UserProfile } from "@/components/core/user-profile";
 import { Icons } from "@/components/icons";
-import { useRouter } from "next/router";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-type Props = {
-  // ...
-};
-
-const SiteHeader = (props: Props) => {
+const SiteHeader = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -56,11 +52,14 @@ const SiteHeader = (props: Props) => {
           "select-none h-fit z-50 transition-all duration-200 shadow-lg fixed sm:inset-x-0 inset-x-4 mx-auto sm:w-fit min-w-[20%] top-4 rounded-lg ",
         )}
       >
-        <Icons.logo className="sm:h-16 h-14 sm:w-16 w-14 cursor-pointer sm:mr-4" />
+        <Icons.logo
+          className="sm:h-16 h-14 sm:w-16 w-14 cursor-pointer sm:mr-4"
+          onClick={() => router.push("/")}
+        />
+
         <ul
           className={cn(
             "flex flex-row items-center text-center justify-center w-full",
-            // sideMenuOpen ? "active" : "",
           )}
         >
           <Button
@@ -94,7 +93,7 @@ const SiteHeader = (props: Props) => {
             Login
           </Button>
         ) : (
-          <UserNav />
+          <UserProfile isSiteHeader isCollapsed />
         )}
       </motion.nav>
     </AnimatePresence>
