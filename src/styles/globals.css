@@ -114,6 +114,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .chevron {
   position: absolute;
   opacity: 0;

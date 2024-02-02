@@ -91,6 +91,7 @@ export default function Home() {
         <VisionSection />
         <Tabs
           defaultValue="upcoming"
+          id="events"
           className="justify-center items-center mx-auto flex flex-col w-[75%] px-16"
         >
           <h1 className="text-7xl font-extrabold my-12">Featured Events</h1>
