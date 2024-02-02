@@ -1,9 +1,8 @@
-import Head from "next/head";
-import React from "react";
-import { StickyScroll } from "@/components/landing-page/sticky-scroll-reveal";
-import { api } from "@/utils/api";
 import HeroSection from "@/components/landing-page/hero-section";
+import { StickyScroll } from "@/components/landing-page/sticky-scroll-reveal";
 import VisionSection from "@/components/landing-page/vision-section";
+import { api } from "@/utils/api";
+import Head from "next/head";
 
 // the data is for rendering the events and members cards
 const data = {

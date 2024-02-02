@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
-import { useMotionValueEvent, useScroll, useTransform } from "framer-motion";
-import { motion } from "framer-motion";
-import { type Event } from "@prisma/client";
-import { cn } from "@/lib/utils";
-import { atom, useAtom } from "jotai";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
-import { compareAsc, isAfter } from "date-fns";
+import { cn } from "@/lib/utils";
 import { type RouterOutputs } from "@/utils/api";
+import { type Event } from "@prisma/client";
+import { compareAsc, isAfter } from "date-fns";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { atom, useAtom } from "jotai";
+import Image from "next/image";
+import Link from "next/link";
+import { useRef } from "react";
 
 export const activeEventAtom = atom<number>(0);
 
@@ -21,6 +25,8 @@ export const useActiveEvent = () => {
 
   return { activeCard: activeEvent, setActiveCard: setActiveEvent };
 };
+
+const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
 interface StickyScrollProps {
   events: RouterOutputs["event"]["getAll"] | undefined;
@@ -60,6 +66,25 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
     return isAfter(event.date, new Date());
   });
 
+  if (!upcomingEvents || upcomingEvents.length === 0) {
+    return (
+      <div className=" select-none flex flex-col gap-8 justify-center items-center h-[150vh] bg-gray-700">
+        <h2
+          className="animate-floating text-6xl font-extrabold text-gray-400"
+          style={{ textShadow: "0 0 6rem black" }}
+        >
+          No Upcoming Events
+        </h2>
+        <p
+          // style={{ textShadow: "0 0 2rem black" }}
+          className="text-gray-500 font-semibold text-2xl z-10"
+        >
+          Check back later for more events.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <motion.section
       animate={{
@@ -74,7 +99,7 @@ export const StickyScroll = ({ events }: StickyScrollProps) => {
       id="events"
     >
       <div className="div relative flex flex-col items-start w-full h-full">
-        {upcomingEvents?.map((event, index) => (
+        {upcomingEvents.map((event, index) => (
           <EventCard key={event.title + index} item={event} index={index} />
         ))}
       </div>
