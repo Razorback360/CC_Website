@@ -1,5 +1,5 @@
+import EventsGrid from "@/components/landing-page/events-grid";
 import HeroSection from "@/components/landing-page/hero-section";
-import { StickyScroll } from "@/components/landing-page/sticky-scroll-reveal";
 import VisionSection from "@/components/landing-page/vision-section";
 import { api } from "@/utils/api";
 import Head from "next/head";
@@ -87,7 +87,7 @@ export default function Home() {
       <div className="w-full transition-all">
         <HeroSection />
         <VisionSection />
-        <StickyScroll events={events} />
+        <EventsGrid events={events} />
       </div>
     </>
   );

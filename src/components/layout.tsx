@@ -1,5 +1,6 @@
 import SignoutPopup from "@/components/popups/SignoutPopup";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { Separator } from "@/components/ui/separator";
 import { HeaderFooterInclusionRoutes } from "@/config/site";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -30,6 +31,9 @@ const AppLayout = ({ children, ...props }: Props) => {
         {children}
         <Toaster />
         <TailwindIndicator />
+        {HeaderFooterInclusionRoutes.includes(pathname) && (
+          <Separator className="w-full my-4" />
+        )}
         {HeaderFooterInclusionRoutes.includes(pathname) && <SiteFooter />}
       </SignoutPopup>
     </div>
