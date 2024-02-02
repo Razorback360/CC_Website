@@ -131,8 +131,11 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Icons.sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Icons.moon className="mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            {theme === "light" ? (
+              <Icons.sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            ) : (
+              <Icons.moon className="mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            )}
             <span>Toggle theme</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>

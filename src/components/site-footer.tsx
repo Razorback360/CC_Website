@@ -1,14 +1,13 @@
 import * as React from "react";
 
-import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
-import { LocaleSwitcher } from "@/components/core/locale_switcher";
 import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/config/site";
+import { cn, handleLocaleChange } from "@/lib/utils";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   const router = useRouter();
@@ -24,7 +23,22 @@ function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0 md:h-fit">
           <ThemeToggle />
           <Separator orientation="vertical" />
-          <LocaleSwitcher />
+          <Button
+            className="flex flex-col gap-0 text-xl"
+            variant="link"
+            size="icon"
+            onClick={async () =>
+              await handleLocaleChange(
+                router,
+                router.locale === "en" ? "ar" : "en",
+              )
+            }
+          >
+            <Icons.languages />
+            <span className="text-xs font-medium">
+              {router.locale === "en" ? "العربية" : "English"}
+            </span>
+          </Button>
         </div>
         <div className="flex items-center justify-center flex-wrap gap-4 px-8 flex-row md:gap-2 md:px-0">
           <a
