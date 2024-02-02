@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { format, isSameDay } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useEffect } from "react";
@@ -101,7 +103,6 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
     }
     if (isCreatingNewEvent) {
       // TODO: fix this shit
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
       console.log(
         await supabase.storage
           .from("images")
