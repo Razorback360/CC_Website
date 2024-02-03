@@ -43,14 +43,57 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  events: {
+    async linkAccount({ user, profile, account }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          name: profile.name,
+          image: profile.image,
+          profileImage: profile.image,
+        },
+      });
+    },
+  },
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
       user: {
         ...session.user,
         id: user.id,
+        email: user.email,
+        name: user.name,
+        studentId: user.studentId,
+        image: user.image,
+        profileImage: user.profileImage,
+        role: user.role,
       },
     }),
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      // allow only users with a specific emails to sign in (production only)
+      if (env.NODE_ENV === "development") {
+        return true;
+      }
+      const registeredUsers = await db.user.findMany({});
+      if (!registeredUsers) {
+        throw new Error(
+          "Unable to reach server data at this time, try again later",
+        );
+      }
+      // only allow users with a user record that is also enabled to sign in
+      if (
+        registeredUsers.some(
+          (registeredUser) =>
+            registeredUser.email === user.email &&
+            registeredUser.enabled === true,
+        )
+      ) {
+        return true;
+      } else {
+        // Optional: redirect to error page or display a custom error message
+        throw new Error("Access denied. You're not allowed to sign in.");
+      }
+    },
   },
   secret: env.NEXTAUTH_SECRET,
   debug: env.NODE_ENV === "development",
@@ -63,6 +106,7 @@ export const authOptions: NextAuthOptions = {
       id: "azure-ad",
       name: "Microsoft",
       clientId: env.AZURE_AD_B2C_CLIENT_ID,
+      allowDangerousEmailAccountLinking: true,
       clientSecret: env.AZURE_AD_B2C_CLIENT_SECRET,
       wellKnown: `https://login.microsoftonline.com/${env.AZURE_AD_B2C_TENANT_NAME}/v2.0/.well-known/openid-configuration`,
       authorization: {

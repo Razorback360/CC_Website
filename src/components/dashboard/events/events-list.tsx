@@ -1,36 +1,24 @@
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import {
   ContextMenu,
   ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuIconItem,
-  ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { type RouterOutputs } from "@/utils/api";
-import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
-import { format } from "date-fns";
 import { Icons } from "@/components/icons";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
-import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
-import { buttonVariants } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
 import UploadEventAttachmentsDialog from "@/components/popups/upload-event-attachments";
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { type RouterOutputs } from "@/utils/api";
+import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
+import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
+import { format } from "date-fns";
 
 type EventListProps = {
   events: RouterOutputs["event"]["getAll"];
@@ -90,6 +78,7 @@ export default function EventList({
                           </div>
                         </div>
                       </div>
+
                       <div className="line-clamp-2 text-xs text-muted-foreground">
                         {event.description.substring(0, 300)}
                       </div>
@@ -101,7 +90,8 @@ export default function EventList({
                       </div>
                     </button>
                   </ContextMenuTrigger>
-                  <ContextMenuContent className="w-48 space-y-1">
+                  <ContextMenuContent className="w-64">
+                    {/* <ContextMenuContent className="w-48 space-y-1"> */}
                     <DialogTrigger asChild>
                       <ContextMenuIconItem icon={<Icons.upload />}>
                         Upload Images
@@ -109,18 +99,19 @@ export default function EventList({
                     </DialogTrigger>
                     <AlertDialogTrigger asChild>
                       <ContextMenuIconItem
-                        className={cn(
-                          "text-red-500 box-border border border-red-500/20 bg-red-500/10 focus:bg-red-500/40 focus:border-red-500/50",
-                        )}
-                        disabled={loadingDelete}
+                        className={cn("text-red-500")}
+                        disabled={!selectedEvent || loadingDelete}
                         icon={<Icons.trash />}
                       >
                         Delete Event
                       </ContextMenuIconItem>
                     </AlertDialogTrigger>
                     <ContextMenuSeparator />
-                    <ContextMenuCheckboxItem checked>
+                    <ContextMenuCheckboxItem checked={event.public}>
                       Public
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem>
+                      Show Full URLs
                     </ContextMenuCheckboxItem>
                   </ContextMenuContent>
                 </ContextMenu>

@@ -22,7 +22,7 @@ const Sidebar = () => {
       </button>
       <section
         className={`h-fit md:w-1/4 lg:fixed hidden lg:!block flex-col lg:flex-row mt-16 ${
-          menu ? "transparent" : ""
+          menu ? "bg-white/10 backdrop-blur-xl" : ""
         } lg:bg-none lg:h-full w-full text-center`}
         style={style}
       >

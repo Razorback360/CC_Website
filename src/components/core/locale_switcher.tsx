@@ -57,12 +57,12 @@ export const SAFlag = () => {
       >
         <defs>
           <clipPath id="a">
-            <path fill-opacity=".7" d="M124 0h496v496H124z" />
+            <path fillOpacity=".7" d="M124 0h496v496H124z" />
           </clipPath>
         </defs>
         <g
-          fill-rule="evenodd"
-          clip-path="url(#a)"
+          fillRule="evenodd"
+          clipPath="url(#a)"
           transform="translate(-128) scale(1.0321)"
         >
           <path fill="#165d31" d="M0 0h744v496H0z" />
@@ -146,8 +146,8 @@ export const USFlag = () => {
         id="flag-icon-css-us"
         viewBox="0 0 512 512"
       >
-        <g fill-rule="evenodd">
-          <g stroke-width="1pt">
+        <g fillRule="evenodd">
+          <g strokeWidth="1pt">
             <path
               fill="#bd3d44"
               d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"

@@ -5,7 +5,7 @@ import DashboardLayout from "@/components/dashboard/dashboard-layout";
 const Events = () => {
   return (
     <DashboardLayout
-      pageTitle="Dashboard Events"
+      pageTitle="Events Dashboard"
       description="Manage your club's events."
       defaultLayout={[265, 600, 600]}
       navCollapsedSize={0}

@@ -1,29 +1,26 @@
-import React, { useEffect } from "react";
-import { CalendarIcon } from "lucide-react";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { format, isSameDay } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useEffect } from "react";
 
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormField,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
 import {
   Select,
   SelectContent,
@@ -31,10 +28,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import { api } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
-import { Icons } from "@/components/icons";
 import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
+import { supabase } from "@/utils/supabase";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+const MAX_FILE_SIZE = 20 * 1024 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 
 const addEventFormSchema = z.object({
   title: z.string().min(2).max(50),
@@ -43,6 +55,23 @@ const addEventFormSchema = z.object({
   semesterId: z.string().min(1), // Add validation if needed
   categoryId: z.string().min(1), // Add validation if needed
   link: z.string().url().min(0),
+  public: z.boolean(),
+  poster: z
+    .any()
+    .refine(
+      (file: FileList | undefined) => file?.length == 1,
+      "File is required.",
+    )
+    .refine(
+      (file: FileList) =>
+        ACCEPTED_IMAGE_TYPES.includes(file.item(0)?.type ?? ""),
+      "Must be a PNG, JPG, JPEG, or WEBP.",
+    )
+    .refine(
+      (file: FileList) => file.item(0)?.size ?? 0 <= MAX_FILE_SIZE,
+      `Max file size is 3MB.`,
+    ),
+  src: z.string().optional(),
 });
 
 type EventDisplayProps = {
@@ -60,14 +89,30 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       semesterId: "",
       categoryId: "",
       link: "",
+      public: false,
+      poster: undefined,
+      src: "sssss",
     },
   });
+
+  const posterRef = form.register("poster", { required: true });
 
   async function onSubmit(data: z.infer<typeof addEventFormSchema>) {
     if (selectedEvent && !isCreatingNewEvent) {
       await updateEvent({ ...data, id: selectedEvent.id });
     }
     if (isCreatingNewEvent) {
+      // TODO: fix this shit
+      console.log(
+        await supabase.storage
+          .from("images")
+          .upload(
+            `${data.title}/poster/${data.poster[0].name}`,
+            data.poster[0],
+          ),
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      data.src = `${data.title}/poster/${data.poster[0].name}`;
       await createEvent(data);
     }
   }
@@ -128,6 +173,8 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
             updatedFields.push("categoryId");
 
           if (data.link !== oldData.link) updatedFields.push("link");
+
+          if (data.public !== oldData.public) updatedFields.push("public");
 
           // TODO @SauceX22 poster changes system update
           // if (data.organizers !== oldData.organizers) {
@@ -200,6 +247,8 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         semesterId: selectedEvent.semesterId,
         categoryId: selectedEvent.categoryId,
         link: selectedEvent.link,
+        public: selectedEvent.public,
+        poster: undefined,
       });
     } else {
       form.reset({
@@ -209,6 +258,8 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         semesterId: "",
         categoryId: "",
         link: "",
+        public: false,
+        poster: undefined,
       });
     }
   }, [selectedEvent]);
@@ -323,10 +374,26 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                 )}
               />
               <div className="w-full">
-                <Label htmlFor="picture" className="m-1">
-                  Event Poster
-                </Label>
-                <Input id="picture" type="file" className="p-0 mt-2" />
+                <FormField
+                  control={form.control}
+                  name="poster"
+                  render={({ field }) => (
+                    <>
+                      <FormLabel htmlFor="picture" className="m-1">
+                        Event Poster
+                      </FormLabel>
+                      <Input
+                        id="picture"
+                        type="file"
+                        className="p-0 mt-2"
+                        {...posterRef}
+                      />
+                      <FormMessage>
+                        {form.formState.errors.poster?.message as string}
+                      </FormMessage>
+                    </>
+                  )}
+                />
               </div>
             </div>
             <div className="w-full flex flex-row items-center gap-2 justify-between">
@@ -393,6 +460,26 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                 )}
               />
             </div>
+            <FormField
+              control={form.control}
+              name="public"
+              render={({ field }) => (
+                <div className="mt-2 w-full flex flex-col">
+                  <FormLabel className="m-1">Public</FormLabel>
+                  <div className="flex flex-row gap-2 mt-2 m-1">
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Set event as public or private.
+                    </FormDescription>
+                  </div>
+                </div>
+              )}
+            />
           </div>
           <Button
             variant="default"

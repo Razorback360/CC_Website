@@ -71,11 +71,37 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        spotlight: {
+          "0%": {
+            opacity: 0,
+            transform: "translate(-72%, -62%) scale(0.5)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate(-50%,-40%) scale(1)",
+          },
+        },
+        floating: {
+          "0%": {
+            transform: "translate3d(0, 0, 0)",
+          },
+          "45%": {
+            transform: "translate3d(0, -20%, 0)",
+          },
+          "55%": {
+            transform: "translate3d(0, -20%, 0)",
+          },
+          "100%": {
+            transform: "translate3d(0, 0, 0)",
+          },
+        },
       },
       animation: {
+        spotlight: "spotlight 2s ease .75s 1 forwards",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "slow-pulse": "pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        floating: "floating 3s ease-in-out infinite",
       },
     },
   },

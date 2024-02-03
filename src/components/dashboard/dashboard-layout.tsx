@@ -110,7 +110,7 @@ const DashboardLayout = ({
                   label: "",
                   icon: Icons.users,
                   variant: "ghost",
-                  href: "#",
+                  href: "/dashboard/members",
                 },
                 {
                   title: "Privileges",

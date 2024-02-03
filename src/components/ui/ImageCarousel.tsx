@@ -8,7 +8,7 @@ type Slide = {
 
 type Props = {
   slides: Slide[];
-} & React.HTMLAttributes<HTMLImageElement> ;
+} & React.HTMLAttributes<HTMLImageElement>;
 
 export function ImageCarousel(props: Props) {
   return (
@@ -16,15 +16,15 @@ export function ImageCarousel(props: Props) {
       {props.slides.map((slide, i) => {
         return (
           <div
-            className="flex h-full w-full items-center justify-center dark:text-white"
+            className="flex h-full w-2/3 items-center justify-center dark:text-white"
             key={i}
           >
             <img
               src={slide.src}
-              className={`${props.className} object-cover w-full`}
+              className={`${props.className} object-cover w-full  rounded-lg`}
               alt={slide.description}
             />
-            <div className="absolute bottom-0 p-5 md:p-10 mb-5 rounded-lg max-w-xl text-center opacity-90 bg-secondary ">
+            <div className="absolute bottom-0 p-5 md:p-10 mb-10 rounded-lg max-w-xl text-center opacity-90 bg-secondary ">
               <h5>{slide.label}</h5>
               <p className=" text-primary">{slide.description}</p>
             </div>

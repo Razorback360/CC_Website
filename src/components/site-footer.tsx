@@ -1,131 +1,143 @@
-import * as React from "react";
+import React from "react";
 
-import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
-import { LocaleSwitcher } from "@/components/core/locale_switcher";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/config/site";
+import { cn, handleLocaleChange } from "@/lib/utils";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
-  const router = useRouter();
+  const socialLinks = siteConfig.links;
   return (
     <footer
       className={cn(
         className,
-        "flex flex-col items-center justify-between py-2 gap-4 h-fit",
+        "flex md:flex-row items-center justify-between md:gap-4 h-fit w-full md:px-32 md:py-10",
+        "flex-col gap-8 px-6 py-6",
       )}
     >
-      <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0 md:h-fit">
-        <p className="text-center text-sm leading-loose md:text-left">
-          Already a member?{" "}
-          <Button
-            onClick={async () => await router.push("/auth/login")}
-            variant="link"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4 px-1"
-          >
-            Sign in
-          </Button>
+      <div className="flex flex-row items-center gap-4 md:flex-row md:gap-2">
+        <Icons.logo className="w-16 md:mr-4" />
+        <p className="text-center md:text-base text-sm leading-none md:text-left">
+          © {new Date().getFullYear()} KFUPM Computer Club - All rights
+          reserved
         </p>
+      </div>
+      <div className="flex items-center justify-center flex-row flex-wrap gap-1 md:gap-2">
         <ThemeToggle />
-        <Separator orientation="vertical" />
-        <LocaleSwitcher />
-      </div>
-
-      <div className="flex items-center justify-center gap-4 px-8 flex-row md:gap-2 md:px-0">
-        <a
-          href={siteConfig.links.twitter}
-          title={siteConfig.links.twitter}
-          className="hover:cursor-pointer fill-secondary-foreground"
+        <LanguageToggle />
+        <Separator orientation="vertical" asChild>
+          <>|</>
+        </Separator>
+        <FooterSocialLink
+          href={socialLinks.twitter}
+          title={socialLinks.twitter}
         >
-          <Icons.twitter
-            title={siteConfig.links.twitter}
-            className="hover:cursor-pointer fill-secondary-foreground"
-          />
-        </a>
-        <a
-          href={siteConfig.links.linkedin}
-          title={siteConfig.links.linkedin}
-          className="hover:cursor-pointer fill-secondary-foreground"
+          <Icons.twitter title={socialLinks.twitter} />
+        </FooterSocialLink>
+        <FooterSocialLink
+          href={socialLinks.linkedin}
+          title={socialLinks.linkedin}
         >
-          <Icons.linkedin className="hover:cursor-pointer" />
-        </a>
-        <a
-          href={siteConfig.links.github}
-          title={siteConfig.links.github}
-          className="hover:cursor-pointer fill-secondary-foreground"
-        >
-          <Icons.gitHub className="hover:cursor-pointer" />
-        </a>
-        <a
-          href={siteConfig.links.youtube}
-          title={siteConfig.links.youtube}
-          className="hover:cursor-pointer fill-secondary-foreground"
-        >
-          <Icons.youtube className="hover:cursor-pointer" />
-        </a>
-        <a
-          href={siteConfig.links.whatsapp}
-          title={siteConfig.links.whatsapp}
-          className="hover:cursor-pointer fill-secondary-foreground"
-        >
-          <Icons.whatsapp className="hover:cursor-pointer" />
-        </a>
-        <a
-          href={siteConfig.links.email}
-          title={siteConfig.links.email}
-          className="hover:cursor-pointer fill-secondary-foreground"
-        >
-          {/* <Icons.email className="hover:cursor-pointer" /> */}
-        </a>
-      </div>
-      <div className="flex flex-row items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-        <Icons.logo className="w-16" />
-        <p className="text-center text-sm leading-loose md:text-left">
-          Built by{" "}
-          <a
-            href={siteConfig.links.twitter}
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4"
+          <Icons.linkedin />
+        </FooterSocialLink>
+        {/* <FooterSocialLink
+            href={socialLinks.github}
+            title={socialLinks.github}
           >
-            shadcn
-          </a>
-          . Hosted on{" "}
-          <a
-            href="https://vercel.com"
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4"
-          >
-            Vercel
-          </a>
-          . Illustrations by{" "}
-          <a
-            href="https://popsy.co"
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4"
-          >
-            Popsy
-          </a>
-          . The source code is available on{" "}
-          <a
-            href={siteConfig.links.youtube}
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium underline underline-offset-4"
-          >
-            GitHub
-          </a>
-          .
-        </p>
+            <Icons.gitHub />
+          </FooterSocialLink> */}
+        <FooterSocialLink
+          href={socialLinks.youtube}
+          title={socialLinks.youtube}
+        >
+          <Icons.youtube />
+        </FooterSocialLink>
+        <FooterSocialLink
+          href={socialLinks.whatsapp}
+          title={socialLinks.whatsapp}
+        >
+          <Icons.whatsapp />
+        </FooterSocialLink>
+        <FooterSocialLink
+          href={socialLinks.telegram}
+          title={socialLinks.telegram}
+        >
+          <Icons.telegram />
+        </FooterSocialLink>
+        {/* <FooterSocialLink href={socialLinks.email} title={socialLinks.email}>
+            <Icons.email />
+          </FooterSocialLink> */}
       </div>
     </footer>
   );
 }
 
 export default SiteFooter;
+
+type FooterSocialLinkProps = {
+  href: string;
+  title: string;
+  children: React.ReactNode;
+};
+
+const FooterSocialLink = ({ href, title, children }: FooterSocialLinkProps) => {
+  return (
+    <Button className="text-xl" variant="outline" size="icon" asChild>
+      <Link target="_blank" rel="noopener noreferrer" href={href} title={title}>
+        {children}
+      </Link>
+    </Button>
+  );
+};
+
+const LanguageToggle = () => {
+  const router = useRouter();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          className="flex flex-col gap-0 text-xl"
+          variant="outline"
+          size="icon"
+          onClick={async () =>
+            await handleLocaleChange(
+              router,
+              router.locale === "en" ? "ar" : "en",
+            )
+          }
+        >
+          <Icons.languages />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuContent>
+          <DropdownMenuItem
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+            onClick={async () => await handleLocaleChange(router, "ar")}
+          >
+            {router.locale === "ar" && <Icons.check className="mr-2 h-4 w-4" />}
+            العربية
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+            onClick={async () => await handleLocaleChange(router, "en")}
+          >
+            {router.locale === "en" && <Icons.check className="mr-2 h-4 w-4" />}
+            English
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
+    </DropdownMenu>
+  );
+};

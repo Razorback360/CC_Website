@@ -12,6 +12,74 @@ export const eventRouter = createTRPCRouter({
       include: {
         Semester: true,
         Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+  }),
+  getAllPublic: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.event.findMany({
+      where: {
+        public: true,
+      },
+      include: {
+        Semester: true,
+        Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+  }),
+  getAllUpcomingPublic: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.event.findMany({
+      where: {
+        public: true,
+        date: {
+          gte: new Date(),
+        },
+      },
+      include: {
+        Semester: true,
+        Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+  }),
+  getAllPastPublic: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.event.findMany({
+      where: {
+        public: true,
+        date: {
+          lt: new Date(),
+        },
+      },
+      include: {
+        Semester: true,
+        Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
       },
       orderBy: {
         date: "asc",
@@ -31,6 +99,8 @@ export const eventRouter = createTRPCRouter({
         link: z.string().min(0),
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
+        public: z.boolean(),
+        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -40,6 +110,7 @@ export const eventRouter = createTRPCRouter({
           description: input.description,
           date: input.date,
           link: input.link,
+          public: input.public,
           Category: {
             connect: {
               id: input.categoryId,
@@ -48,6 +119,18 @@ export const eventRouter = createTRPCRouter({
           Semester: {
             connect: {
               id: input.semesterId,
+            },
+          },
+          Attachments: {
+            create: {
+              // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
+              src: input.src as string,
+              type: "EVENT_POSTER",
+              Uploader: {
+                connect: {
+                  id: ctx.session.user.id,
+                },
+              },
             },
           },
         },
@@ -63,6 +146,7 @@ export const eventRouter = createTRPCRouter({
         link: z.string().min(1).optional(),
         categoryId: z.string().min(1).optional(),
         semesterId: z.string().min(1).optional(),
+        public: z.boolean().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -75,6 +159,7 @@ export const eventRouter = createTRPCRouter({
           description: input.description,
           date: input.date,
           link: input.link,
+          public: input.public,
           Category: {
             connect: {
               id: input.categoryId,

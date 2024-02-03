@@ -25,10 +25,10 @@ const events = [
     description: "Description for Event 2",
     date: new Date("2023-12-15T18:30:00Z"),
     Semester: {
-      id: "c0e7363d-ec04-5ce6-afc7-bbb41b9fd259",
-      number: 232,
+      id: "8e233777-3a9b-5bdb-8b61-0ce571c81397",
+      number: 231,
     },
-    semesterId: "c0e7363d-ec04-5ce6-afc7-bbb41b9fd259",
+    semesterId: "8e233777-3a9b-5bdb-8b61-0ce571c81397",
     Category: {
       id: "f6131c80-ed66-529e-a7c6-96721de3c4f3",
       name: "Category B",
@@ -98,6 +98,10 @@ async function main() {
       {
         id: "c0e7363d-ec04-5ce6-afc7-bbb41b9fd259",
         number: 232,
+      },
+      {
+        id: "8e233777-3a9b-5bdb-8b61-0ce571c81397",
+        number: 231,
       },
     ],
     skipDuplicates: true,
