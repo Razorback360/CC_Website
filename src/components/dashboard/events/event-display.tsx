@@ -469,7 +469,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
               render={({ field }) => (
                 <FormItem className="mt-2 w-full flex flex-col">
                   <FormLabel id="public-status" className="m-1">
-                    Public
+                    Public Status
                   </FormLabel>
                   <div className="flex flex-row gap-2 mt-2 m-1">
                     <FormControl id="public-status">
