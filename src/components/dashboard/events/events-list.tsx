@@ -16,7 +16,10 @@ import { DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { type RouterOutputs } from "@/utils/api";
-import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
+import {
+  useDeleteEvent,
+  useUpdateEventPublicStatus,
+} from "@/utils/hooks/use-crud-event";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { format } from "date-fns";
 
@@ -35,6 +38,8 @@ export default function EventList({
   const { mutateAsync: deleteEvent, loading: loadingDelete } = useDeleteEvent(
     setIsCreatingNewEvent,
   );
+
+  const { mutateAsync: setEventPublicStatus } = useUpdateEventPublicStatus();
 
   return (
     <ScrollArea className="h-[92vh] my-5">
@@ -90,8 +95,7 @@ export default function EventList({
                       </div>
                     </button>
                   </ContextMenuTrigger>
-                  <ContextMenuContent className="w-64">
-                    {/* <ContextMenuContent className="w-48 space-y-1"> */}
+                  <ContextMenuContent className="w-48 space-y-1">
                     <DialogTrigger asChild>
                       <ContextMenuIconItem icon={<Icons.upload />}>
                         Upload Images
@@ -107,11 +111,16 @@ export default function EventList({
                       </ContextMenuIconItem>
                     </AlertDialogTrigger>
                     <ContextMenuSeparator />
-                    <ContextMenuCheckboxItem checked={event.public}>
+                    <ContextMenuCheckboxItem
+                      checked={event.public}
+                      onClick={async () => {
+                        await setEventPublicStatus({
+                          id: event.id,
+                          public: !event.public,
+                        });
+                      }}
+                    >
                       Public
-                    </ContextMenuCheckboxItem>
-                    <ContextMenuCheckboxItem>
-                      Show Full URLs
                     </ContextMenuCheckboxItem>
                   </ContextMenuContent>
                 </ContextMenu>

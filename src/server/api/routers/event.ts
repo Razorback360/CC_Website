@@ -89,7 +89,6 @@ export const eventRouter = createTRPCRouter({
   getAllCategories: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.eventCategory.findMany({});
   }),
-
   create: protectedProcedure
     .input(
       z.object({
@@ -133,6 +132,23 @@ export const eventRouter = createTRPCRouter({
               },
             },
           },
+        },
+      });
+    }),
+  updatePublicStatus: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().min(1),
+        public: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.event.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          public: input.public,
         },
       });
     }),
