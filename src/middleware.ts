@@ -17,11 +17,11 @@ export function middleware(req: NextRequest) {
   // if (env.NODE_ENV === "production" && pathname !== "/linktree") {
   //   return NextResponse.redirect(new URL("/linktree", req.nextUrl));
   // }
-  if (env.NODE_ENV === "production") {
+  if (env.NODE_ENV === "production" && pathname !== "/linktree") {
     //   return NextResponse.redirect(new URL("/linktree", req.nextUrl));
     const { ua } = userAgent(req);
 
-    if (/iP(hone|ad|od)/.test(ua)) {
+    if (/iP(hone|ad|od)/.test(ua) ) {
       return NextResponse.redirect(new URL("/linktree", req.nextUrl));
     } else if (/Android/.test(ua)) {
       return NextResponse.redirect(new URL("/linktree", req.nextUrl));
