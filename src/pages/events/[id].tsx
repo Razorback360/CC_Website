@@ -1,19 +1,21 @@
 import { Button } from "@/components/ui/button";
-import { LayoutGrid } from "@/components/ui/layout-grid";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { api } from "@/utils/api";
+import { isAfter } from "date-fns";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export default function Event() {
   const router = useRouter();
   const { id: eventId } = router.query as { id: string };
   const { data: event } = api.event.get.useQuery({ id: eventId });
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  const toggleGallery = () => setIsGalleryOpen(!isGalleryOpen);
 
   const backgroundColors = ["#0f172a", "#171717", "#2d3748", "#1a202c"];
   const linearGradients = [
@@ -37,61 +39,78 @@ export default function Event() {
     return <Skeleton />;
   }
 
+  const isEventDone = isAfter(new Date(), event.date);
+
   return (
     <>
       <Head>
         <title>Computer Club - KFUPM</title>
         <meta name="description" content="Home of KFUPM's Computer Club" />
       </Head>
-      <main className="flex justify-between items-start p-10 gap-20 h-screen w-screen">
-        <div
-          style={{
-            background: randomGradient,
-          }}
-          className={cn(
-            "hidden lg:flex flex-col aspect-[19/23] ms-10 flex-shrink-0",
-            // inset y = rest of the height of the screen / 2
-            "2xl:h-[80vh] 2xl:inset-y-[10vh] xl:h-[65vh] xl:inset-y-[17.5vh]",
-            "lg:h-[50vh] lg:inset-y-[25vh]",
-            "p-4 rounded-lg sticky justify-between items-center overflow-hidden ",
-          )}
-        >
-          <Image
-            className="rounded-lg select-none max-h-full overflow-hidden"
-            src={
-              // "https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/Web%20Development%20Bootcamp/poster/GFAwUcbWkAAVbkg.jpg"
-              event.Attachments.filter(
-                (attachment) => attachment.type === "EVENT_POSTER",
-              ).at(0)?.src ?? "/placeholder/event.png"
-            }
-            loading="eager"
-            width={1920}
-            height={1080}
-            layout="responsive"
-            objectFit="contain"
-            objectPosition="start"
-            alt="event image"
-          />
-          <Button
-            className="w-full mt-4 flex-shrink-0"
-            size="xl"
-            variant="outline"
-            asChild
+      <main className="flex flex-col justify-center items-center p-20 gap-2 h-full w-full">
+        <div className="flex flex-row justify-between items-start pb-20 gap-10 xl:gap-20 h-fit max-h-screen w-full">
+          <div
+            style={{
+              background: randomGradient,
+            }}
+            className={cn(
+              "hidden lg:flex flex-col aspect-[19/23] ms-10 flex-shrink-0",
+              // inset y = rest of the height of the screen / 2
+              "2xl:h-[80vh] 2xl:inset-y-[10vh] xl:h-[65vh] xl:inset-y-[17.5vh]",
+              "lg:h-[50vh] lg:inset-y-[25vh]",
+              "p-4 rounded-lg justify-between items-center overflow-hidden ",
+              // isGalleryOpen ? "mt-10" : "mt-0",
+            )}
           >
-            <Link href={event.link}>Register</Link>
-          </Button>
-        </div>
-        <div className="flex flex-col items-start max-h-[80vh] my-16 me-20 h-full w-full text-white">
-          <h2 className="text-6xl font-bold"> {event.title}</h2>
-          <p dir="rtl" className="text-3xl h-full w-full mt-20 text-right">
-            {event.description}
-          </p>
-          <Separator className="my-5" />
-          <div className="h-screen py-5 w-full flex flex-col justify-center items-center">
-            <h1 className="text-2xl">Image Gallery</h1>
-            <LayoutGrid cards={cards} />
+            <Image
+              className="rounded-lg select-none max-h-full overflow-hidden"
+              src={
+                // "https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/Web%20Development%20Bootcamp/poster/GFAwUcbWkAAVbkg.jpg"
+                event.Attachments.filter(
+                  (attachment) => attachment.type === "EVENT_POSTER",
+                ).at(0)?.src ?? "/placeholder/event.png"
+              }
+              loading="eager"
+              width={1920}
+              height={1080}
+              layout="responsive"
+              objectFit="contain"
+              objectPosition="start"
+              alt="event image"
+            />
+            <Button
+              className="w-full mt-4 flex-shrink-0"
+              size="xl"
+              variant="outline"
+              disabled={isEventDone}
+              asChild
+            >
+              <Link href={event.link}>Register</Link>
+            </Button>
+          </div>
+          <div
+            className={cn(
+              "flex flex-col justify-between items-start gap-4 my-16 me-20 w-full text-white",
+              isGalleryOpen ? "h-fit" : "max-h-[80vh] h-full",
+            )}
+          >
+            <h2 className="text-6xl font-bold"> {event.title}</h2>
+            <p dir="rtl" className="text-3xl h-full w-full mt-20 text-right">
+              {event.description}
+            </p>
           </div>
         </div>
+        {/* {isEventDone && (
+          <>
+            <Separator />
+            <h1 className="text-7xl sticky font-extrabold my-12">
+              Event Gallery
+            </h1>
+            <div className="w-full h-full bg-red-500">
+              <LayoutGrid cards={cards} />
+            </div>
+          </>
+        )} */}
       </main>
     </>
   );
