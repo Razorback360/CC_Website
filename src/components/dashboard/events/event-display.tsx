@@ -103,17 +103,11 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       await updateEvent({ ...data, id: selectedEvent.id });
     }
     if (isCreatingNewEvent) {
+      const imagePath = `${data.title}/poster/${data.poster[0].name}`;
       // TODO: fix this shit
-      console.log(
-        await supabase.storage
-          .from("images")
-          .upload(
-            `${data.title}/poster/${data.poster[0].name}`,
-            data.poster[0],
-          ),
-      );
+      await supabase.storage.from("images").upload(imagePath, data.poster[0]);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      data.src = `${data.title}/poster/${data.poster[0].name}`;
+      data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
       await createEvent(data);
     }
   }

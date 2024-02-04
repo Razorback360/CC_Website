@@ -18,6 +18,15 @@ const config = {
    */
 
   i18n: i18n,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "nfjirfbkulkxtgkdqmtn.supabase.co",
+        pathname: "/storage/v1/object/public/images/**",
+      },
+    ],
+  },
 };
 
 export default config;
