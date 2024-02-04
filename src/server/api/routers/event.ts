@@ -134,6 +134,11 @@ export const eventRouter = createTRPCRouter({
             },
           },
         },
+        include: {
+          Category: true,
+          Semester: true,
+          Attachments: true,
+        },
       });
     }),
   update: protectedProcedure
@@ -147,6 +152,7 @@ export const eventRouter = createTRPCRouter({
         categoryId: z.string().min(1).optional(),
         semesterId: z.string().min(1).optional(),
         public: z.boolean().optional(),
+        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -170,6 +176,21 @@ export const eventRouter = createTRPCRouter({
               id: input.semesterId,
             },
           },
+          Attachments: {
+            updateMany: {
+              where: {
+                type: "EVENT_POSTER",
+              },
+              data: {
+                src: input.src,
+              },
+            },
+          },
+        },
+        include: {
+          Category: true,
+          Semester: true,
+          Attachments: true,
         },
       });
     }),
