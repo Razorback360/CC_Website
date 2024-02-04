@@ -92,10 +92,10 @@ export default function Home() {
         <Tabs
           defaultValue="upcoming"
           id="events"
-          className="justify-center items-center mx-auto flex flex-col w-[75%] px-16"
+          className="justify-center items-center mx-auto flex flex-col w-full 2xl:w-[75%] 2xl:px-16 lg:px-8 px-4"
         >
           <h1 className="text-7xl font-extrabold my-12">Featured Events</h1>
-          <TabsList className="w-2/3 mx-auto h-fit rounded-lg gap-2">
+          <TabsList className="mx-auto h-fit rounded-lg gap-2">
             <TabsTrigger
               value="upcoming"
               className="rounded-lg w-full py-4 text-xl"
@@ -109,10 +109,10 @@ export default function Home() {
               Past Events
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="upcoming" className="w-full h-fit min-h-[80vh]">
+          <TabsContent value="upcoming" className="w-full h-fit">
             <EventsGrid events={upcomingEvents} />
           </TabsContent>
-          <TabsContent value="past" className="w-full h-fit min-h-[80vh]">
+          <TabsContent value="past" className="w-full h-fit">
             <EventsGrid events={pastEvents} />
           </TabsContent>
         </Tabs>
