@@ -92,7 +92,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       link: "",
       public: false,
       poster: undefined,
-      src: "sssss",
+      src: "",
     },
   });
 
