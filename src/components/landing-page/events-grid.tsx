@@ -64,9 +64,7 @@ const EventCard = ({ event, index }: EventCardProps) => {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <Image
           className="h-full w-full flex-shrink-0 object-cover object-center rounded-md"
-          src={
-            event.Attachments.at(0)?.src ?? `/event (${(index % 4) + 1}).png`
-          }
+          src={event.Attachments.at(0)?.src ?? "/placeholder/event.png"}
           width={350}
           height={350}
           loading="lazy"
