@@ -25,6 +25,10 @@ const config = {
         hostname: "nfjirfbkulkxtgkdqmtn.supabase.co",
         pathname: "/storage/v1/object/public/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
     ],
   },
 };

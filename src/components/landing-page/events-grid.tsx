@@ -19,7 +19,7 @@ interface EventsGridProps {
 export const EventsGrid = ({ events }: EventsGridProps) => {
   if (!events || events.length === 0) {
     return (
-      <div className="select-none flex flex-col gap-8 justify-center items-center h-[150vh] bg-gray-700">
+      <div className="select-none flex flex-col gap-8 justify-center items-center h-fit min-h-[50vh]">
         <h2
           className="animate-floating text-6xl font-extrabold text-gray-400"
           style={{ textShadow: "0 0 6rem black" }}
@@ -37,7 +37,7 @@ export const EventsGrid = ({ events }: EventsGridProps) => {
   }
 
   return (
-    <div className="w-full grid lg:grid-cols-2 gap-2">
+    <div className="w-full grid lg:grid-cols-2 gap-2 h-fit min-h-[50vh]">
       {events.map((event, index) => {
         return (
           <EventCard key={event.title + index} event={event} index={index} />
