@@ -12,6 +12,7 @@ import {
   FormControl,
   FormDescription,
   FormField,
+  FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
@@ -276,24 +277,24 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
               control={form.control}
               name="title"
               render={({ field }) => (
-                <div className="mt-2 flex flex-col gap-2">
+                <FormItem className="mt-2 flex flex-col gap-2">
                   <FormLabel htmlFor="title">Title</FormLabel>
-                  <FormControl className="">
+                  <FormControl id="title">
                     <Input id="title" placeholder="Event Title" {...field} />
                   </FormControl>
                   <FormMessage>
                     {form.formState.errors.title?.message}
                   </FormMessage>
-                </div>
+                </FormItem>
               )}
             />
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
-                <div className="mt-2 flex flex-col gap-2">
+                <FormItem className="mt-2 flex flex-col gap-2">
                   <FormLabel htmlFor="description">Description</FormLabel>
-                  <FormControl className="">
+                  <FormControl id="description">
                     <Textarea
                       className="max-h-72"
                       id="description"
@@ -304,16 +305,16 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                   <FormMessage>
                     {form.formState.errors.description?.message}
                   </FormMessage>
-                </div>
+                </FormItem>
               )}
             />
             <FormField
               control={form.control}
               name="link"
               render={({ field }) => (
-                <div className="mt-2 flex flex-col gap-2">
+                <FormItem className="mt-2 flex flex-col gap-2">
                   <FormLabel htmlFor="link">Form Link</FormLabel>
-                  <FormControl className="">
+                  <FormControl id="link">
                     <Input
                       type="text"
                       id="link"
@@ -324,7 +325,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                   <FormMessage>
                     {form.formState.errors.link?.message}
                   </FormMessage>
-                </div>
+                </FormItem>
               )}
             />
             <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
@@ -332,14 +333,15 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <div className="w-full flex flex-col">
+                  <FormItem className="w-full flex flex-col">
                     <FormLabel htmlFor="date" className="m-1">
                       Event Date
                     </FormLabel>
-                    <FormControl>
+                    <FormControl id="date">
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
+                            id="date"
                             variant={"outline"}
                             className={cn(
                               "font-normal mt-2 mr-2",
@@ -351,12 +353,13 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                             {form.getValues("date") ? (
                               format(form.getValues("date"), "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <>Pick a date</>
                             )}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
+                            id="date"
                             mode="single"
                             selected={form.getValues("date")}
                             onSelect={(date: Date | undefined) => {
@@ -370,45 +373,45 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                     <FormMessage className="col-start-2 col-span-3">
                       {form.formState.errors.date?.message}
                     </FormMessage>
-                  </div>
+                  </FormItem>
                 )}
               />
-              <div className="w-full">
-                <FormField
-                  control={form.control}
-                  name="poster"
-                  render={({ field }) => (
-                    <>
-                      <FormLabel htmlFor="picture" className="m-1">
-                        Event Poster
-                      </FormLabel>
+              <FormField
+                control={form.control}
+                name="poster"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="picture" className="m-1">
+                      Event Poster
+                    </FormLabel>
+                    <FormControl id="picture">
                       <Input
                         id="picture"
                         type="file"
                         className="p-0 mt-2"
                         {...posterRef}
                       />
-                      <FormMessage>
-                        {form.formState.errors.poster?.message as string}
-                      </FormMessage>
-                    </>
-                  )}
-                />
-              </div>
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.poster?.message as string}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="w-full flex flex-row items-center gap-2 justify-between">
               <FormField
                 control={form.control}
                 name="semesterId"
                 render={({ field }) => (
-                  <div className="w-full">
+                  <FormItem className="w-full">
                     <FormLabel htmlFor="semesterId" className="m-1">
                       Semester
                     </FormLabel>
                     <FormControl>
                       {/* Custom Combobox for Semester */}
                       <Select onValueChange={field.onChange}>
-                        <FormControl>
+                        <FormControl id="semesterId">
                           <SelectTrigger className="mt-2 mr-2">
                             <SelectValue placeholder="Select a Semester" />
                           </SelectTrigger>
@@ -425,21 +428,21 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                     <FormMessage className="col-start-2 col-span-3">
                       {form.formState.errors.semesterId?.message}
                     </FormMessage>
-                  </div>
+                  </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
                 name="categoryId"
                 render={({ field }) => (
-                  <div className="w-full">
+                  <FormItem className="w-full">
                     <FormLabel htmlFor="categoryId" className="m-1">
                       Category
                     </FormLabel>
                     <FormControl>
                       {/* Custom Combobox for Semester */}
                       <Select onValueChange={field.onChange}>
-                        <FormControl>
+                        <FormControl id="categoryId">
                           <SelectTrigger className="mt-2 ">
                             <SelectValue placeholder="Select a Category" />
                           </SelectTrigger>
@@ -456,7 +459,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                     <FormMessage className="col-start-2 col-span-3">
                       {form.formState.errors.categoryId?.message}
                     </FormMessage>
-                  </div>
+                  </FormItem>
                 )}
               />
             </div>
@@ -464,11 +467,14 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
               control={form.control}
               name="public"
               render={({ field }) => (
-                <div className="mt-2 w-full flex flex-col">
-                  <FormLabel className="m-1">Public</FormLabel>
+                <FormItem className="mt-2 w-full flex flex-col">
+                  <FormLabel id="public-status" className="m-1">
+                    Public Status
+                  </FormLabel>
                   <div className="flex flex-row gap-2 mt-2 m-1">
-                    <FormControl>
+                    <FormControl id="public-status">
                       <Switch
+                        id="public-status"
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
@@ -477,7 +483,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                       Set event as public or private.
                     </FormDescription>
                   </div>
-                </div>
+                </FormItem>
               )}
             />
           </div>

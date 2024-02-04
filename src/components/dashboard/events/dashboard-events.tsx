@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import EventList from "@/components/dashboard/events/events-list";
 import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
+import DeleteEventPopup from "@/components/popups/delete-event-popup";
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
+import { cn } from "@/lib/utils";
 import { api } from "@/utils/api";
-import EventList from "@/components/dashboard/events/events-list";
-import EventDisplay from "./event-display";
-import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
-import DeleteEventPopup from "@/components/popups/delete-event-popup";
-import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useDeleteEvent } from "@/utils/hooks/use-crud-event";
+import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
+import EventDisplay from "./event-display";
 
 interface DashboardEventsProps {
   defaultLayout: number[];
@@ -31,7 +31,14 @@ export default function DashboardEvents({
   const { data: events, refetch } = api.event.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       if (!selectedEvent && !isCreatingNewEvent) {
-        selectEvent(data[0]);
+        if (data.length > 0) {
+          selectEvent(data[0]);
+          setIsCreatingNewEvent(false);
+        } else {
+          selectEvent(undefined);
+          setIsCreatingNewEvent(true);
+        }
+      } else if (selectedEvent && isCreatingNewEvent) {
         setIsCreatingNewEvent(false);
       }
     },
