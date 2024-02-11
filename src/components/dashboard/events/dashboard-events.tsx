@@ -3,7 +3,6 @@ import { useState } from "react";
 import EventList from "@/components/dashboard/events/events-list";
 import { Icons } from "@/components/icons";
 import DeleteEventPopup from "@/components/popups/delete-event-popup";
-import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
@@ -87,30 +86,12 @@ export default function DashboardEvents({
       </ResizablePanel>
       <ResizableHandle withHandle={false} />
       <ResizablePanel defaultSize={defaultLayout[2]}>
-        <div className={cn("ml-auto flex items-center p-4")}>
+        <div className={cn("ml-auto flex items-center p-5")}>
           <h1 className="font-bold text-[1.30rem]">
             {selectedEvent
               ? `Editing Event: ${selectedEvent?.title}`
               : "Creating an Event"}
           </h1>
-          <Tooltip>
-            <TooltipTrigger asChild className="ml-auto">
-              <AlertDialogTrigger
-                asChild
-                disabled={!selectedEvent?.id || loadingDelete}
-              >
-                <Button
-                  variant={!selectedEvent?.id ? "ghost" : "destructive"}
-                  size="icon"
-                  disabled={!selectedEvent || loadingDelete}
-                >
-                  <Icons.trash />
-                  <span className="sr-only">Delete Event</span>
-                </Button>
-              </AlertDialogTrigger>
-            </TooltipTrigger>
-            <TooltipContent>Delete Event</TooltipContent>
-          </Tooltip>
         </div>
         <Separator />
         <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">

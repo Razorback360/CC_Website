@@ -12,6 +12,7 @@ import {
   FaCreditCard as CreditCard,
   FaUserCheck as DoubleCheck,
   FaClipboardList as Events,
+  FaUpload,
   FaFile as File,
   FaFileAlt as FileText,
   FaGithub as GitHubIcon,
@@ -211,5 +212,6 @@ export const Icons = {
   caretUpDown: CaretUpDown,
   edit: MdEdit,
   history: History,
+  upload: FaUpload,
   languages: Languages,
 };

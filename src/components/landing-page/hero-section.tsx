@@ -1,20 +1,19 @@
-import {
-  Carousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import React from "react";
-import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
 import Spotlight from "@/components/landing-page/spotlight";
 import ScrollIndicatorArrows from "@/components/scroll-indicator-arrows";
-import Image from "next/image";
 import {
-  useScroll,
-  useTransform,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
+import {
   motion,
   useMotionValueEvent,
+  useScroll,
+  useTransform,
 } from "framer-motion";
+import React from "react";
 
 const slides = [
   {
@@ -54,7 +53,7 @@ const HeroSection = () => {
   const heroRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["end end", "end start"],
+    offset: ["start start", "end start"],
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
