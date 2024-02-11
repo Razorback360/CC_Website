@@ -87,7 +87,7 @@ export default function DashboardEvents({
       </ResizablePanel>
       <ResizableHandle withHandle={false} />
       <ResizablePanel defaultSize={defaultLayout[2]}>
-        <div className={cn("ms-auto flex items-center p-4")}>
+        <div className={cn("ml-auto flex items-center p-5")}>
           <h1 className="font-bold text-[1.30rem]">
             {selectedEvent
               ? `Editing Event: ${selectedEvent?.title}`
