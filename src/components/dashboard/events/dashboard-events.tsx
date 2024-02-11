@@ -31,7 +31,14 @@ export default function DashboardEvents({
   const { data: events, refetch } = api.event.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       if (!selectedEvent && !isCreatingNewEvent) {
-        selectEvent(data[0]);
+        if (data.length > 0) {
+          selectEvent(data[0]);
+          setIsCreatingNewEvent(false);
+        } else {
+          selectEvent(undefined);
+          setIsCreatingNewEvent(true);
+        }
+      } else if (selectedEvent && isCreatingNewEvent) {
         setIsCreatingNewEvent(false);
       }
     },

@@ -27,8 +27,6 @@ export const useActiveEvent = () => {
   return { activeCard: activeEvent, setActiveCard: setActiveEvent };
 };
 
-const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
-
 interface StickyScrollProps {
   events: RouterOutputs["event"]["getAll"] | undefined;
 }

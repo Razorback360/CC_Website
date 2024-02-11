@@ -42,6 +42,50 @@ export const eventRouter = createTRPCRouter({
       },
     });
   }),
+  getAllUpcomingPublic: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.event.findMany({
+      where: {
+        public: true,
+        date: {
+          gte: new Date(),
+        },
+      },
+      include: {
+        Semester: true,
+        Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+  }),
+  getAllPastPublic: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.event.findMany({
+      where: {
+        public: true,
+        date: {
+          lt: new Date(),
+        },
+      },
+      include: {
+        Semester: true,
+        Category: true,
+        Attachments: {
+          where: {
+            type: "EVENT_POSTER",
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+  }),
   getAllCategories: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.eventCategory.findMany({});
   }),
@@ -56,7 +100,7 @@ export const eventRouter = createTRPCRouter({
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
         public: z.boolean(),
-        src: z.string(),
+        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -79,7 +123,8 @@ export const eventRouter = createTRPCRouter({
           },
           Attachments: {
             create: {
-              src: input.src,
+              // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
+              src: input.src as string,
               type: "EVENT_POSTER",
               Uploader: {
                 connect: {
@@ -88,6 +133,11 @@ export const eventRouter = createTRPCRouter({
               },
             },
           },
+        },
+        include: {
+          Category: true,
+          Semester: true,
+          Attachments: true,
         },
       });
     }),
@@ -102,6 +152,7 @@ export const eventRouter = createTRPCRouter({
         categoryId: z.string().min(1).optional(),
         semesterId: z.string().min(1).optional(),
         public: z.boolean().optional(),
+        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -125,6 +176,21 @@ export const eventRouter = createTRPCRouter({
               id: input.semesterId,
             },
           },
+          Attachments: {
+            updateMany: {
+              where: {
+                type: "EVENT_POSTER",
+              },
+              data: {
+                src: input.src,
+              },
+            },
+          },
+        },
+        include: {
+          Category: true,
+          Semester: true,
+          Attachments: true,
         },
       });
     }),
@@ -138,6 +204,33 @@ export const eventRouter = createTRPCRouter({
       return await ctx.db.event.delete({
         where: {
           id: input.id,
+        },
+      });
+    }),
+  get: publicProcedure
+    .input(
+      z.object({
+        id: z.string().min(1),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.event.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          Organizers: true,
+          Attachments: {
+            where: {
+              OR: [
+                { type: "EVENT_POSTER" },
+                { type: "EVENT_IMAGE" },
+                { type: "EVENT_VIDEO" },
+              ],
+            },
+          },
+          Category: true,
+          Semester: true,
         },
       });
     }),

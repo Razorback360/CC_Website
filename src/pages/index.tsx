@@ -1,6 +1,7 @@
+import EventsGrid from "@/components/landing-page/events-grid";
 import HeroSection from "@/components/landing-page/hero-section";
-import { StickyScroll } from "@/components/landing-page/sticky-scroll-reveal";
 import VisionSection from "@/components/landing-page/vision-section";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { api } from "@/utils/api";
 import Head from "next/head";
 
@@ -61,7 +62,8 @@ const data = {
 };
 
 export default function Home() {
-  const { data: events } = api.event.getAllPublic.useQuery();
+  const { data: upcomingEvents } = api.event.getAllUpcomingPublic.useQuery();
+  const { data: pastEvents } = api.event.getAllPastPublic.useQuery();
 
   return (
     <>
@@ -87,7 +89,33 @@ export default function Home() {
       <div className="w-full transition-all">
         <HeroSection />
         <VisionSection />
-        <StickyScroll events={events} />
+        <Tabs
+          defaultValue="upcoming"
+          id="events"
+          className="justify-center items-center mx-auto flex flex-col w-full 2xl:w-[75%] 2xl:px-16 lg:px-8 px-4"
+        >
+          <h1 className="text-7xl font-extrabold my-12">Featured Events</h1>
+          <TabsList className="mx-auto h-fit rounded-lg gap-2">
+            <TabsTrigger
+              value="upcoming"
+              className="rounded-lg w-full py-4 text-xl"
+            >
+              Upcoming Events
+            </TabsTrigger>
+            <TabsTrigger
+              value="past"
+              className="rounded-lg w-full py-4 text-xl"
+            >
+              Past Events
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="upcoming" className="w-full h-fit">
+            <EventsGrid events={upcomingEvents} />
+          </TabsContent>
+          <TabsContent value="past" className="w-full h-fit">
+            <EventsGrid events={pastEvents} />
+          </TabsContent>
+        </Tabs>
       </div>
     </>
   );

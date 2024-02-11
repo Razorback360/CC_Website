@@ -1,13 +1,24 @@
 import { atom, useAtom } from "jotai";
 
-import { type Event } from "@prisma/client";
+import { type Attachment, type Event } from "@prisma/client";
 
-export const selectedEventAtom = atom<Event | undefined>(undefined);
+export const selectedEventAtom = atom<
+  | (Event & {
+     Attachments: Attachment[];
+    })
+  | undefined
+>(undefined);
 
 export const useSelectedEvent = () => {
   const [selectedEvent, setSelectedEvent] = useAtom(selectedEventAtom);
 
-  const selectEvent = (event: Event | undefined) => {
+  const selectEvent = (
+    event:
+      | (Event & {
+          Attachments: Attachment[];
+        })
+      | undefined,
+  ) => {
     setSelectedEvent(event);
   };
 
