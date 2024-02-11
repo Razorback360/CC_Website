@@ -1,5 +1,5 @@
 import { env } from "@/env.mjs";
-import { type NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse, userAgent } from "next/server";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -17,5 +17,15 @@ export function middleware(req: NextRequest) {
   // if (env.NODE_ENV === "production" && pathname !== "/linktree") {
   //   return NextResponse.redirect(new URL("/linktree", req.nextUrl));
   // }
+  if (env.NODE_ENV === "production" && pathname !== "/linktree") {
+    //   return NextResponse.redirect(new URL("/linktree", req.nextUrl));
+    const { ua } = userAgent(req);
+
+    if (/iP(hone|ad|od)/.test(ua) ) {
+      return NextResponse.redirect(new URL("/linktree", req.nextUrl));
+    } else if (/Android/.test(ua)) {
+      return NextResponse.redirect(new URL("/linktree", req.nextUrl));
+    }
+  }
   return NextResponse.next();
 }
