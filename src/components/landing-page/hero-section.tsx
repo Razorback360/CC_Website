@@ -82,7 +82,7 @@ const HeroSection = () => {
     <motion.section
       style={{ opacity }}
       ref={heroRef}
-      className="hero relative flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
+      className="hero relative flex flex-col-reverse items-center justify-end lg:justify-between lg:flex-row min-h-[100vh] h-fit w-full select-none pt-[12vh] lg:pt-0"
     >
       <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
       <img
@@ -97,10 +97,10 @@ const HeroSection = () => {
           y: parallaxText,
           opacity,
         }}
-        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold"
+        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold mt-12 lg:mt-0"
       >
         <span
-          className="2xl:text-[12rem] xl:text-[10rem] lg:text-[8rem] md:text-[7rem] leading-none text-foreground"
+          className="text-5xl lg:2xl:text-[12rem] lg:xl:text-[10rem] lg:text-[8rem] md:text-[7rem] leading-none text-foreground"
           style={{
             fontFamily: "Dancing Script",
             WebkitBackgroundClip: "text",
@@ -109,18 +109,18 @@ const HeroSection = () => {
           Welcome to
         </span>
         <br />
-        <span className="2xl:text-[7rem] xl:text-[6rem] lg:text-[5rem] md:text-[4rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
+        <span className="text-5xl lg:2xl:text-[7rem] lg:xl:text-[6rem] lg:text-[5rem] md:text-[4rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
           KFUPM <br />
           Computer Club
         </span>
       </motion.div>
       {/* vertical */}
-      <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
+      <div className="grid grid-cols-3 lg:grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-full lg:w-fit lg:max-w-[40%] lg:aspect-[3/5] ">
         <motion.div
           style={{
             y: parallaxCarousels1,
           }}
-          className="col-span-1 row-span-1 row-start-1 aspect-square"
+          className="col-span-1 row-span-1 row-start-1 aspect-square hidden lg:block"
         >
           <Carousel
             className="embla h-full w-full overflow-hidden"
@@ -155,7 +155,7 @@ const HeroSection = () => {
           style={{
             y: parallaxCarousels2,
           }}
-          className="col-span-1 row-span-1 row-start-2 aspect-square"
+          className="col-span-1 row-span-1 row-start-2 aspect-square hidden lg:block"
         >
           <Carousel
             className="embla h-full w-full overflow-hidden"
@@ -188,7 +188,7 @@ const HeroSection = () => {
           style={{
             y: parallaxCarousels3,
           }}
-          className="col-span-2 row-span-2 col-start-2 aspect-square"
+          className="col-span-2 row-span-2 col-start-2 aspect-square hidden lg:block"
         >
           <Carousel
             className="embla h-full w-full"
@@ -221,7 +221,7 @@ const HeroSection = () => {
           style={{
             y: parallaxCarousels4,
           }}
-          className="col-span-3 row-span-3 aspect-square"
+          className="col-span-3 row-span-3 aspect-square "
         >
           <Carousel
             className="embla h-full w-full"
