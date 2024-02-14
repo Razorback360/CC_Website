@@ -22,7 +22,7 @@ const VisionSection = () => {
       )}
     >
       <div className="sticky top-1/2 translate-y-[-50%]">
-        <h1 className="text-8xl text-center text-primary-foreground font-extrabold">
+        <h1 className="lg:text-8xl text-6xl text-center text-primary-foreground font-extrabold">
           Our Vision
         </h1>
         <p className="text-center text-xl mt-8 max-w-3xl text-primary-foreground font-bold">

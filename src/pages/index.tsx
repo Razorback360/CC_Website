@@ -94,7 +94,9 @@ export default function Home() {
           id="events"
           className="justify-center items-center mx-auto flex flex-col w-full 2xl:w-[75%] 2xl:px-16 lg:px-8 px-4"
         >
-          <h1 className="text-7xl font-extrabold my-12">Featured Events</h1>
+          <h1 className="lg:text-7xl text-4xl font-extrabold my-12">
+            Featured Events
+          </h1>
           <TabsList className="mx-auto h-fit rounded-lg gap-2">
             <TabsTrigger
               value="upcoming"
