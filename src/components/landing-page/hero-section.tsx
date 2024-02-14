@@ -82,7 +82,7 @@ const HeroSection = () => {
     <motion.section
       style={{ opacity }}
       ref={heroRef}
-      className="hero relative flex flex-col-reverse items-center justify-end lg:justify-between lg:flex-row min-h-[100vh] h-fit w-full select-none pt-[12vh] lg:pt-0"
+      className="hero relative flex md:flex-col flex-col-reverse items-center justify-end lg:justify-between lg:flex-row min-h-[100vh] h-fit w-full select-none pt-[12vh] lg:pt-0"
     >
       <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
       <img
@@ -97,10 +97,10 @@ const HeroSection = () => {
           y: parallaxText,
           opacity,
         }}
-        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold mt-12 lg:mt-0"
+        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold mt-12 md:mt-0"
       >
         <span
-          className="text-5xl lg:2xl:text-[12rem] lg:xl:text-[10rem] lg:text-[8rem] md:text-[7rem] leading-none text-foreground"
+          className="text-7xl lg:2xl:text-[12rem] lg:xl:text-[10rem] lg:text-[8rem] md:text-[7rem] leading-none text-foreground"
           style={{
             fontFamily: "Dancing Script",
             WebkitBackgroundClip: "text",
@@ -115,7 +115,7 @@ const HeroSection = () => {
         </span>
       </motion.div>
       {/* vertical */}
-      <div className="grid grid-cols-3 lg:grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-full lg:w-fit lg:max-w-[40%] lg:aspect-[3/5] ">
+      <div className="grid grid-cols-3 lg:grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-full lg:w-fit lg:max-w-[40%] lg:aspect-[3/5] md:mt-10">
         <motion.div
           style={{
             y: parallaxCarousels1,
@@ -221,7 +221,7 @@ const HeroSection = () => {
           style={{
             y: parallaxCarousels4,
           }}
-          className="col-span-3 row-span-3 aspect-square "
+          className="col-span-3 row-span-3 aspect-square"
         >
           <Carousel
             className="embla h-full w-full"

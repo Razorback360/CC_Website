@@ -70,7 +70,7 @@ const SiteHeader = () => {
             asChild
           >
             <Link href="#about-us">
-              <Icons.aboutUs className="block sm:hidden" />
+              <Icons.aboutUs className="block sm:hidden text-3xl" />
               <span className="hidden sm:block text-sm">About Us</span>
             </Link>
           </Button>
@@ -80,7 +80,7 @@ const SiteHeader = () => {
             asChild
           >
             <Link href="#events">
-              <Icons.events className="block sm:hidden" />
+              <Icons.events className="block sm:hidden text-3xl" />
               <span className="hidden sm:block text-sm">Events</span>
             </Link>
           </Button>
