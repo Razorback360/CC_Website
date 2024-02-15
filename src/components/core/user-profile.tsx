@@ -1,4 +1,4 @@
-import { ChevronRight, LogOut, Settings, User } from "lucide-react";
+import { ChevronRight, LogOut, Settings } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import React from "react";
@@ -116,10 +116,17 @@ export const UserProfile = ({ isCollapsed, isSiteHeader = false }: Props) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/overview">
-              <User className="mr-2 h-4 w-4" />
-              <span>Dashboard</span>
-            </Link>
+            {!router.pathname.startsWith("/dashboard") ? (
+              <Link href="/dashboard/overview">
+                <Icons.home className="mr-2 h-4 w-4" />
+                <span>Dashboard</span>
+              </Link>
+            ) : (
+              <Link href="/">
+                <Icons.home className="mr-2 h-4 w-4" />
+                <span>Landing Page</span>
+              </Link>
+            )}
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/dashboard/settings">
