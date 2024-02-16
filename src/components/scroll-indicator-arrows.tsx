@@ -22,9 +22,9 @@ function ScrollIndicatorArrows() {
         visible ? "opacity-50" : "opacity-0",
       )}
     >
-      <div className="chevron w-9 h-2"></div>
-      <div className="chevron w-9 h-2"></div>
-      <div className="chevron w-9 h-2"></div>
+      <div className="chevron w-7 lg:w-9 h-1.5 lg:h-2"></div>
+      <div className="chevron w-7 lg:w-9 h-1.5 lg:h-2"></div>
+      <div className="chevron w-7 lg:w-9 h-1.5 lg:h-2"></div>
     </div>
   );
 }

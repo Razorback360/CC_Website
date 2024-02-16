@@ -50,13 +50,13 @@ const SiteHeader = () => {
           duration: 0.1,
         }}
         className={cn(
-          "flex justify-between items-center lg:text-xl md:text-lg sm:px-6 px-5 sm:py-1 py-2 hover:px-7",
+          "flex justify-between items-center lg:text-xl md:text-lg sm:px-6 px-5 py-1 hover:px-7",
           "select-none bg-background outline outline-2 outline-border hover:outline-none hover:bg-accent",
           "h-fit z-50 transition-all duration-200 shadow-lg fixed sm:inset-x-0 inset-x-4 mx-auto sm:w-fit min-w-[20%] top-4 rounded-lg ",
         )}
       >
         <Icons.logo
-          className="sm:h-16 h-14 sm:w-16 w-14 cursor-pointer"
+          className="md:h-20 h-16 md:w-20 w-16 cursor-pointer"
           onClick={() => router.push("/")}
         />
         <ul
@@ -87,11 +87,7 @@ const SiteHeader = () => {
         </ul>
         {/* login button */}
         {!session?.user ? (
-          <Button
-            variant="default"
-            className="hidden sm:block"
-            onClick={() => router.push("/auth/login")}
-          >
+          <Button variant="default" onClick={() => router.push("/auth/login")}>
             Login
           </Button>
         ) : (

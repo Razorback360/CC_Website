@@ -39,7 +39,7 @@ export const EventsGrid = ({ events }: EventsGridProps) => {
   }
 
   return (
-    <div className="w-full grid lg:grid-cols-2 gap-2 h-fit min-h-[50vh]">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-2 h-fit min-h-[50vh]">
       {events.map((event, index) => {
         return (
           <EventCard key={event.title + index} event={event} index={index} />
