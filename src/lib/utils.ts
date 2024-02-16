@@ -1,5 +1,6 @@
-import { type ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { type NextRouter } from "next/router";
+import { type CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -27,4 +28,14 @@ export const getNameInitials = (name: string) => {
     })
     .filter(Boolean) // Remove null values (non-initials)
     .join("");
+};
+
+export const rtlSafetyProps = (value: string) => {
+  return {
+    // set to rtl if the text contains ANY arabic chars (range: 0600-06FF)
+    dir: value.match(/[\u0600-\u06FF]/) ? "rtl" : "ltr",
+    style: {
+      textAlign: value.match(/[\u0600-\u06FF]/) ? "right" : "left",
+    } as CSSProperties,
+  };
 };
