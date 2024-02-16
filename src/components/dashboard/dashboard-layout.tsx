@@ -1,16 +1,16 @@
-import * as React from "react";
 import { Icons } from "@/components/icons";
+import * as React from "react";
 
 import { UserProfile } from "@/components/core/user-profile";
 import Nav from "@/components/dashboard/nav";
-import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 
@@ -38,12 +38,12 @@ const DashboardLayout = ({
     required: true,
   });
 
+  const title = `${pageTitle} | KFUPM CC`;
+
   return (
     <>
       <Head>
-        <title>
-          {pageTitle} | {"KFUPM CC"}
-        </title>
+        <title>{title}</title>
         <meta name="description" content={description} />
       </Head>
       <TooltipProvider delayDuration={0}>
