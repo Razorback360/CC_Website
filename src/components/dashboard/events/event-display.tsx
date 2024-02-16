@@ -86,9 +86,13 @@ const addEventFormSchema = z.object({
 
 type EventDisplayProps = {
   isCreatingNewEvent: boolean;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
-const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
+const EventDisplay = ({
+  isCreatingNewEvent,
+  setIsLoading,
+}: EventDisplayProps) => {
   const { selectedEvent, selectEvent } = useSelectedEvent();
   const form = useForm<z.infer<typeof addEventFormSchema>>({
     resolver: zodResolver(addEventFormSchema),
@@ -280,7 +284,13 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         poster: undefined,
       });
     }
-  }, [selectedEvent]);
+
+    if (loadingCreate || loadingUpdate) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [selectedEvent, loadingCreate, loadingUpdate]);
 
   return (
     <>
@@ -288,232 +298,229 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 justify-between mr-5"
+            className="flex flex-col gap-2 justify-between p-4"
           >
-            <div>
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem className="mt-2 flex flex-col gap-2">
-                    <FormLabel htmlFor="title">Title</FormLabel>
-                    <FormControl id="title">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="title">Title</FormLabel>
+                  <FormControl id="title">
                     <Input
                       id="title"
                       placeholder="Event Title"
                       {...rtlSafetyProps(field.value)}
                       {...field}
                     />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.title?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem className="mt-2 flex flex-col gap-2">
-                    <FormLabel htmlFor="description">Description</FormLabel>
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.title?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <FormControl id="description">
+                    <Textarea
+                      className="max-h-72"
+                      id="description"
+                      placeholder="Event Description"
                       {...rtlSafetyProps(field.value)}
-                    <FormControl id="description">
-                      <Textarea
-                        className="max-h-72"
-                        id="description"
-                        placeholder="Event Description"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.description?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.description?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="link">Form Link</FormLabel>
+                  <FormControl id="link">
+                    <Input
+                      type="text"
+                      id="link"
+                      placeholder="https://docs.google.com/forms/..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.link?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
               <FormField
                 control={form.control}
-                name="link"
+                name="date"
                 render={({ field }) => (
-                  <FormItem className="mt-2 flex flex-col gap-2">
-                    <FormLabel htmlFor="link">Form Link</FormLabel>
-                    <FormControl id="link">
-                      <Input
-                        type="text"
-                        id="link"
-                        placeholder="https://docs.google.com/forms/..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.link?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
-                <FormField
-                  control={form.control}
-                  name="date"
-                  render={({ field }) => (
-                    <FormItem className="w-full flex flex-col">
-                      <FormLabel htmlFor="date" className="m-1">
-                        Event Date
-                      </FormLabel>
-                      <FormControl id="date">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              id="date"
-                              variant={"outline"}
-                              className={cn(
-                                "font-normal mt-2 mr-2",
-                                !form.getValues("date") &&
-                                  "text-muted-foreground",
-                              )}
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {form.getValues("date") ? (
-                                format(form.getValues("date"), "PPP")
-                              ) : (
-                                <>Pick a date</>
-                              )}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              id="date"
-                              mode="single"
-                              selected={form.getValues("date")}
-                              onSelect={(date: Date | undefined) => {
-                                if (date) form.setValue("date", date);
-                              }}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </FormControl>
-                      <FormMessage className="col-start-2 col-span-3">
-                        {form.formState.errors.date?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="poster"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel htmlFor="picture" className="m-1">
-                        Event Poster
-                      </FormLabel>
-                      <FormControl id="picture">
-                        <Input
-                          {...posterRef}
-                          id="picture"
-                          type="file"
-                          className="p-0 mt-2"
-                          value={
-                            selectedEvent?.src?.split("/").pop() ?? undefined
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage>
-                        {form.formState.errors.poster?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-full flex flex-row items-center gap-2 justify-between">
-                <FormField
-                  control={form.control}
-                  name="semesterId"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel htmlFor="semesterId" className="m-1">
-                        Semester
-                      </FormLabel>
-                      <FormControl>
-                        {/* Custom Combobox for Semester */}
-                        <Select onValueChange={field.onChange}>
-                          <FormControl id="semesterId">
-                            <SelectTrigger className="mt-2 mr-2">
-                              <SelectValue placeholder="Select a Semester" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {semesters?.map((semester, index) => (
-                              <SelectItem value={semester.id} key={index}>
-                                Term {semester.number}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage className="col-start-2 col-span-3">
-                        {form.formState.errors.semesterId?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="categoryId"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel htmlFor="categoryId" className="m-1">
-                        Category
-                      </FormLabel>
-                      <FormControl>
-                        {/* Custom Combobox for Semester */}
-                        <Select onValueChange={field.onChange}>
-                          <FormControl id="categoryId">
-                            <SelectTrigger className="mt-2 ">
-                              <SelectValue placeholder="Select a Category" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {categories?.map((category, index) => (
-                              <SelectItem value={category.id} key={index}>
-                                {category.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage className="col-start-2 col-span-3">
-                        {form.formState.errors.categoryId?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="public"
-                render={({ field }) => (
-                  <FormItem className="mt-2 w-full flex flex-col">
-                    <FormLabel id="public-status" className="m-1">
-                      Public Status
+                  <FormItem className="w-full flex flex-col">
+                    <FormLabel htmlFor="date" className="m-1">
+                      Event Date
                     </FormLabel>
-                    <div className="flex flex-row gap-2 mt-2 m-1">
-                      <FormControl id="public-status">
-                        <Switch
-                          id="public-status"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Set event as public or private.
-                      </FormDescription>
-                    </div>
+                    <FormControl id="date">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="date"
+                            variant={"outline"}
+                            className={cn(
+                              "font-normal mt-2 mr-2",
+                              !form.getValues("date") &&
+                                "text-muted-foreground",
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {form.getValues("date") ? (
+                              format(form.getValues("date"), "PPP")
+                            ) : (
+                              <>Pick a date</>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            id="date"
+                            mode="single"
+                            selected={form.getValues("date")}
+                            onSelect={(date: Date | undefined) => {
+                              if (date) form.setValue("date", date);
+                            }}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
+                    <FormMessage className="col-start-2 col-span-3">
+                      {form.formState.errors.date?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="poster"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="picture" className="m-1">
+                      Event Poster
+                    </FormLabel>
+                    <FormControl id="picture">
+                      <Input
+                        {...posterRef}
+                        id="picture"
+                        type="file"
+                        className="p-0 mt-2"
+                        multiple={false}
+                        accept={ACCEPTED_IMAGE_TYPES.join(",")}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.poster?.message}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
             </div>
+            <div className="w-full flex flex-row items-center gap-2 justify-between">
+              <FormField
+                control={form.control}
+                name="semesterId"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="semesterId" className="m-1">
+                      Semester
+                    </FormLabel>
+                    <FormControl>
+                      {/* Custom Combobox for Semester */}
+                      <Select onValueChange={field.onChange}>
+                        <FormControl id="semesterId">
+                          <SelectTrigger className="mt-2 mr-2">
+                            <SelectValue placeholder="Select a Semester" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {semesters?.map((semester, index) => (
+                            <SelectItem value={semester.id} key={index}>
+                              Term {semester.number}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage className="col-start-2 col-span-3">
+                      {form.formState.errors.semesterId?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="categoryId" className="m-1">
+                      Category
+                    </FormLabel>
+                    <FormControl>
+                      {/* Custom Combobox for Semester */}
+                      <Select onValueChange={field.onChange}>
+                        <FormControl id="categoryId">
+                          <SelectTrigger className="mt-2 ">
+                            <SelectValue placeholder="Select a Category" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {categories?.map((category, index) => (
+                            <SelectItem value={category.id} key={index}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage className="col-start-2 col-span-3">
+                      {form.formState.errors.categoryId?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="public"
+              render={({ field }) => (
+                <FormItem className="mt-2 w-full flex flex-col">
+                  <FormLabel id="public-status" className="m-1">
+                    Public Status
+                  </FormLabel>
+                  <div className="flex flex-row gap-2 mt-2 m-1">
+                    <FormControl id="public-status">
+                      <Switch
+                        id="public-status"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Set event as public or private.
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
             <Button
               variant="default"
               type="submit"
@@ -534,13 +541,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         {selectedEvent && selectedEvent.Attachments ? (
           <div className="h-1/2 w-2/5">
             <label>Current Poster</label>
-            <img
-              src={
-                selectedEvent.Attachments.length > 0
-                  ? selectedEvent.Attachments[0]?.src
-                  : ""
-              }
-            />
+            <img src={form.getValues("src") ?? undefined} />
           </div>
         ) : (
           ""
