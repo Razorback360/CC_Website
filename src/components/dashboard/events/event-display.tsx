@@ -27,7 +27,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
+import { cn, rtlSafetyProps } from "@/lib/utils";
 import { api } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
@@ -298,7 +298,12 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                   <FormItem className="mt-2 flex flex-col gap-2">
                     <FormLabel htmlFor="title">Title</FormLabel>
                     <FormControl id="title">
-                      <Input id="title" placeholder="Event Title" {...field} />
+                    <Input
+                      id="title"
+                      placeholder="Event Title"
+                      {...rtlSafetyProps(field.value)}
+                      {...field}
+                    />
                     </FormControl>
                     <FormMessage>
                       {form.formState.errors.title?.message}
@@ -312,6 +317,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                 render={({ field }) => (
                   <FormItem className="mt-2 flex flex-col gap-2">
                     <FormLabel htmlFor="description">Description</FormLabel>
+                      {...rtlSafetyProps(field.value)}
                     <FormControl id="description">
                       <Textarea
                         className="max-h-72"
