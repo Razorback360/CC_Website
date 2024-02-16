@@ -66,7 +66,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {props.children}
         {loading && (
-          <Icons.spinner className="my-auto ms-3 animate-spin duration-700" />
+          <Icons.spinner className="my-auto ms-3 animate-spin duration-700 text-lg" />
         )}
       </button>
     );
