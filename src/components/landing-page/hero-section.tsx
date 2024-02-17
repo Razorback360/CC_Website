@@ -6,6 +6,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import Autoplay, { type AutoplayOptionsType } from "embla-carousel-autoplay";
 import {
   motion,
@@ -82,11 +83,14 @@ const HeroSection = () => {
     <motion.section
       style={{ opacity }}
       ref={heroRef}
-      className="hero relative flex flex-row items-center justify-between max-h-[100vh] h-fit w-full select-none"
+      className={cn(
+        "hero relative flex md:flex-col flex-col-reverse items-center justify-end lg:justify-between",
+        "lg:flex-row min-h-[100vh] max-h-[100vh] h-fit w-full select-none pt-[11.3vh] lg:pt-0",
+      )}
     >
-      <Spotlight className="top-40 left-0 md:left-60 md:-top-20 absolute" />
+      <Spotlight className="top-64 left-0 md:left-60 md:-top-20 lg:absolute hidden" />
       <img
-        className="select-none z-10 absolute opacity-5 -rotate-[10deg] left-[-10%] scale-x-[-1] blur-sm"
+        className="select-none z-0 lg:z-10 absolute opacity-5 -rotate-[10deg] top-96 md:top-auto left-[-10%] scale-x-[-1] blur-sm"
         draggable={false}
         src="/main-01.png"
         loading="eager"
@@ -97,10 +101,10 @@ const HeroSection = () => {
           y: parallaxText,
           opacity,
         }}
-        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold"
+        className="flex flex-col items-center justify-center w-full text-primary leading-none font-extrabold h-[40vh] px-4 lg:h-auto lg:px-6"
       >
         <span
-          className="2xl:text-[12rem] xl:text-[10rem] lg:text-[8rem] md:text-[7rem] leading-none text-foreground"
+          className="2xl:text-[10rem] xl:text-[8rem] lg:text-[7rem] md:text-[7rem] text-[5rem] leading-none text-foreground"
           style={{
             fontFamily: "Dancing Script",
             WebkitBackgroundClip: "text",
@@ -109,18 +113,23 @@ const HeroSection = () => {
           Welcome to
         </span>
         <br />
-        <span className="2xl:text-[7rem] xl:text-[6rem] lg:text-[5rem] md:text-[4rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
-          KFUPM <br />
+        <span className="2xl:text-[6rem] xl:text-[5.5rem] lg:text-[4rem] md:text-[3.5rem] text-[3.25rem] text-center bg-gradient-to-r from-primary to-[#10B981] bg-clip-text text-transparent font-[Inter]">
+          KFUPM <br className="hidden lg:inline" />
           Computer Club
         </span>
       </motion.div>
       {/* vertical */}
-      <div className="grid grid-cols-3 grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh] h-fit w-fit max-w-[40%] aspect-[3/5]">
+      <div
+        className={cn(
+          "grid grid-cols-3 lg:grid-rows-5 items-center justify-center flex-shrink-0 max-h-[100vh]",
+          "h-full lg:h-fit w-full lg:w-fit lg:max-w-[50%] lg:aspect-[3/5] z-10",
+        )}
+      >
         <motion.div
           style={{
             y: parallaxCarousels1,
           }}
-          className="col-span-1 row-span-1 row-start-1 aspect-square"
+          className="col-span-1 row-span-1 row-start-1 aspect-square hidden lg:block"
         >
           <Carousel
             className="embla h-full w-full overflow-hidden"
@@ -155,7 +164,7 @@ const HeroSection = () => {
           style={{
             y: parallaxCarousels2,
           }}
-          className="col-span-1 row-span-1 row-start-2 aspect-square"
+          className="col-span-1 row-span-1 row-start-2 aspect-square hidden lg:block"
         >
           <Carousel
             className="embla h-full w-full overflow-hidden"
@@ -188,7 +197,7 @@ const HeroSection = () => {
           style={{
             y: parallaxCarousels3,
           }}
-          className="col-span-2 row-span-2 col-start-2 aspect-square"
+          className="col-span-2 row-span-2 col-start-2 aspect-square hidden lg:block"
         >
           <Carousel
             className="embla h-full w-full"

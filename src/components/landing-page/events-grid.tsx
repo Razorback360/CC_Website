@@ -3,12 +3,14 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { type RouterOutputs } from "@/utils/api";
 import { format } from "date-fns";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { rtlSafetyProps } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -37,7 +39,7 @@ export const EventsGrid = ({ events }: EventsGridProps) => {
   }
 
   return (
-    <div className="w-full grid lg:grid-cols-2 gap-2 h-fit min-h-[50vh]">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-2 h-fit min-h-[50vh]">
       {events.map((event, index) => {
         return (
           <EventCard key={event.title + index} event={event} index={index} />
@@ -75,9 +77,12 @@ const EventCard = ({ event, index }: EventCardProps) => {
       </CardHeader>
       <div className="flex flex-col items-center justify-between gap-2 p-1 w-full h-full max-h-full">
         <CardContent className="p-1 flex flex-col items-start justify-start h-full w-full flex-grow-0">
-          <p className="sm:text-xl sm:font-semibold lg:text-2xl lg:font-bold xl:text-xl xl:font-bold flex-shrink-0">
+          <CardTitle
+            {...rtlSafetyProps(event.description)}
+            className="sm:text-xl text-lg font-semibold lg:text-2xl lg:font-bold xl:text-xl xl:font-bold flex-shrink-0"
+          >
             {event.title}
-          </p>
+          </CardTitle>
           <Badge
             className="text-xs md:text-sm max-w-fit mt-1 flex-shrink-0"
             variant="secondary"
@@ -85,7 +90,7 @@ const EventCard = ({ event, index }: EventCardProps) => {
             {event.Semester.number}
           </Badge>
           <p
-            dir="rtl"
+            {...rtlSafetyProps(event.description)}
             className="text-ellipsis text-xs lg:text-sm mt-1 h-full flex-grow-0 line-clamp-[2] whitespace-pre-wrap text-right"
           >
             {/* check all spaces that are supposed to be new lines, and replace them with \n */}
