@@ -12,7 +12,6 @@ import {
   FaCreditCard as CreditCard,
   FaUserCheck as DoubleCheck,
   FaClipboardList as Events,
-  FaUpload,
   FaFile as File,
   FaFileAlt as FileText,
   FaGithub as GitHubIcon,
@@ -49,9 +48,17 @@ import {
   IoPersonSharp as Person,
   IoSunnyOutline as Sun,
 } from "react-icons/io5";
-import { LuChevronsUpDown as CaretUpDown } from "react-icons/lu";
-import { MdEventAvailable as EventsDone, MdEdit } from "react-icons/md";
+import {
+  LuChevronsUpDown as CaretUpDown,
+  LuUploadCloud as LuUpload,
+} from "react-icons/lu";
+import {
+  MdCrop as Crop,
+  MdEventAvailable as EventsDone,
+  MdEdit,
+} from "react-icons/md";
 import { RiListCheck3 as EventsRemain } from "react-icons/ri";
+import { RxReset as Reset } from "react-icons/rx";
 import { VscDebugBreakpointDataUnverified as Point } from "react-icons/vsc";
 
 type IconProps = React.HTMLAttributes<SVGElement>;
@@ -212,6 +219,8 @@ export const Icons = {
   caretUpDown: CaretUpDown,
   edit: MdEdit,
   history: History,
-  upload: FaUpload,
+  upload: LuUpload,
   languages: Languages,
+  crop: Crop,
+  reset: Reset,
 };

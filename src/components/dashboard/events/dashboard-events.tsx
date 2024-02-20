@@ -79,7 +79,6 @@ export default function DashboardEvents({
         <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <EventList
             events={events ?? []}
-            isCreatingNewEvent={isCreatingNewEvent}
             setIsCreatingNewEvent={setIsCreatingNewEvent}
           />
         </div>

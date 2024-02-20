@@ -1,10 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { format, isSameDay } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useEffect } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Icons } from "@/components/icons";
+import { FileDialog } from "@/components/popups/file-dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -22,6 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -38,7 +37,11 @@ import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
 import { supabase } from "@/utils/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format, isSameDay } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FileWithPreview } from "types";
 import * as z from "zod";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024 * 1024;
@@ -58,20 +61,28 @@ const addEventFormSchema = z.object({
   link: z.string().url().min(0),
   public: z.boolean(),
   poster: z
-    .any().optional()
+    .any()
+    .optional()
     .refine(
       (file: FileList | undefined) => file?.length == 1 || file?.length == 0,
       "File is required.",
-    ).optional()
+    )
+    .optional()
     .refine(
       (file: FileList) =>
-        ACCEPTED_IMAGE_TYPES.includes(file.length !== 0 ? file.item(0)?.type ?? "image/png" : "image/png") || file.length == 0,
+        ACCEPTED_IMAGE_TYPES.includes(
+          file.length !== 0 ? file.item(0)?.type ?? "image/png" : "image/png",
+        ) || file.length == 0,
       "Must be a PNG, JPG, JPEG, or WEBP.",
-    ).optional()
+    )
+    .optional()
     .refine(
-      (file: FileList) => (file.length !== 0 ? file.item(0)?.size : 0 <= MAX_FILE_SIZE) ?? file.length == 0,
+      (file: FileList) =>
+        (file.length !== 0 ? file.item(0)?.size : 0 <= MAX_FILE_SIZE) ??
+        file.length == 0,
       `Max file size is 3MB.`,
-    ).optional(),
+    )
+    .optional(),
   src: z.string().optional(),
 });
 
@@ -98,13 +109,25 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
 
   const posterRef = form.register("poster", { required: false });
 
+  const [files, setFiles] = useState<FileWithPreview[] | null>(null);
+
+  // TODO using supabase, upload images to the server
+  const submitUploadFiles = (files: FileWithPreview[]) => {
+    console.log(files);
+  };
+
   async function onSubmit(data: z.infer<typeof addEventFormSchema>) {
     if (selectedEvent && !isCreatingNewEvent) {
       if (data.poster) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        const imagePath = `${data.title}/poster/poster.${data.poster[0].name.slice((data.poster[0].name.lastIndexOf(".") - 1 >>> 0) + 2)}`;
+        const imagePath = `${
+          data.title
+        }/poster/poster.${data.poster[0].name.slice(
+          ((data.poster[0].name.lastIndexOf(".") - 1) >>> 0) + 2,
+        )}`;
         // TODO: fix this shit
-        await supabase.storage.from("images").upload(imagePath, data.poster[0], {upsert: true});
+        await supabase.storage
+          .from("images")
+          .upload(imagePath, data.poster[0], { upsert: true });
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
       }
@@ -112,10 +135,15 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
     }
     if (isCreatingNewEvent) {
       if (data.poster) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        const imagePath = `${data.title}/poster/poster.${data.poster[0].name.slice((data.poster[0].name.lastIndexOf(".") - 1 >>> 0) + 2)}`;
+        const imagePath = `${
+          data.title
+        }/poster/poster.${data.poster[0].name.slice(
+          ((data.poster[0].name.lastIndexOf(".") - 1) >>> 0) + 2,
+        )}`;
         // TODO: fix this shit
-        await supabase.storage.from("images").upload(imagePath, data.poster[0], {upsert: true});
+        await supabase.storage
+          .from("images")
+          .upload(imagePath, data.poster[0], { upsert: true });
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
       }
@@ -201,29 +229,31 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
             // e.g. "Title changed from 'Old Title' to 'New Title'"
             // separate each field with a comma
             // for semester and category, use the number of semester, and name of the category instead of the id
-            const updateDescription = `Updated event ${data.title
-              } Updated fields: ${updatedFields
-                .map((field) => {
-                  if (field === "semesterId") {
-                    return `"Semester" from "${semesters?.find(
-                      (semester) => semester.id === oldData.semesterId,
-                    )?.number}" to "${semesters?.find(
-                      (semester) => semester.id === data.semesterId,
-                    )?.number}"`;
-                  }
-                  if (field === "categoryId") {
-                    return `"Category" from "${categories?.find(
-                      (category) => category.id === oldData.categoryId,
-                    )?.name}" to "${categories?.find(
-                      (category) => category.id === data.categoryId,
-                    )?.name}"`;
-                  }
-                  return `"${field.charAt(0).toUpperCase()}${field.slice(
-                    1,
-                  )}" from "${(oldData as Record<string, unknown>)[field] as string
-                    }" to "${(data as Record<string, unknown>)[field] as string}"`;
-                })
-                .join(", ")}`;
+            const updateDescription = `Updated event ${
+              data.title
+            } Updated fields: ${updatedFields
+              .map((field) => {
+                if (field === "semesterId") {
+                  return `"Semester" from "${semesters?.find(
+                    (semester) => semester.id === oldData.semesterId,
+                  )?.number}" to "${semesters?.find(
+                    (semester) => semester.id === data.semesterId,
+                  )?.number}"`;
+                }
+                if (field === "categoryId") {
+                  return `"Category" from "${categories?.find(
+                    (category) => category.id === oldData.categoryId,
+                  )?.name}" to "${categories?.find(
+                    (category) => category.id === data.categoryId,
+                  )?.name}"`;
+                }
+                return `"${field.charAt(0).toUpperCase()}${field.slice(
+                  1,
+                )}" from "${
+                  (oldData as Record<string, unknown>)[field] as string
+                }" to "${(data as Record<string, unknown>)[field] as string}"`;
+              })
+              .join(", ")}`;
 
             // Create a system update with the specific type and description
             await createSystemUpdateAsync({
@@ -350,7 +380,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
                               className={cn(
                                 "font-normal mt-2 mr-2",
                                 !form.getValues("date") &&
-                                "text-muted-foreground",
+                                  "text-muted-foreground",
                               )}
                             >
                               <CalendarIcon className="mr-2 h-4 w-4" />
@@ -506,14 +536,41 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
               )}
               {selectedEvent ? "Save Changes" : "Create New Event"}
             </Button>
+            <FileDialog
+              submitUploadFiles={submitUploadFiles}
+              maxFiles={100}
+              maxSize={1024 * 1024 * 5} // 5MB
+              files={files}
+              setFiles={setFiles}
+              isUploading={false}
+              disabled={false}
+            >
+              <Button
+                variant="default"
+                type="button"
+                className="w-full text-white mt-4"
+              >
+                <Icons.upload className="mr-2 size-4" aria-hidden="true" />
+                Upload Images
+                <span className="sr-only">Upload Images</span>
+              </Button>
+            </FileDialog>
           </form>
         </Form>
-        {selectedEvent && selectedEvent.Attachments ?
-          <div className="h-1/2 w-2/5" >
+        {selectedEvent && selectedEvent.Attachments ? (
+          <div className="h-1/2 w-2/5">
             <label>Current Poster</label>
-            <img src={selectedEvent.Attachments.length > 0 ? selectedEvent.Attachments[0]?.src : ""} />
-          </div> : ""
-        }
+            <img
+              src={
+                selectedEvent.Attachments.length > 0
+                  ? selectedEvent.Attachments[0]?.src
+                  : ""
+              }
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </ScrollArea>
     </>
   );
