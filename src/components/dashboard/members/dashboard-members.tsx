@@ -1,75 +1,39 @@
-import React, { ReactElement, useEffect, useState } from "react";
-
-import { Button } from "@/components/ui/button";
+import MemberCard from "@/components/dashboard/MemberCard";
+import MemberDisplay from "@/components/dashboard/members/member-display";
 import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
+import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
+import { Button } from "@/components/ui/button";
+import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { api } from "@/utils/api";
 import { useSelectedMember } from "@/utils/hooks/use-selected-member";
-import DeleteMemberPopup from "@/components/popups/delete-member-popup";
-import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
-import { DialogTrigger } from "@/components/ui/dialog";
-import MemberCard from "@/components/dashboard/MemberCard";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import MemberDisplay from "@/components/dashboard/members/member-display";
-import NewMemberForm from "./NewMemberForm";
-import MemberPut from "./MemberPut";
+import { useState } from "react";
 
 type DashboardMembersProps = {
   defaultLayout: number[];
 };
 
 const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
-  const [form, setForm] = useState(() => <NewMemberForm></NewMemberForm>)
   const { selectedMember, selectMember } = useSelectedMember();
-  const [prevSelectedMember, setPrevSelectedMember]:any = useState(null);
-  const { data: members, refetch: refetchMembers } = api.user.getAll.useQuery(
-    undefined,
-    {
-      onSuccess: (data) => {
-
-        if (
-          !selectedMember ||
-          (selectedMember &&
-            !data.filter((member) => member.id === selectedMember.id).length)
-        ) {
-          if (!data[0]) return;
-          // selectMember(data[0]);
-        }
-      },
+  const [isCreatingNewMember, setIsCreatingNewMember] = useState(false);
+  const { data: members } = api.user.getAll.useQuery(undefined, {
+    onSuccess: (data) => {
+      if (
+        !selectedMember ||
+        (selectedMember &&
+          !data.filter((member) => member.id === selectedMember.id).length)
+      ) {
+        if (!data[0]) return;
+        selectMember(data[0]);
+      }
     },
-  );
-
-  useEffect(() => {
-
-    
-    if (selectedMember && selectedMember !== prevSelectedMember) {
-      setPrevSelectedMember(selectedMember == null ? {} : selectedMember);
-      // setForm(() => <React.Fragment />)
-      setForm( 
-        <>
-        <MemberPut
-      id={selectedMember.id}
-    studentId={selectedMember.studentId}
-    enabled={selectedMember.enabled}
-    major={selectedMember.tags[0] ? selectedMember.tags[0] : "" }
-    position={selectedMember.tags[1] ? selectedMember.tags[1] : "" }
-    role={selectedMember.role}
-    
-    />
-    </>
-    )
-    }
-    
-  },[selectedMember])
-
-
+  });
 
   return (
     <AddNewMemberFormDialog>
@@ -77,17 +41,18 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
         <div className="flex items-center p-4 ">
           <h1 className="text-3xl font-bold">Members Management</h1>
           <Tooltip>
-            {/* <DialogTrigger asChild>
-              <TooltipTrigger asChild className="ml-auto"> */}
-                <Button variant="ghost" size="icon" onClick={() => {
-                  setForm(() => <NewMemberForm />)
-                  // selectMember(undefined)
-                }}>
+            <Dialog Trigger asChild>
+              <TooltipTrigger asChild className="ml-auto">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsCreatingNewMember(true)}
+                >
                   <Icons.add />
                   <span className="sr-only">Create Member</span>
                 </Button>
-              {/* </TooltipTrigger>
-            </DialogTrigger> */}
+              </TooltipTrigger>
+            </Dialog>
             <TooltipContent>Create Member</TooltipContent>
           </Tooltip>
         </div>
@@ -96,7 +61,7 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
           <ScrollArea className="h-[92vh] ">
             <div className="flex flex-col gap-2 p-4 ">
               {members?.map((member) => (
-                <MemberCard member={member} key={member.id}  />
+                <MemberCard member={member} key={member.id} />
               ))}
             </div>
           </ScrollArea>
@@ -104,14 +69,7 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
       </ResizablePanel>
       <ResizableHandle withHandle={true} />
       <ResizablePanel defaultSize={defaultLayout[2]}>
-        <div className="m-4">
-          {form}
-    
-    
-    
-
-        </div>
-        {/* <div className={cn("flex items-center p-4")}>
+        <div className="flex items-center p-4">
           <h1 className="font-bold text-3xl">
             Editing Member:{" "}
             {selectedMember?.name ?? `${selectedMember?.studentId} (Unsingned)`}
@@ -120,7 +78,7 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
         <Separator />
         <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
           <MemberDisplay />
-        </div> */}
+        </div>
       </ResizablePanel>
     </AddNewMemberFormDialog>
   );
