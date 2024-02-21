@@ -31,6 +31,7 @@ export const env = createEnv({
     AZURE_AD_B2C_TENANT_NAME: z.string().min(1),
     AZURE_AD_B2C_CLIENT_ID: z.string().min(1),
     AZURE_AD_B2C_CLIENT_SECRET: z.string().min(1),
+    AZURE_AD_B2C_TENANT_ID: z.string().min(1),
     
     // Add ` on ID and SECRET if you want to make sure they're not empty
   },
@@ -56,6 +57,7 @@ export const env = createEnv({
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    AZURE_AD_B2C_TENANT_ID: process.env.AZURE_AD_B2C_TENANT_ID,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     AZURE_AD_B2C_TENANT_NAME: process.env.AZURE_AD_B2C_TENANT_NAME,
     AZURE_AD_B2C_CLIENT_ID: process.env.AZURE_AD_B2C_CLIENT_ID,

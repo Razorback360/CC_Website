@@ -19,6 +19,7 @@ import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useSelectedMember } from "@/utils/hooks/use-selected-member";
 import { api } from "@/utils/api";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 type Props = {
   member: User;
@@ -35,6 +36,7 @@ const MemberCard = ({ member }: Props) => {
       },
     });
 
+  useEffect(()=>{},[selectedMember])
   return (
     <DeleteMemberPopup
       memberName={selectedMember?.name ?? "_UNDEFINED_"}
@@ -54,12 +56,13 @@ const MemberCard = ({ member }: Props) => {
             )}
             onClick={() => {
               selectMember(member);
+              // console.log(selectedMember)
             }}
           >
             <div
               className={cn(
                 "flex flex-row gap-4 justify-start p-4 items-center h-full w-full",
-                member.name === null && "blur-sm",
+                // member.name === null && "blur-sm",
               )}
             >
               <Avatar className="h-16 w-16">
