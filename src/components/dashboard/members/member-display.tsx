@@ -1,30 +1,16 @@
-import React, { useEffect } from "react";
-import { CalendarIcon } from "lucide-react";
-import { format, isSameDay } from "date-fns";
+import { useEffect } from "react";
 
+import { addMemberFormSchema } from "@/components/popups/add-member-dialog";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
+  FormControl,
+  FormDescription,
   FormField,
   FormLabel,
-  FormControl,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -32,13 +18,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { useSelectedMember } from "@/utils/hooks/use-selected-member";
-import { Icons } from "@/components/icons";
 import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
-import { addMemberFormSchema } from "@/components/popups/add-member-dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRole } from "@prisma/client";
-import { Switch } from "@/components/ui/switch";
+import { useForm } from "react-hook-form";
+import { type z } from "zod";
 
 const MemberDisplay = () => {
   const { selectedMember, selectMember } = useSelectedMember();
@@ -47,33 +35,98 @@ const MemberDisplay = () => {
     defaultValues: {
       studentId: "",
       position: "",
-      enabled: false,
+      enabled: true,
       role: "MEMBER",
-      // TODO @SauceX22 add default privilege setting
       tags: [],
     },
   });
-
-  const { mutateAsync: updateMember } = api.user.update.useMutation({
-    onSuccess: () => {
-      toast({
-        title: "Member Updated",
-        description: "Member has been updated successfully",
-      });
-    },
-  });
-
-  async function onSubmit(data: z.infer<typeof addMemberFormSchema>) {
-    if (selectedMember) {
-      await updateMember({ ...data, id: selectedMember.id });
-    }
-  }
 
   const { data: semesters } = api.semester.getAll.useQuery();
 
   const apiUtils = api.useUtils();
 
   const { createSystemUpdateAsync } = useSystemUpdates();
+
+  const { mutateAsync: updateMember } = api.user.update.useMutation({
+    onSettled: async (data, error, variables, context) => {
+      if (error) {
+        toast({
+          title: "Failed to update member!",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+      if (data && selectedMember) {
+        // filter out the old member from the selected member
+        const oldData = selectedMember;
+
+        // Determine which fields were updated by comparing with the existing member
+        const updatedFields = [];
+
+        if (data.studentId !== oldData.studentId)
+          updatedFields.push("studentId");
+
+        if (data.enabled !== oldData.enabled) updatedFields.push("enabled");
+
+        if (data.role !== oldData.role) updatedFields.push("role");
+
+        if (data.tags.join(",") !== oldData.tags.join(","))
+          updatedFields.push("tags");
+
+        if (updatedFields.length > 0) {
+          // Construct a descriptive message based on the updated fields
+          // use the updatedFields array to construct the message (mention from and to values)
+          // e.g. "Title changed from 'Old Title' to 'New Title'"
+          // separate each field with a comma
+          // for semester and category, use the number of semester, and name of the category instead of the id
+          const updateDescription = `Updated member ${
+            data.studentId
+          } Updated fields: ${updatedFields
+            .map((field) => {
+              return `"${field.charAt(0).toUpperCase()}${field.slice(
+                1,
+              )}" from "${
+                (oldData as Record<string, unknown>)[field] as string
+              }" to "${(data as Record<string, unknown>)[field] as string}"`;
+            })
+            .join(", ")}`;
+
+          // Create a system update with the specific type and description
+          await createSystemUpdateAsync({
+            referenceId: data.id,
+            description: updateDescription,
+            type: "MEMBER_UPDATE",
+          });
+        }
+
+        selectMember(data);
+        await apiUtils.user.getAll.invalidate();
+        toast({
+          title: "Member Updated!",
+          description: `Member "${data.studentId}" has been updated successfully.`,
+        });
+      }
+    },
+  });
+
+  async function onSubmit(data: z.infer<typeof addMemberFormSchema>) {
+    if (selectedMember) {
+      await updateMember({
+        ...data,
+        id: selectedMember.id,
+        // tags: [...data.tags, `${data.position} Position`],
+      });
+
+      toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      });
+    }
+  }
 
   useEffect(() => {
     if (selectedMember) {
@@ -132,7 +185,7 @@ const MemberDisplay = () => {
                           <SelectItem key={role} value={role}>
                             {role}
                           </SelectItem>
-                        ))}{" "}
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>

@@ -17,34 +17,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRole } from "@prisma/client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { z } from "zod";
 
 export const addMemberFormSchema = z.object({
   studentId: z.string().min(2).max(10),
-  major: z.string().min(2).max(50),
   position: z.string().min(2).max(20),
   enabled: z.boolean().default(true),
   role: z.nativeEnum(UserRole),
   tags: z.array(z.string().min(2).max(15)),
 });
 
-type MemberPutProps = {
-  studentId: string;
-  major: string;
-  position: string;
-  enabled: boolean;
-  role: UserRole;
-  id: string;
-};
-
-export default function MemberPut(props: MemberPutProps) {
+export default function MemberPut() {
   const { selectedMember, selectMember } = useSelectedMember();
 
   const form = useForm<z.infer<typeof addMemberFormSchema>>({
     resolver: zodResolver(addMemberFormSchema),
     defaultValues: {
       studentId: "",
-      major: "",
       position: "",
       enabled: true,
       role: "MEMBER",
@@ -59,7 +48,6 @@ export default function MemberPut(props: MemberPutProps) {
         studentId: selectedMember.studentId,
         enabled: selectedMember.enabled,
         // FIXME @SauceX22 major and position are not guaranteed to be the last two tags
-        major: selectedMember.tags[tags.length - 2]?.replaceAll("Major", ""),
         position: selectedMember.tags[tags.length - 1]?.includes("Position")
           ? selectedMember.tags[tags.length - 1]?.replaceAll("Position", "")
           : "",
@@ -69,7 +57,7 @@ export default function MemberPut(props: MemberPutProps) {
     }
   }, [selectedMember]);
 
-  const { mutateAsync: update } = api.user.update.useMutation({
+  const { mutateAsync: updateMember } = api.user.update.useMutation({
     onSuccess: () => {
       toast({
         title: "Member Added",
@@ -81,22 +69,24 @@ export default function MemberPut(props: MemberPutProps) {
   });
 
   async function onSubmit(data: z.infer<typeof addMemberFormSchema>) {
-    // TODO Do something with the form values.
-    await update({
-      id: props.id,
-      enabled: data.enabled,
-      role: data.role,
-      tags: [...data.tags, `${data.major} Major`, `${data.position} Position`],
-    });
+    // TODO @SauceX22 Do something with the form values.
+    if (selectedMember) {
+      await updateMember({
+        id: selectedMember.id,
+        enabled: data.enabled,
+        role: data.role,
+        tags: [...data.tags, `${data.position} Position`],
+      });
 
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+      toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      });
+    }
   }
 
   return (
@@ -111,7 +101,6 @@ export default function MemberPut(props: MemberPutProps) {
               <FormControl>
                 <Input
                   disabled
-                  defaultValue={props.id}
                   className="col-span-3"
                   id="student-id"
                   placeholder="s20xxxxxxx"
@@ -145,26 +134,6 @@ export default function MemberPut(props: MemberPutProps) {
               <FormDescription className="col-start-2 col-span-3">
                 Whether the member is allowed to login or not
               </FormDescription>
-            </div>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="major"
-          render={({ field }) => (
-            <div className="grid grid-cols-4 items-center gap-2">
-              <FormLabel htmlFor="major">Major</FormLabel>
-              <FormControl>
-                <Input
-                  className="col-span-3"
-                  id="major"
-                  placeholder="CS"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="col-start-2 col-span-3">
-                {form.formState.errors.major?.message}
-              </FormMessage>
             </div>
           )}
         />

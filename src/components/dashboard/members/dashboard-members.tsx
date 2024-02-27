@@ -3,6 +3,7 @@ import MemberDisplay from "@/components/dashboard/members/member-display";
 import { Icons } from "@/components/icons";
 import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
 import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
 import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -41,7 +42,7 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
         <div className="flex items-center p-4 ">
           <h1 className="text-3xl font-bold">Members Management</h1>
           <Tooltip>
-            <Dialog Trigger asChild>
+            <DialogTrigger asChild>
               <TooltipTrigger asChild className="ml-auto">
                 <Button
                   variant="ghost"
@@ -52,7 +53,7 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
                   <span className="sr-only">Create Member</span>
                 </Button>
               </TooltipTrigger>
-            </Dialog>
+            </DialogTrigger>
             <TooltipContent>Create Member</TooltipContent>
           </Tooltip>
         </div>
