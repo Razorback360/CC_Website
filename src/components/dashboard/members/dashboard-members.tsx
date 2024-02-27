@@ -1,23 +1,20 @@
-import React, { useState } from "react";
-
-import { Button } from "@/components/ui/button";
+import MemberCard from "@/components/dashboard/MemberCard";
+import MemberDisplay from "@/components/dashboard/members/member-display";
 import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
+import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
+import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ResizableHandle, ResizablePanel } from "@/components/ui/resizable";
 import { api } from "@/utils/api";
 import { useSelectedMember } from "@/utils/hooks/use-selected-member";
-import DeleteMemberPopup from "@/components/popups/delete-member-popup";
-import AddNewMemberFormDialog from "@/components/popups/add-member-dialog";
-import { DialogTrigger } from "@/components/ui/dialog";
-import MemberCard from "@/components/dashboard/MemberCard";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import MemberDisplay from "@/components/dashboard/members/member-display";
+import { useState } from "react";
 
 type DashboardMembersProps = {
   defaultLayout: number[];
@@ -25,22 +22,19 @@ type DashboardMembersProps = {
 
 const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
   const { selectedMember, selectMember } = useSelectedMember();
-
-  const { data: members, refetch: refetchMembers } = api.user.getAll.useQuery(
-    undefined,
-    {
-      onSuccess: (data) => {
-        if (
-          !selectedMember ||
-          (selectedMember &&
-            !data.filter((member) => member.id === selectedMember.id).length)
-        ) {
-          if (!data[0]) return;
-          selectMember(data[0]);
-        }
-      },
+  const [isCreatingNewMember, setIsCreatingNewMember] = useState(false);
+  const { data: members } = api.user.getAll.useQuery(undefined, {
+    onSuccess: (data) => {
+      if (
+        !selectedMember ||
+        (selectedMember &&
+          !data.filter((member) => member.id === selectedMember.id).length)
+      ) {
+        if (!data[0]) return;
+        selectMember(data[0]);
+      }
     },
-  );
+  });
 
   return (
     <AddNewMemberFormDialog>
@@ -50,7 +44,11 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
           <Tooltip>
             <DialogTrigger asChild>
               <TooltipTrigger asChild className="ml-auto">
-                <Button variant="ghost" size="icon">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsCreatingNewMember(true)}
+                >
                   <Icons.add />
                   <span className="sr-only">Create Member</span>
                 </Button>
@@ -70,9 +68,9 @@ const DashboardMembers = ({ defaultLayout }: DashboardMembersProps) => {
           </ScrollArea>
         </div>
       </ResizablePanel>
-      <ResizableHandle withHandle={false} />
+      <ResizableHandle withHandle={true} />
       <ResizablePanel defaultSize={defaultLayout[2]}>
-        <div className={cn("flex items-center p-4")}>
+        <div className="flex items-center p-4">
           <h1 className="font-bold text-3xl">
             Editing Member:{" "}
             {selectedMember?.name ?? `${selectedMember?.studentId} (Unsingned)`}

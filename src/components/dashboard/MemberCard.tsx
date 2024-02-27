@@ -1,24 +1,23 @@
-import { type User } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getNameInitials } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
-  ContextMenuItem,
-  ContextMenuTrigger,
+  ContextMenu,
+  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuIconItem,
   ContextMenuSeparator,
-  ContextMenuCheckboxItem,
-  ContextMenu,
+  ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { getNameInitials } from "@/lib/utils";
+import { type User } from "@prisma/client";
 
-import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import DeleteMemberPopup from "@/components/popups/delete-member-popup";
 import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { useSelectedMember } from "@/utils/hooks/use-selected-member";
-import { api } from "@/utils/api";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { api } from "@/utils/api";
+import { useSelectedMember } from "@/utils/hooks/use-selected-member";
 
 type Props = {
   member: User;
@@ -59,7 +58,6 @@ const MemberCard = ({ member }: Props) => {
             <div
               className={cn(
                 "flex flex-row gap-4 justify-start p-4 items-center h-full w-full",
-                member.name === null && "blur-sm",
               )}
             >
               <Avatar className="h-16 w-16">

@@ -1,29 +1,28 @@
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import LabelsInput from "@/components/labels-input";
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormField,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import LabelsInput from "@/components/labels-input";
-import React from "react";
-import { api } from "@/utils/api";
-import { UserRole } from "@prisma/client";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { toast } from "@/components/ui/use-toast";
+import { api } from "@/utils/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UserRole } from "@prisma/client";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export const addMemberFormSchema = z.object({
   studentId: z.string().min(2).max(10),
