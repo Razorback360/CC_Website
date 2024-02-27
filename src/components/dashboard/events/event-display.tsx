@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Icons } from "@/components/icons";
 import { FileDialog } from "@/components/popups/file-dialog";
 import { Button } from "@/components/ui/button";
@@ -31,7 +28,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
+import { cn, rtlSafetyProps } from "@/lib/utils";
 import { api } from "@/utils/api";
 import { useSelectedEvent } from "@/utils/hooks/use-selected-event";
 import { useSystemUpdates } from "@/utils/hooks/use-system-updates";
@@ -44,7 +41,7 @@ import { useForm } from "react-hook-form";
 import { FileWithPreview } from "types";
 import * as z from "zod";
 
-const MAX_FILE_SIZE = 20 * 1024 * 1024 * 1024;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -61,36 +58,43 @@ const addEventFormSchema = z.object({
   link: z.string().url().min(0),
   public: z.boolean(),
   poster: z
-    .any()
+    .custom<FileList>()
     .optional()
+    .refine((files) => files?.length === 1 || files?.length === 0, {
+      message: "File is required.",
+    })
     .refine(
-      (file: FileList | undefined) => file?.length == 1 || file?.length == 0,
-      "File is required.",
+      (files) => {
+        if (files && files.length > 0) {
+          const file = files.item(0);
+          return file ? ACCEPTED_IMAGE_TYPES.includes(file.type) : false;
+        }
+        return true; // If no file is provided, validation passes
+      },
+      { message: "Must be a PNG, JPG, JPEG, or WEBP." },
     )
-    .optional()
     .refine(
-      (file: FileList) =>
-        ACCEPTED_IMAGE_TYPES.includes(
-          file.length !== 0 ? file.item(0)?.type ?? "image/png" : "image/png",
-        ) || file.length == 0,
-      "Must be a PNG, JPG, JPEG, or WEBP.",
-    )
-    .optional()
-    .refine(
-      (file: FileList) =>
-        (file.length !== 0 ? file.item(0)?.size : 0 <= MAX_FILE_SIZE) ??
-        file.length == 0,
-      `Max file size is 3MB.`,
-    )
-    .optional(),
+      (files) => {
+        if (files && files.length > 0) {
+          const file = files.item(0);
+          return file ? file.size <= MAX_FILE_SIZE : true;
+        }
+        return true; // If no file is provided, validation passes
+      },
+      { message: "Max file size is 5MB." },
+    ),
   src: z.string().optional(),
 });
 
 type EventDisplayProps = {
   isCreatingNewEvent: boolean;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
-const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
+const EventDisplay = ({
+  isCreatingNewEvent,
+  setIsLoading,
+}: EventDisplayProps) => {
   const { selectedEvent, selectEvent } = useSelectedEvent();
   const form = useForm<z.infer<typeof addEventFormSchema>>({
     resolver: zodResolver(addEventFormSchema),
@@ -102,7 +106,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
       categoryId: "",
       link: "",
       public: false,
-      poster: "2",
+      poster: undefined,
       src: "",
     },
   });
@@ -117,36 +121,28 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
   };
 
   async function onSubmit(data: z.infer<typeof addEventFormSchema>) {
-    if (selectedEvent && !isCreatingNewEvent) {
+    if (
+      (isCreatingNewEvent || selectedEvent) &&
+      !(selectedEvent && isCreatingNewEvent)
+    ) {
       if (data.poster) {
-        const imagePath = `${
-          data.title
-        }/poster/poster.${data.poster[0].name.slice(
-          ((data.poster[0].name.lastIndexOf(".") - 1) >>> 0) + 2,
-        )}`;
-        // TODO: fix this shit
-        await supabase.storage
-          .from("images")
-          .upload(imagePath, data.poster[0], { upsert: true });
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
+        const posterImageFile = data.poster.item(0);
+        if (posterImageFile) {
+          const imagePath = `${
+            data.title
+          }/poster/poster.${posterImageFile.name.slice(
+            ((posterImageFile.name.lastIndexOf(".") - 1) >>> 0) + 2,
+          )}`;
+          await supabase.storage
+            .from("images")
+            .upload(imagePath, posterImageFile, { upsert: true });
+          data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
+        }
       }
-      await updateEvent({ ...data, id: selectedEvent.id });
     }
-    if (isCreatingNewEvent) {
-      if (data.poster) {
-        const imagePath = `${
-          data.title
-        }/poster/poster.${data.poster[0].name.slice(
-          ((data.poster[0].name.lastIndexOf(".") - 1) >>> 0) + 2,
-        )}`;
-        // TODO: fix this shit
-        await supabase.storage
-          .from("images")
-          .upload(imagePath, data.poster[0], { upsert: true });
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
-      }
+    if (selectedEvent) {
+      await updateEvent({ ...data, id: selectedEvent.id });
+    } else if (isCreatingNewEvent) {
       await createEvent(data);
     }
   }
@@ -283,6 +279,7 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         link: selectedEvent.link,
         public: selectedEvent.public,
         poster: undefined,
+        src: selectedEvent.src,
       });
     } else {
       form.reset({
@@ -296,7 +293,13 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         poster: undefined,
       });
     }
-  }, [selectedEvent]);
+
+    if (loadingCreate || loadingUpdate) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [selectedEvent, loadingCreate, loadingUpdate]);
 
   return (
     <>
@@ -304,223 +307,229 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 justify-between mr-5"
+            className="flex flex-col gap-2 justify-between p-4"
           >
-            <div>
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="title">Title</FormLabel>
+                  <FormControl id="title">
+                    <Input
+                      id="title"
+                      placeholder="Event Title"
+                      {...rtlSafetyProps(field.value)}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.title?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <FormControl id="description">
+                    <Textarea
+                      className="max-h-72"
+                      id="description"
+                      placeholder="Event Description"
+                      {...rtlSafetyProps(field.value)}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.description?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem className="mt-2 flex flex-col gap-2">
+                  <FormLabel htmlFor="link">Form Link</FormLabel>
+                  <FormControl id="link">
+                    <Input
+                      type="text"
+                      id="link"
+                      placeholder="https://docs.google.com/forms/..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.link?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
               <FormField
                 control={form.control}
-                name="title"
+                name="date"
                 render={({ field }) => (
-                  <FormItem className="mt-2 flex flex-col gap-2">
-                    <FormLabel htmlFor="title">Title</FormLabel>
-                    <FormControl id="title">
-                      <Input id="title" placeholder="Event Title" {...field} />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.title?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem className="mt-2 flex flex-col gap-2">
-                    <FormLabel htmlFor="description">Description</FormLabel>
-                    <FormControl id="description">
-                      <Textarea
-                        className="max-h-72"
-                        id="description"
-                        placeholder="Event Description"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.description?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="link"
-                render={({ field }) => (
-                  <FormItem className="mt-2 flex flex-col gap-2">
-                    <FormLabel htmlFor="link">Form Link</FormLabel>
-                    <FormControl id="link">
-                      <Input
-                        type="text"
-                        id="link"
-                        placeholder="https://docs.google.com/forms/..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.link?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              <div className="w-full flex flex-row items-center gap-2 justify-between mt-2">
-                <FormField
-                  control={form.control}
-                  name="date"
-                  render={({ field }) => (
-                    <FormItem className="w-full flex flex-col">
-                      <FormLabel htmlFor="date" className="m-1">
-                        Event Date
-                      </FormLabel>
-                      <FormControl id="date">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              id="date"
-                              variant={"outline"}
-                              className={cn(
-                                "font-normal mt-2 mr-2",
-                                !form.getValues("date") &&
-                                  "text-muted-foreground",
-                              )}
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {form.getValues("date") ? (
-                                format(form.getValues("date"), "PPP")
-                              ) : (
-                                <>Pick a date</>
-                              )}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              id="date"
-                              mode="single"
-                              selected={form.getValues("date")}
-                              onSelect={(date: Date | undefined) => {
-                                if (date) form.setValue("date", date);
-                              }}
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </FormControl>
-                      <FormMessage className="col-start-2 col-span-3">
-                        {form.formState.errors.date?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="poster"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel htmlFor="picture" className="m-1">
-                        Event Poster
-                      </FormLabel>
-                      <FormControl id="picture">
-                        <Input
-                          id="picture"
-                          type="file"
-                          className="p-0 mt-2"
-                          {...posterRef}
-                        />
-                      </FormControl>
-                      <FormMessage>
-                        {form.formState.errors.poster?.message as string}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-full flex flex-row items-center gap-2 justify-between">
-                <FormField
-                  control={form.control}
-                  name="semesterId"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel htmlFor="semesterId" className="m-1">
-                        Semester
-                      </FormLabel>
-                      <FormControl>
-                        {/* Custom Combobox for Semester */}
-                        <Select onValueChange={field.onChange}>
-                          <FormControl id="semesterId">
-                            <SelectTrigger className="mt-2 mr-2">
-                              <SelectValue placeholder="Select a Semester" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {semesters?.map((semester, index) => (
-                              <SelectItem value={semester.id} key={index}>
-                                Term {semester.number}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage className="col-start-2 col-span-3">
-                        {form.formState.errors.semesterId?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="categoryId"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel htmlFor="categoryId" className="m-1">
-                        Category
-                      </FormLabel>
-                      <FormControl>
-                        {/* Custom Combobox for Semester */}
-                        <Select onValueChange={field.onChange}>
-                          <FormControl id="categoryId">
-                            <SelectTrigger className="mt-2 ">
-                              <SelectValue placeholder="Select a Category" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {categories?.map((category, index) => (
-                              <SelectItem value={category.id} key={index}>
-                                {category.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage className="col-start-2 col-span-3">
-                        {form.formState.errors.categoryId?.message}
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="public"
-                render={({ field }) => (
-                  <FormItem className="mt-2 w-full flex flex-col">
-                    <FormLabel id="public-status" className="m-1">
-                      Public Status
+                  <FormItem className="w-full flex flex-col">
+                    <FormLabel htmlFor="date" className="m-1">
+                      Event Date
                     </FormLabel>
-                    <div className="flex flex-row gap-2 mt-2 m-1">
-                      <FormControl id="public-status">
-                        <Switch
-                          id="public-status"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Set event as public or private.
-                      </FormDescription>
-                    </div>
+                    <FormControl id="date">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="date"
+                            variant={"outline"}
+                            className={cn(
+                              "font-normal mt-2 mr-2",
+                              !form.getValues("date") &&
+                                "text-muted-foreground",
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {form.getValues("date") ? (
+                              format(form.getValues("date"), "PPP")
+                            ) : (
+                              <>Pick a date</>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            id="date"
+                            mode="single"
+                            selected={form.getValues("date")}
+                            onSelect={(date: Date | undefined) => {
+                              if (date) form.setValue("date", date);
+                            }}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
+                    <FormMessage className="col-start-2 col-span-3">
+                      {form.formState.errors.date?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="poster"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="picture" className="m-1">
+                      Event Poster
+                    </FormLabel>
+                    <FormControl id="picture">
+                      <Input
+                        {...posterRef}
+                        id="picture"
+                        type="file"
+                        className="p-0 mt-2"
+                        multiple={false}
+                        accept={ACCEPTED_IMAGE_TYPES.join(",")}
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.poster?.message}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
             </div>
+            <div className="w-full flex flex-row items-center gap-2 justify-between">
+              <FormField
+                control={form.control}
+                name="semesterId"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="semesterId" className="m-1">
+                      Semester
+                    </FormLabel>
+                    <FormControl>
+                      {/* Custom Combobox for Semester */}
+                      <Select onValueChange={field.onChange}>
+                        <FormControl id="semesterId">
+                          <SelectTrigger className="mt-2 mr-2">
+                            <SelectValue placeholder="Select a Semester" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {semesters?.map((semester, index) => (
+                            <SelectItem value={semester.id} key={index}>
+                              Term {semester.number}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage className="col-start-2 col-span-3">
+                      {form.formState.errors.semesterId?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel htmlFor="categoryId" className="m-1">
+                      Category
+                    </FormLabel>
+                    <FormControl>
+                      {/* Custom Combobox for Semester */}
+                      <Select onValueChange={field.onChange}>
+                        <FormControl id="categoryId">
+                          <SelectTrigger className="mt-2 ">
+                            <SelectValue placeholder="Select a Category" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {categories?.map((category, index) => (
+                            <SelectItem value={category.id} key={index}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage className="col-start-2 col-span-3">
+                      {form.formState.errors.categoryId?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="public"
+              render={({ field }) => (
+                <FormItem className="mt-2 w-full flex flex-col">
+                  <FormLabel id="public-status" className="m-1">
+                    Public Status
+                  </FormLabel>
+                  <div className="flex flex-row gap-2 mt-2 m-1">
+                    <FormControl id="public-status">
+                      <Switch
+                        id="public-status"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Set event as public or private.
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
             <Button
               variant="default"
               type="submit"
@@ -557,19 +566,11 @@ const EventDisplay = ({ isCreatingNewEvent }: EventDisplayProps) => {
             </FileDialog>
           </form>
         </Form>
-        {selectedEvent && selectedEvent.Attachments ? (
+        {selectedEvent && selectedEvent.Attachments && (
           <div className="h-1/2 w-2/5">
             <label>Current Poster</label>
-            <img
-              src={
-                selectedEvent.Attachments.length > 0
-                  ? selectedEvent.Attachments[0]?.src
-                  : ""
-              }
-            />
+            <img src={form.getValues("src") ?? undefined} />
           </div>
-        ) : (
-          ""
         )}
       </ScrollArea>
     </>

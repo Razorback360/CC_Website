@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 
-import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
@@ -23,26 +22,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <button
-        type="button"
-        className={cn(
-          buttonVariants({ variant: "outline" }),
-          "bg-green-500 text-primary-foreground font-semibold",
-        )}
+      <Button
+        variant="outline"
+        className="bg-green-500 text-primary-foreground font-semibold"
         onClick={async () => {
           setIsMicrosoftLoading(true);
-          // TODO - implement microsoft auth
           await signIn("azure-ad");
         }}
-        disabled={isMicrosoftLoading}
+        loading={isMicrosoftLoading}
       >
-        {isMicrosoftLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.microsoft className="mr-2 h-4 w-4" />
-        )}{" "}
+        <Icons.microsoft className="mr-2 h-4 w-4" />
         KFUPM Authentication
-      </button>
+      </Button>
     </div>
   );
 }

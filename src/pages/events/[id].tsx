@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn, rtlSafetyProps } from "@/lib/utils";
 import { api } from "@/utils/api";
 import { isAfter } from "date-fns";
 import Head from "next/head";
@@ -40,7 +40,6 @@ export default function Event() {
   }
 
   const isEventDone = isAfter(new Date(), event.date);
-
   return (
     <>
       <Head>
@@ -94,9 +93,17 @@ export default function Event() {
               isGalleryOpen ? "h-fit" : "max-h-[80vh] h-full",
             )}
           >
-            <h2 className="text-6xl font-bold"> {event.title}</h2>
-            <p dir="rtl" className="text-3xl h-full w-full mt-20 text-right">
-              {event.description}
+            <h2 {...rtlSafetyProps(event.title)} className="text-6xl font-bold">
+              {event.title}
+            </h2>
+            <p
+              {...rtlSafetyProps(event.description)}
+              className="text-3xl h-full w-full mt-20 whitespace-pre-line"
+            >
+              {event.description
+                // ensure there's always 2 line breaks instead of many or just one
+                .replace(/(\n\n\n+)/g, "\n\n")
+                .replace(/(\n\n)$/, "\n")}
             </p>
           </div>
         </div>

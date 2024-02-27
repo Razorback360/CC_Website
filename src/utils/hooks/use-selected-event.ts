@@ -4,7 +4,8 @@ import { type Attachment, type Event } from "@prisma/client";
 
 export const selectedEventAtom = atom<
   | (Event & {
-     Attachments: Attachment[];
+      Attachments: Attachment[];
+      src: string | undefined;
     })
   | undefined
 >(undefined);
@@ -19,7 +20,18 @@ export const useSelectedEvent = () => {
         })
       | undefined,
   ) => {
-    setSelectedEvent(event);
+    const poster = event?.Attachments.find(
+      (attachment) => attachment.type === "EVENT_POSTER",
+    );
+
+    setSelectedEvent(
+      event
+        ? {
+            ...event,
+            src: poster?.src,
+          }
+        : undefined,
+    );
   };
 
   return { selectedEvent, selectEvent };

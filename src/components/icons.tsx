@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { AiOutlineLoading as LoadingSpinner } from "react-icons/ai";
 import {
   FaExclamationTriangle as AlertTriangle,
   FaArrowRight as ArrowRight,
@@ -17,10 +18,10 @@ import {
   FaGithub as GitHubIcon,
   FaQuestionCircle as HelpCircle,
   FaHistory as History,
+  FaHome as Home,
   FaImage as Image,
   FaLaptop as Laptop,
   FaLinkedin as LinkedinIcon,
-  FaSpinner as Loader2,
   FaSignOutAlt as LogOut,
   FaMicrosoft as MicrosoftIcon,
   FaMoon as Moon,
@@ -156,7 +157,6 @@ export const Icons = {
     </svg>
   ),
   close: X,
-  spinner2: Loader2,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   chevronDown: ChevronDown,
@@ -193,21 +193,7 @@ export const Icons = {
   microsoft: MicrosoftIcon,
   gitHub: GitHubIcon,
   twitter: TwitterIcon,
-  spinner: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-    </svg>
-  ),
+  spinner: LoadingSpinner,
   x: X,
   linkedin: LinkedinIcon,
   email: AtSign,
@@ -223,4 +209,5 @@ export const Icons = {
   languages: Languages,
   crop: Crop,
   reset: Reset,
+  home: Home,
 };

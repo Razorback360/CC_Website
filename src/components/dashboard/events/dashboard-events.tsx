@@ -26,6 +26,7 @@ export default function DashboardEvents({
 }: DashboardEventsProps) {
   const { selectedEvent, selectEvent } = useSelectedEvent();
   const [isCreatingNewEvent, setIsCreatingNewEvent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: events, refetch } = api.event.getAll.useQuery(undefined, {
     onSuccess: (data) => {
@@ -80,6 +81,7 @@ export default function DashboardEvents({
           <EventList
             events={events ?? []}
             setIsCreatingNewEvent={setIsCreatingNewEvent}
+            isLoading={isLoading}
           />
         </div>
       </ResizablePanel>
@@ -93,8 +95,11 @@ export default function DashboardEvents({
           </h1>
         </div>
         <Separator />
-        <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
-          <EventDisplay isCreatingNewEvent={isCreatingNewEvent} />
+        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-full">
+          <EventDisplay
+            isCreatingNewEvent={isCreatingNewEvent}
+            setIsLoading={setIsLoading}
+          />
         </div>
       </ResizablePanel>
     </DeleteEventPopup>
