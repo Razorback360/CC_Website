@@ -38,16 +38,8 @@ import { format, isSameDay } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FileWithPreview } from "types";
+import { type FileWithPreview } from "types";
 import * as z from "zod";
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
 
 const addEventFormSchema = z.object({
   title: z.string().min(2).max(50),
@@ -57,33 +49,33 @@ const addEventFormSchema = z.object({
   categoryId: z.string().min(1), // Add validation if needed
   link: z.string().url().min(0),
   public: z.boolean(),
-  poster: z
-    .custom<FileList>()
-    .optional()
-    .refine((files) => files?.length === 1 || files?.length === 0, {
-      message: "File is required.",
-    })
-    .refine(
-      (files) => {
-        if (files && files.length > 0) {
-          const file = files.item(0);
-          return file ? ACCEPTED_IMAGE_TYPES.includes(file.type) : false;
-        }
-        return true; // If no file is provided, validation passes
-      },
-      { message: "Must be a PNG, JPG, JPEG, or WEBP." },
-    )
-    .refine(
-      (files) => {
-        if (files && files.length > 0) {
-          const file = files.item(0);
-          return file ? file.size <= MAX_FILE_SIZE : true;
-        }
-        return true; // If no file is provided, validation passes
-      },
-      { message: "Max file size is 5MB." },
-    ),
-  src: z.string().optional(),
+  // poster: z
+  //   .custom<FileList>()
+  //   .optional()
+  //   .refine((files) => files?.length === 1 || files?.length === 0, {
+  //     message: "File is required.",
+  //   })
+  //   .refine(
+  //     (files) => {
+  //       if (files && files.length > 0) {
+  //         const file = files.item(0);
+  //         return file ? ACCEPTED_IMAGE_TYPES.includes(file.type) : false;
+  //       }
+  //       return true; // If no file is provided, validation passes
+  //     },
+  //     { message: "Must be a PNG, JPG, JPEG, or WEBP." },
+  //   )
+  //   .refine(
+  //     (files) => {
+  //       if (files && files.length > 0) {
+  //         const file = files.item(0);
+  //         return file ? file.size <= MAX_FILE_SIZE : true;
+  //       }
+  //       return true; // If no file is provided, validation passes
+  //     },
+  //     { message: "Max file size is 5MB." },
+  //   ),
+  // src: z.string().optional(),
 });
 
 type EventDisplayProps = {
@@ -106,40 +98,64 @@ const EventDisplay = ({
       categoryId: "",
       link: "",
       public: false,
-      poster: undefined,
-      src: "",
+      // poster: undefined,
+      // src: "",
     },
   });
 
-  const posterRef = form.register("poster", { required: false });
+  // const posterRef = form.register("poster", { required: false });
 
   const [files, setFiles] = useState<FileWithPreview[] | null>(null);
+  const [posterFile, setPosterFile] = useState<FileWithPreview[] | null>(null);
 
   // TODO using supabase, upload images to the server
   const submitUploadFiles = (files: FileWithPreview[]) => {
     console.log(files);
   };
 
-  async function onSubmit(data: z.infer<typeof addEventFormSchema>) {
-    if (
-      (isCreatingNewEvent || selectedEvent) &&
-      !(selectedEvent && isCreatingNewEvent)
-    ) {
-      if (data.poster) {
-        const posterImageFile = data.poster.item(0);
-        if (posterImageFile) {
-          const imagePath = `${
-            data.title
-          }/poster/poster.${posterImageFile.name.slice(
-            ((posterImageFile.name.lastIndexOf(".") - 1) >>> 0) + 2,
-          )}`;
-          await supabase.storage
-            .from("images")
-            .upload(imagePath, posterImageFile, { upsert: true });
-          data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
-        }
+  const submitUploadPoster = async (posterFiles: FileWithPreview[]) => {
+    const posterImageFile = posterFiles[0];
+    if (selectedEvent && !isCreatingNewEvent) {
+      if (posterImageFile) {
+        const imagePath = `${
+          selectedEvent?.title ?? form.getValues("title")
+        }/poster/poster.${posterImageFile.name.slice(
+          ((posterImageFile.name.lastIndexOf(".") - 1) >>> 0) + 2,
+        )}`;
+
+        await supabase.storage
+          .from("images")
+          .upload(imagePath, posterImageFile, { upsert: true });
+
+        // update the poster src of the event
+        await updateEvent({
+          id: selectedEvent.id,
+          src: `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`,
+        });
       }
     }
+  };
+
+  async function onSubmit(data: z.infer<typeof addEventFormSchema>) {
+    // if (
+    //   (isCreatingNewEvent || selectedEvent) &&
+    //   !(selectedEvent && isCreatingNewEvent)
+    // ) {
+    //   if (data.poster) {
+    //     const posterImageFile = data.poster.item(0);
+    //     if (posterImageFile) {
+    //       const imagePath = `${
+    //         data.title
+    //       }/poster/poster.${posterImageFile.name.slice(
+    //         ((posterImageFile.name.lastIndexOf(".") - 1) >>> 0) + 2,
+    //       )}`;
+    //       await supabase.storage
+    //         .from("images")
+    //         .upload(imagePath, posterImageFile, { upsert: true });
+    //       data.src = `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`;
+    //     }
+    //   }
+    // }
     if (selectedEvent) {
       await updateEvent({ ...data, id: selectedEvent.id });
     } else if (isCreatingNewEvent) {
@@ -278,8 +294,8 @@ const EventDisplay = ({
         categoryId: selectedEvent.categoryId,
         link: selectedEvent.link,
         public: selectedEvent.public,
-        poster: undefined,
-        src: selectedEvent.src,
+        // poster: undefined,
+        // src: selectedEvent.src,
       });
     } else {
       form.reset({
@@ -290,7 +306,7 @@ const EventDisplay = ({
         categoryId: "",
         link: "",
         public: false,
-        poster: undefined,
+        // poster: undefined,
       });
     }
 
@@ -418,7 +434,7 @@ const EventDisplay = ({
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="poster"
                 render={({ field }) => (
@@ -441,7 +457,7 @@ const EventDisplay = ({
                     </FormMessage>
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
             <div className="w-full flex flex-row items-center gap-2 justify-between">
               <FormField
@@ -539,12 +555,13 @@ const EventDisplay = ({
             >
               {selectedEvent ? "Save Changes" : "Create New Event"}
             </Button>
+            {/* Poster Upload */}
             <FileDialog
-              submitUploadFiles={submitUploadFiles}
-              maxFiles={100}
+              submitUploadFiles={submitUploadPoster}
+              maxFiles={1}
               maxSize={1024 * 1024 * 5} // 5MB
-              files={files}
-              setFiles={setFiles}
+              files={posterFile}
+              setFiles={setPosterFile}
               isUploading={false}
               disabled={false}
             >
@@ -558,6 +575,7 @@ const EventDisplay = ({
                 <span className="sr-only">Upload Poster</span>
               </Button>
             </FileDialog>
+            {/* Images Upload */}
             <FileDialog
               submitUploadFiles={submitUploadFiles}
               maxFiles={100}
@@ -582,7 +600,7 @@ const EventDisplay = ({
         {selectedEvent && selectedEvent.Attachments && (
           <div className="h-1/2 w-2/5">
             <label>Current Poster</label>
-            <img src={form.getValues("src") ?? undefined} />
+            <img src={posterFile?.[0]?.preview} alt="Poster" />
           </div>
         )}
       </ScrollArea>
