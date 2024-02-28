@@ -29,9 +29,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           setIsMicrosoftLoading(true);
           await signIn("azure-ad");
         }}
-        loading={isMicrosoftLoading}
+        icon={Icons.microsoft}
+        isLoading={isMicrosoftLoading}
       >
-        <Icons.microsoft className="mr-2 h-4 w-4" />
         KFUPM Authentication
       </Button>
     </div>

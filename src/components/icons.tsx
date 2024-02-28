@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { AiOutlineLoading as LoadingSpinner } from "react-icons/ai";
 import {
   FaExclamationTriangle as AlertTriangle,
   FaArrowRight as ArrowRight,
@@ -51,6 +50,7 @@ import {
 } from "react-icons/io5";
 import {
   LuChevronsUpDown as CaretUpDown,
+  LuLoader2 as LoadingSpinner,
   LuUploadCloud as LuUpload,
 } from "react-icons/lu";
 import {

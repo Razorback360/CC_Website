@@ -534,17 +534,30 @@ const EventDisplay = ({
               variant="default"
               type="submit"
               className="w-full text-white mt-4"
-              disabled={loadingCreate || loadingUpdate}
+              isLoading={loadingCreate || loadingUpdate}
+              icon={selectedEvent ? Icons.edit : Icons.add}
             >
-              {loadingCreate || loadingUpdate ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              ) : selectedEvent ? (
-                <Icons.edit className="mr-2 h-4 w-4" />
-              ) : (
-                <Icons.add className="mr-2 h-4 w-4" />
-              )}
               {selectedEvent ? "Save Changes" : "Create New Event"}
             </Button>
+            <FileDialog
+              submitUploadFiles={submitUploadFiles}
+              maxFiles={100}
+              maxSize={1024 * 1024 * 5} // 5MB
+              files={files}
+              setFiles={setFiles}
+              isUploading={false}
+              disabled={false}
+            >
+              <Button
+                variant="default"
+                type="button"
+                className="w-full text-white mt-4"
+              >
+                <Icons.upload className="mr-2 size-4" aria-hidden="true" />
+                Upload Poster
+                <span className="sr-only">Upload Poster</span>
+              </Button>
+            </FileDialog>
             <FileDialog
               submitUploadFiles={submitUploadFiles}
               maxFiles={100}

@@ -2,7 +2,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import { Icons } from "@/components/icons";
+import { Icon, Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -40,12 +40,21 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  loading?: boolean;
+  icon?: Icon;
+  isLoading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, asChild = false, loading = false, ...props },
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      icon: Icon,
+      isLoading = false,
+      ...props
+    },
     ref,
   ) => {
     if (asChild) {
@@ -57,16 +66,37 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         />
       );
     }
+
+    if (isLoading) {
+      return (
+        <button
+          className={cn(
+            buttonVariants({ variant, size, className }),
+            "flex items-center justify-center",
+          )}
+          ref={ref}
+          disabled={isLoading}
+          {...props}
+        >
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          {props.children}
+        </button>
+      );
+    }
+
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        disabled={loading}
         {...props}
       >
-        {props.children}
-        {loading && (
-          <Icons.spinner className="my-auto ms-3 animate-spin duration-700 text-lg" />
+        {Icon ? (
+          <>
+            <Icon className="mr-3" />
+            {props.children}
+          </>
+        ) : (
+          props.children
         )}
       </button>
     );
