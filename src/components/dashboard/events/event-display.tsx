@@ -600,7 +600,11 @@ const EventDisplay = ({
         {selectedEvent && selectedEvent.Attachments && (
           <div className="h-1/2 w-2/5">
             <label>Current Poster</label>
-            <img src={posterFile?.[0]?.preview} alt="Poster" />
+            {posterFile && posterFile.length > 0 ? (
+              <img src={posterFile?.[0]?.preview} alt="Poster" />
+            ) : (
+              <img src="/placeholder/event.png" alt="Poster" />
+            )}
           </div>
         )}
       </ScrollArea>
