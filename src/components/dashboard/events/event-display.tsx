@@ -88,6 +88,9 @@ const EventDisplay = ({
   setIsLoading,
 }: EventDisplayProps) => {
   const { selectedEvent, selectEvent } = useSelectedEvent();
+  const selectedEventPoster = selectedEvent?.Attachments.find(
+    (attachment) => attachment.type === "EVENT_POSTER",
+  );
   const form = useForm<z.infer<typeof addEventFormSchema>>({
     resolver: zodResolver(addEventFormSchema),
     defaultValues: {
@@ -600,8 +603,8 @@ const EventDisplay = ({
         {selectedEvent && selectedEvent.Attachments && (
           <div className="h-1/2 w-2/5">
             <label>Current Poster</label>
-            {posterFile && posterFile.length > 0 ? (
-              <img src={posterFile?.[0]?.preview} alt="Poster" />
+            {selectedEventPoster ? (
+              <img src={selectedEventPoster.src} alt="Poster" />
             ) : (
               <img src="/placeholder/event.png" alt="Poster" />
             )}
