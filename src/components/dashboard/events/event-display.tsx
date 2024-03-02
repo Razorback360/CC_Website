@@ -120,21 +120,34 @@ const EventDisplay = ({
     const posterImageFile = posterFiles[0];
     if (selectedEvent && !isCreatingNewEvent) {
       if (posterImageFile) {
-        const imagePath = `${
-          selectedEvent?.title ?? form.getValues("title")
-        }/poster/poster.${posterImageFile.name.slice(
-          ((posterImageFile.name.lastIndexOf(".") - 1) >>> 0) + 2,
-        )}`;
+        try {
+          const imagePath = `${
+            selectedEvent?.title ?? form.getValues("title")
+          }/poster/poster.${posterImageFile.name.slice(
+            ((posterImageFile.name.lastIndexOf(".") - 1) >>> 0) + 2,
+          )}`;
 
-        await supabase.storage
-          .from("images")
-          .upload(imagePath, posterImageFile, { upsert: true });
+          const res = await supabase.storage
+            .from("images")
+            .upload(imagePath, posterImageFile, { upsert: true });
 
-        // update the poster src of the event
-        await updateEvent({
-          id: selectedEvent.id,
-          src: `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`,
-        });
+          if (res.error) {
+            throw new Error(res.error.message);
+          }
+          // update the poster src of the event
+          await updateEventPoster({
+            eventId: selectedEvent.id,
+            src: `https://nfjirfbkulkxtgkdqmtn.supabase.co/storage/v1/object/public/images/${imagePath}`,
+          });
+        } catch (error) {
+          if (error instanceof Error) {
+            toast({
+              title: "Failed to upload poster!",
+              description: error.message,
+              variant: "destructive",
+            });
+          }
+        }
       }
     }
   };
@@ -188,6 +201,27 @@ const EventDisplay = ({
           title: "Event Created!",
           description: "Your event has been created successfully.",
         });
+      },
+    });
+
+  const { mutateAsync: updateEventPoster, isLoading: loadingUpdatePoster } =
+    api.event.updatePoster.useMutation({
+      onSettled: async (data, error, variables, context) => {
+        if (error) {
+          toast({
+            title: "Failed to update event poster!",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+        if (data && selectedEvent) {
+          selectEvent(data);
+          await apiUtils.event.getAll.invalidate();
+          toast({
+            title: "Event Poster Updated!",
+            description: "Your event poster has been updated successfully.",
+          });
+        }
       },
     });
 

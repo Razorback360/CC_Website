@@ -99,7 +99,6 @@ export const eventRouter = createTRPCRouter({
         semesterId: z.string().min(1),
         categoryId: z.string().min(1),
         public: z.boolean(),
-        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -118,18 +117,6 @@ export const eventRouter = createTRPCRouter({
           Semester: {
             connect: {
               id: input.semesterId,
-            },
-          },
-          Attachments: {
-            create: {
-              // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-              src: input.src as string,
-              type: "EVENT_POSTER",
-              Uploader: {
-                connect: {
-                  id: ctx.session.user.id,
-                },
-              },
             },
           },
         },
@@ -168,7 +155,6 @@ export const eventRouter = createTRPCRouter({
         categoryId: z.string().min(1).optional(),
         semesterId: z.string().min(1).optional(),
         public: z.boolean().optional(),
-        src: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -192,21 +178,65 @@ export const eventRouter = createTRPCRouter({
               id: input.semesterId,
             },
           },
-          Attachments: {
-            updateMany: {
-              where: {
-                type: "EVENT_POSTER",
-              },
-              data: {
-                src: input.src,
-              },
-            },
-          },
         },
         include: {
           Category: true,
           Semester: true,
           Attachments: true,
+        },
+      });
+    }),
+  updatePoster: protectedProcedure
+    .input(
+      z.object({
+        eventId: z.string().min(1),
+        src: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const eventPoster = await ctx.db.attachment.findFirst({
+        where: {
+          eventId: input.eventId,
+          type: "EVENT_POSTER",
+        },
+      });
+      if (eventPoster) {
+        await ctx.db.attachment.update({
+          where: {
+            id: eventPoster.id,
+          },
+          data: {
+            src: input.src,
+          },
+        });
+      } else {
+        await ctx.db.attachment.create({
+          data: {
+            src: input.src,
+            type: "EVENT_POSTER",
+            Event: {
+              connect: {
+                id: input.eventId,
+              },
+            },
+            Uploader: {
+              connect: {
+                id: ctx.session.user.id,
+              },
+            },
+          },
+        });
+      }
+      return await ctx.db.event.findUnique({
+        where: {
+          id: input.eventId,
+        },
+        include: {
+          Attachments: {
+            where: {
+              type: "EVENT_POSTER",
+            },
+          },
         },
       });
     }),
